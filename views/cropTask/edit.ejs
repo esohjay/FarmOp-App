@@ -1,0 +1,31 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui   grid">
+
+
+    <div class="ui eight wide column centered">
+        <a class="ui green button" href="/croptask/<%= task._id %> ">Back</a>
+        <div class="ui raised segment">
+            <form class="myFormValidate" action="/croptask/<%= task._id %>?_method=PUT" method="POST">
+                <div class="ui  form">
+
+               
+                    <div class="field required">
+                        <label for="status">Status</label>
+                        <select name="task[status]" id="status" class="ui dropdown search">
+                            <option value="<%= task.status %> "><%= task.status %> </option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="In progress">In progress</option>
+                    
+                        </select>
+                    </div>
+                
+                    <button class="ui button fluid green">Update Task</button>
+                </div>
+                <div class="ui error message"></div>
+            </form>
+
+        </div>
+    </div>
+</div>

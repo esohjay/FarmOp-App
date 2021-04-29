@@ -1,0 +1,63 @@
+<% layout('layouts/boilerplate') %>
+
+
+<div class="ui raised segments">
+  <div class="ui segment green">
+    <p class="ui huge header">
+    <%= field.name %>
+    </p>
+  </div>
+  <div class="ui piled segments">
+    <div class="ui yellow segment">
+      <p><i class=" yellow map marker alternate icon"></i> 
+        <%= field.location %>
+      </p>
+    </div>
+    <div class="ui segment">
+      <p>
+        <%= field.size %>
+      </p>
+    </div>
+    <div class="ui segment">
+      <p>
+      <%= field.ownership %>
+      </p>
+    </div>
+    <div class="ui segment">
+      <p>
+        <%= field.soilType %>
+      </p>
+    </div>
+  </div>
+  <div class="ui segment">
+    <a class="ui green button" href="/field">Back</a>
+    <div class="ui buttons right floated">
+      <a href="/field/<%= field._id %>/edit" class="ui yellow button">Edit</a>
+      <div class="or"></div>
+      <button class="ui  negative button" id="test">Delete</button>
+      <div class="ui modal test">
+        <div class="header">Are you sure you want to delete <%= field.name %>? </div>
+        <div class="content">
+          <p>If you delete, <%= field.name %> will be deleted permanently.</p>
+        </div>
+        <div class="actions">
+          <div class="ui buttons right floated ">
+            <div class="segments horizontal ui">
+              <div class="ui segment">
+                <a href="" class="ui cancel mini yellow button">No</a>
+              </div>
+              <div class="ui segment">
+                <form action="/field/<%= field._id %>?_method=DELETE " method="POST">
+                  <button class="ui negative button ">Yes</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+ 

@@ -1,0 +1,101 @@
+
+<!--Start: Nav  -->
+<div class="ui fixed borderless menu">
+    <div class="ui container grid">
+        <!--Start: Desktop Nav-->
+        <div class="computer only row">
+            <a href="/" class="header item">Farm App</a>
+            <a href="/animal" class=" item">Animal</a>
+            <a href="/crop" class="item">Crops</a>
+            <a href="/task" class="item">Task</a>
+            <div class="ui dropdown item">
+                Activities <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="/report/activities" class="item">All Activities</a>
+                    <a href="/report/activities/livestock" class="item">Livestock Activities</a>
+                    <a href="/report/activities/crop" class="item">Crop Activities</a>
+                </div>
+            </div>
+            <div class="ui dropdown item">
+                Finance <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="/report/finance" class="item">Farm Finance</a>
+                    <a href="/report/finance/livestock" class="item">Livestock Finance</a>
+                    <a href="/report/finance/crop" class="item">Crop Finance</a>
+            
+                </div>
+            </div>
+            <a href="/field" class="item">
+                Fields
+            </a>
+            <div class="right menu">
+            <div class="item">
+                <% if(!currentUser) { %>
+                    <a class="item " href="/login">Login</a>
+                    <a class="item" href="/register">Register</a>
+                    <% } else { %>
+                        <a class="item" href="/logout">Logout</a>
+                        <% } %>
+            </div>
+            </div>
+        </div>
+        <!--End: Desktop Nav-->
+
+        <!--Start: Mobile Nav-->
+        <div class="tablet mobile only row">
+            <a href="/" class="header item"> Farm App </a>
+            <div class="right menu">
+                <a class="menu item">
+                    <div class="ui basic icon toggle button">
+                        <i class="content icon"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="ui vertical accordion borderless fluid menu">
+                <!-- Start: Search -->
+                <div class="item">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search...">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+                <!-- End: Search -->
+                <a href="/animal" class=" item">Animal</a>
+                <a href="/crop" class="item">Crops</a>
+                <a href="/task" class="item">Task</a>
+                <div class="item">
+                    <div class="title">
+                        Activities<i class="dropdown icon"></i>
+                    </div>
+                    <div class="content">
+                        <a href="/report/activities" class="item">All Activities</a>
+                        <a href="/report/activities/livestock" class="item">Livestock Activities</a>
+                        <a href="/report/activities/crop" class="item">Crop Activities</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="title">
+                        Finance<i class="dropdown icon"></i>
+                    </div>
+                    <div class="content">
+                        <a href="/report/finance" class="item">Farm Finance</a>
+                        <a href="/report/finance/livestock" class="item">Livestock Finance</a>
+                        <a href="/report/finance/crop" class="item">Crop Finance</a>
+                    </div>
+                </div>
+                <a href="/field" class="item">
+                    Fields
+                </a>
+                <div class="ui divider"></div>
+                <% if(!currentUser) { %>
+                    <a class="item " href="/login">Login</a>
+                    <a class="item" href="/register">Register</a>
+                    <% } else { %>
+                        <a class="item" href="/logout">Logout</a>
+                        <% } %>
+            </div>
+        </div>
+        <!--End: Mobile Nav-->
+    </div>
+</div>
+<!--End: Nav  -->

@@ -1,0 +1,25 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui raised segments">
+    <div class="ui segment green">
+        <p class="ui huge header">
+            <%= cropEvents.event %>
+        </p>
+    </div>
+    <div class="ui piled segments">
+        <div class="ui yellow segment">
+            <p>Done on <%= cropEvents.date.toDateString() %>
+            </p>
+        </div>
+        <div class="ui segment">
+            <p>Lead by <%= cropEvents.leader %>
+            </p>
+        </div>
+        <div class="ui segment">
+            <p>Remark: <%= cropEvents.note %>
+            </p>
+        </div>
+    </div>
+</div>
+
+

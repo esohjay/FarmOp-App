@@ -1,0 +1,34 @@
+<% layout('layouts/boilerplate') %>
+
+    <a class="ui green button"  href="/breeder/new">Add a Livestock</a>
+
+<% for(let breed of breeder){ %> 
+  <div class="ui green raised segment">
+<div class="ui  very relaxed styled unstackable items">
+    <div class="item">
+        
+            <a href="/breeder/<%= breed._id %>" class="ui tiny image">
+                <img src="<%= breed.image.url %>">
+            </a>
+            
+
+                    <div class="middle aligned content">
+                        <div class="header">
+                            <%= breed.tag %>
+                                <a href="/breeder/<%= breed._id %>"><i
+                                        class=" green caret square right outline float right icon"></i></a>
+
+
+                        </div>
+                        <div class="extra">
+                            <%= breed.dob.toDateString() %>
+                        </div>
+                    </div>
+    </div>
+
+</div>
+  </div>
+
+    
+    
+<%} %>

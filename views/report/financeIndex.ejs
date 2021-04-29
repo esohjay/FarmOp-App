@@ -1,0 +1,251 @@
+<% layout('layouts/boilerplate') %>
+<% let totalIncome=0; %>
+    <% let totalExpense=0; %>
+    <% let totalCropIncome=0; %>
+        <% let totalCropExpense=0; %>
+
+    <h1 > Livestock Income</h1>
+
+    <table class="ui celled selectable unstackable table">
+        <thead>
+            <tr>
+                <th>Revenue</th>
+                <th>Date</th>
+                
+                <th class="right aligned">Amount</th>
+    
+            </tr>
+        </thead>
+        <% for(let income of livestockIncome){ %>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= income.income %>
+                    </td>
+                    <td>
+                        <%= income.date.toDateString() %>
+                    </td>
+                    <td class="right aligned">
+                        <%= income.amount %>
+                    </td>
+                    
+                </tr>
+                <% totalIncome +=income.amount %>
+                <% } %>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td class="right aligned">
+                            <%= totalIncome %>
+                        </td>
+                        
+                    </tr>
+    </table>
+    
+
+
+
+
+    <h1> Livstock Expenses</h1>
+
+<table class="ui celled selectable unstackable table">
+    <thead>
+        <tr>
+            <th>Expenditure</th>
+            <th>Date</th>
+            
+            <th class="right aligned">Amount</th>
+
+        </tr>
+    </thead>
+    <% for(let expense of livestockExpenses){ %>
+        <tbody>
+            <tr>
+                <td>
+                    <%= expense.expense %>
+                </td>
+                <td>
+                    <%= expense.date.toDateString() %>
+                </td>
+                <td class="right aligned">
+                    <%= expense.amount %>
+                </td>
+
+            </tr>
+            <% totalExpense +=expense.amount %>
+                <% } %>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td class="right aligned">
+                            <%= totalExpense %>
+                        </td>
+                        
+                    </tr>
+</table>
+
+
+
+
+   
+<% let livestockProfit=totalIncome - totalExpense %>
+
+<div class="ui horizontal segments">
+    <div class="ui green segment">
+        <p>Livestock Net profit</p>
+    </div>
+    <div class="ui yellow segment">
+        <p><%= livestockProfit %></p>
+    </div>
+</div>
+    
+
+        
+            <h1>Crop Income</h1>
+
+
+            <table class="ui celled selectable unstackable table">
+                <thead>
+                    <tr>
+                        <th>Revenue</th>
+                        <th>Date</th>
+                        
+                        <th class="right aligned">Amount</th>
+            
+                    </tr>
+                </thead>
+                <% for(let income of cropInflow){ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= income.income %>
+                            </td>
+                            <td>
+                                <%= income.date.toDateString() %>
+                            </td>
+                            <td class="right aligned">
+                                <%= income.amount %>
+                            </td>
+            
+                        </tr>
+                        <% totalCropIncome +=income.amount %>
+                            <% } %>
+                                <tr>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td class="right aligned">
+                                        <%= totalCropIncome %>
+                                    </td>
+                                    
+                                </tr>
+            </table>
+        
+           
+        
+        
+        <div class="mb-3">
+            <h1> Crop Expenses</h1>
+
+
+<table class="ui celled selectable unstackable table">
+    <thead>
+        <tr>
+            <th>Expenditure</th>
+            <th>Date</th>
+            
+            <th class="right aligned">Amount</th>
+
+        </tr>
+    </thead>
+    <% for(let expense of cropExpenses){ %>
+        <tbody>
+            <tr>
+                <td>
+                    <%= expense.expense %>
+                </td>
+                <td>
+                    <%= expense.date.toDateString() %>
+                </td>
+                <td class="right aligned">
+                    <%= expense.amount %>
+                </td>
+
+            </tr>
+            <% totalCropExpense +=expense.amount %>
+                <% } %>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td class="right aligned">
+                            <%= totalCropExpense %>
+                        </td>
+                        
+                    </tr>
+</table>
+
+
+
+
+           
+
+
+            <% let cropProfit=totalCropIncome - totalCropExpense %>
+            
+                <div class="ui horizontal segments">
+                    <div class="ui green segment">
+                        <p>Crop Net profit</p>
+                    </div>
+                    <div class="ui yellow segment">
+                        <p>
+                            <%= cropProfit %> %>
+                        </p>
+                    </div>
+                </div>
+
+
+
+
+        
+            
+            
+        
+                <% let farmIncomeTotal=totalIncome + totalCropIncome %>
+                    <div class="ui horizontal segments">
+                        <div class="ui green segment">
+                            <p>Total Farm income</p>
+                        </div>
+                        <div class="ui yellow segment">
+                            <p>
+                                <%= farmIncomeTotal %>
+                            </p>
+                        </div>
+                    </div>
+
+                    
+                        <% let farmExpenseTotal=totalExpense + totalCropExpense %>
+                            <div class="ui horizontal segments">
+                                <div class="ui green segment">
+                                    <p>Total Farm expense</p>
+                                </div>
+                                <div class="ui yellow segment">
+                                    <p>
+                                        <%= farmExpenseTotal %>
+                                    </p>
+                                </div>
+                            </div>
+
+                            
+                            <% let farmNetProfit = farmIncomeTotal - farmExpenseTotal %>
+                            
+
+                   
+                    <div class="ui horizontal segments">
+                        <div class="ui green segment">
+                            <p>Farm Net Profit:</p>
+                        </div>
+                        <div class="ui yellow segment">
+                            <p>
+                                <%= farmNetProfit %>
+                            </p>
+                        </div>
+                    </div>

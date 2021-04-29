@@ -1,0 +1,63 @@
+<% layout('layouts/boilerplate') %>
+
+    <a class="ui green button"  href="/animal/new">Add a Batch</a>
+
+
+  <% for(let animal of animals){ %> 
+    <div class="ui green raised segment">
+      <div class="ui  very relaxed styled unstackable items">
+        <div class="item">
+
+        <a href="/animal/<%= animal._id %>" class="ui tiny image">
+
+
+
+         
+
+
+
+
+
+
+        
+         
+        </a>
+
+
+          <div class="middle aligned content">
+            <div class="header">
+              <%= animal.name %>
+                <a href="/animal/<%= animal._id %>"><i class=" green caret square right outline float right icon"></i></a>
+
+            </div>
+            <div class="extra">
+              <p>Arrived on <%= animal.dateOfArrival.toDateString() %>
+              </p>
+            </div>
+            <div class="extra">
+              <p>
+                <%= animal.category %> Category
+              </p>
+            
+            </div>
+            <div class="extra">
+              <p>
+                <%= animal.quantity %> in number
+              </p>
+            
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <%} %>
+
+
+
+
+
+

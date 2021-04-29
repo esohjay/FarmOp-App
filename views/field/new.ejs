@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui   grid">
+    <div class="ui eleven wide column centered">
+        <a class="ui green button" href="/field">Back</a>
+        <div class="ui raised segment">
+            <form class="myFormValidate" action="/field" method="POST">
+                <div class="ui  form">
+
+                    <div class="field required">
+                        <label for="name">Field Name</label>
+                        <input type="text" id="name" name="field[name]" placeholder="Field Name">
+                    </div>
+                    <div class="field required">
+                        <label for="location"> Location </label>
+                        <input type="text" id="location" name="field[location]" placeholder="Location">
+                    </div>
+                    <div class="field required">
+                    <label for="ownership">Ownership Type</label>
+                    <input type="text" id="ownership" name="field[ownership]" placeholder="Ownership Type">
+                    </div>
+                    <div class="field required">
+                    <label for="size">Size</label>
+                    <input type="text" id="size" name="field[size]" placeholder="Size">
+                    </div>
+                    <div class="field required">
+                        <label for="soilType">Soil Type</label>
+                        <input type="text" id="soilType" name="field[soilType]" placeholder="Soil Type">
+                    </div>
+                    <button class="ui button fluid green">Add Field</button>
+                </div>
+                <div class="ui error message"></div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+    

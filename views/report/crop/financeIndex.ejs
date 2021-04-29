@@ -1,0 +1,108 @@
+<% layout('layouts/boilerplate') %>
+
+    <% let totalCropIncome=0; %>
+        <% let totalCropExpense=0; %>
+
+
+            <h1>Crop Income</h1>
+            
+            
+            <table class="ui celled selectable unstackable table">
+                <thead>
+                    <tr>
+                        <th>Revenue</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th class="right aligned">Action</th>
+            
+                    </tr>
+                </thead>
+                <% for(let income of cropInflow){ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= income.income %>
+                            </td>
+                            <td>
+                                <%= income.date.toDateString() %>
+                            </td>
+                            <td><%= income.amount %> </td>
+                            <td class="right aligned">
+                            <a href="/report/finance/crop/<%= income._id %>"><i class=" green caret square right outline float right icon"></i></a>
+                            </td>
+            
+                        </tr>
+                        <% totalCropIncome +=income.amount %>
+                            <% } %>
+                                <tr>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td class="right aligned">
+                                        <%= totalCropIncome %>
+                                    </td>
+            
+                                </tr>
+            </table>
+            
+            
+            
+            
+            <div class="mb-3">
+                <h1> Crop Expenses</h1>
+            
+            
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th>Expenditure</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th class="right aligned">Action</th>
+            
+                        </tr>
+                    </thead>
+                    <% for(let expense of cropExpenses){ %>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= expense.expense %>
+                                </td>
+                                <td>
+                                    <%= expense.date.toDateString() %>
+                                </td>
+                                <td><%= expense.amount %> </td>
+                                <td class="right aligned">
+                                <a href="/report/finance/crops/<%= expense._id %>"><i class=" green caret square right outline float right icon"></i></a>
+                                </td>
+            
+                            </tr>
+                            <% totalCropExpense +=expense.amount %>
+                                <% } %>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td></td>
+                                        <td class="right aligned">
+                                            <%= totalCropExpense %>
+                                        </td>
+            
+                                    </tr>
+                </table>
+            
+            
+            
+            
+            
+            
+            
+                <% let cropProfit=totalCropIncome - totalCropExpense %>
+            
+                    <div class="ui horizontal segments">
+                        <div class="ui green segment">
+                            <p>Crop Net profit</p>
+                        </div>
+                        <div class="ui yellow segment">
+                            <p>
+                                <%= cropProfit %> %>
+                            </p>
+                        </div>
+                    </div>

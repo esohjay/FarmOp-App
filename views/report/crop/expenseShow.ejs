@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate') %>
+
+
+
+    <div class="ui raised segments">
+        <div class="ui segment green">
+            <p class="ui huge header">
+                <%= cropExpenses.expense %>
+            </p>
+        </div>
+        <div class="ui piled segments">
+            <div class="ui yellow segment">
+                <p>
+                    <%= cropExpenses.date.toDateString() %>
+                </p>
+            </div>
+            <div class="ui segment">
+                <p>
+                    <%= cropExpenses.amount %>
+                </p>
+            </div>
+            <div class="ui segment">
+                <p>
+                    <%= cropExpenses.note %>
+                </p>
+            </div>
+        </div>
+        <div class="ui segment">
+            <img class="ui centered  image" src="<%= cropExpenses.image %>">
+        </div>
+    </div>
+    <a class="button small ui green" href="/report/finance/crop">Back<i
+            class=" yellow caret square right outline float right icon"></i></a>

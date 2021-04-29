@@ -1,0 +1,74 @@
+<% layout('layouts/boilerplate') %>
+<h1 class="header green huge">Livestock</h1>
+
+
+<table class="ui celled selectable unstackable table">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Leader</th>
+            
+            <th class="right aligned">Remark</th>
+
+        </tr>
+    </thead>
+    <% for(let event of livestockEvents){ %>
+        <tbody>
+            <tr>
+                <td>
+                    <%= event.event %>
+                </td>
+                <td>
+                    <%= event.date.toDateString()%>
+                </td>
+                <td>
+                    <%= event.leader %>
+                </td>
+                <td>
+                    <%= event.note %>
+                </td>
+                
+            </tr>
+            <% } %>
+
+</table>
+
+
+
+
+
+
+<h1>Crop</h1>
+
+<table class="ui celled selectable unstackable table">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Leader</th>
+
+            <th class="right aligned">Remark</th>
+
+        </tr>
+    </thead>
+    <% for(let event of cropEvents){ %>
+        <tbody>
+            <tr>
+                <td>
+                    <%= event.event %>
+                </td>
+                <td>
+                    <%= event.date.toDateString()%>
+                </td>
+                <td>
+                    <%= event.leader %>
+                </td>
+                <td>
+                    <%= event.note %>
+                </td>
+
+            </tr>
+            <% } %>
+
+</table>

@@ -1,0 +1,76 @@
+<% layout('layouts/boilerplate') %>
+<div class="ui   grid">
+    <div class="ui eleven wide column centered">
+        <a class="ui green button" href="/animal">Back</a>
+        <div class="ui raised segment">
+            <form class="myFormValidate" action="/animal" method="POST" >
+                <div class="ui  form">
+                    
+                    <div class="field required">
+                        <label for="name">Name</label>
+                        <select name="animal[name]" id="name" class="ui tag dropdown search">
+                            <option value="">Select Name</option>
+                            <option value="Poultry">Chicken</option>
+                            <option value="Fishery">CatFish</option>
+                            <option value="Ruminant">Cattle</option>
+                            <option value="Others">Sheep</option>
+                            <option value="Poultry">Goat</option>
+                            <option value="Fishery">Rabbit</option>
+                            <option value="Ruminant">Snail</option>
+                            <option value="Others">Grasscutter</option>
+                            <option value="Fishery">Horse</option>
+                            <option value="Ruminant">Donkey</option>
+                            <option value="Others">Guinea Pig</option>
+                    
+                        </select>
+                    </div>
+                    <div class="field required">
+                        <label for="category">Category</label>
+                        <select name="animal[category]" id="category" class="ui dropdown search">
+                            <option value="">Select Category</option>
+                            <option value="Poultry">Poultry</option>
+                            <option value="Fishery">Fishery</option>
+                            <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
+                            <option value="Others">Others(Pig, Rabbit, Snail...)</option>
+                    
+                        </select>
+                    </div>
+                    <div class="field required">
+                        <label for="tag"> Batch ID </label>
+                        <input type="text" id="tag" name="animal[batch]" placeholder="Batch ID">
+                    </div>
+                    <div class="field required">
+                        <label for="variety">Breed</label>
+                        <input type="text" id="variety" name="animal[breed]" placeholder="Breed">
+                    </div>
+                    <div class="field required">
+                        <label for="variety">Quantity</label>
+                        <input type="number" id="variety" name="animal[quantity]" placeholder="Quantity">
+                    </div>
+                    <div class="field required">
+                        <label for="date">Date of Arrival</label>
+                        <input type="date" id="date" name="animal[dateOfArrival]" placeholder="Date Arrived">
+                    </div>
+                     <div class="field required">
+                        <label for="source">Source</label>
+                        <input type="text" id="source" name="animal[source]" placeholder="Source">
+                    </div>
+                    
+                    <div class="field required">
+                        <label for="description">Brief Description</label>
+                        <textarea name="animal[description]" id="description" placeholder="Remark" cols="30" rows="3"  ></textarea>
+                    </div>
+                    <button class="ui button fluid green">Add Animal</button>
+                </div>
+                <div class="ui error message"></div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    

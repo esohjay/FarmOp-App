@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <% let totalIncome=0; %>
+    <a class="button green ui" href="/cropinflow/new">Add an Income</a>
+            <h1> Livestock Income</h1>
+
+            <table class="ui celled selectable unstackable table">
+                <thead>
+                    <tr>
+                        <th>Revenue</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th class="right aligned">Action</th>
+
+                    </tr>
+                </thead>
+                <% for(let income of inflow){ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= income.income %>
+                            </td>
+
+                            <td>
+                                <%= income.date !==undefined ? income.date.toDateString() : '' %>
+                            </td>
+
+
+                            <td>
+                                <%= income.amount !==undefined ? income.amount : '' %>
+                            </td>
+
+                            <td class="right aligned">
+                                <a href="/cropinflow/<%= income._id %>"><i
+                                        class=" green caret square right outline float right icon"></i></a>
+                            </td>
+
+                        </tr>
+                        <% income.amount !==undefined ? totalIncome +=income.amount : totalIncome +=0 %>
+                            <% } %>
+                                <tr>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td>
+                                        <%= totalIncome %>
+                                    </td>
+                                    <td></td>
+                                </tr>
+            </table>

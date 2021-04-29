@@ -1,0 +1,63 @@
+<% layout('layouts/boilerplate') %>
+
+    <a class="ui green button"  href="/farmstock/new">Add a Livestock</a>
+
+<% for(let animal of farmstock){ %> 
+  <div class="ui green raised segment">
+<div class="ui  very relaxed styled unstackable items">
+    <div class="item">
+        
+            <a href="/farmstock/<%= animal._id %>" class="ui tiny image">
+                
+                <img src="<%= animal.image.url %> ">
+            </a>
+            
+
+                    <div class="middle aligned content">
+                        <div class="header">
+                            <%= animal.tag %>
+                                <a href="/farmstock/<%= animal._id %>"><i
+                                        class=" green caret square right outline float right icon"></i></a>
+
+
+                        </div>
+                        <div class="extra">
+                            <%= animal.dob.toDateString() %>
+                        </div>
+                        <div class="extra">
+                          <p>Dam: <%= animal.dam %></p> 
+                       
+                        </div>
+                        <div class="extra">
+                          <div class="ui icon top left pointing dropdown button">
+                            <i class="wrench icon"></i>
+                            <div class="menu">
+                             
+                              <div class="item">
+                                <form action="/farmstock/<%= animal._id %>/sold" method="POST">
+                                <button class="ui icon button"><i role="button" class="green handshake right outline float right icon"></i></button>
+                              </form>
+                              </div>
+                              <div class="item">
+                                <div class="ui ">
+                                <a href="/farmstock/<%=animal._id %>/edit" class="ui yellow button">Edit<i role="button" class="green edit right outline float right icon"></i></a>
+                              </div>
+                              </div>
+                              <div class="item">
+                                <form action="/farmstock/<%= farmstock._id %>?_method=DELETE " method="POST">
+                                  <button class="ui icon button"><i role="button" class="green trash alternate right outline float right icon"></i></button>
+                                </form>
+                              </div>
+                            </div>
+
+                      
+                         </div>
+                    </div>
+    </div>
+
+</div>
+  </div>
+
+    
+    
+<%} %>

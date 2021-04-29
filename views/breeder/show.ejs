@@ -1,0 +1,375 @@
+<% layout('layouts/boilerplate') %>
+<div class="ui segments">
+  <div class="ui segment">
+    <div class="ui three column centered grid ">
+      <div class="column">
+        <div class="ui medium rounded image owl-carousel owl-theme">
+          <img src="<%= breeder.image.url %> ">
+        </div>
+      </div>
+    </div>
+  <div class="ui segments">
+    <div class="ui horizontal segments">
+      <div class="ui huge header segment">
+        <p><%= breeder.tag %> </p>
+      </div>
+      <div class="ui huge header segment">
+        <p><%= breeder.dam %> </p>
+      </div>
+    </div>
+    
+    <div class="ui segment">
+      <p><%= breeder.sire%></p>
+    </div>
+    <div class="ui horizontal segments">
+      <div class="ui  segment">
+        <p>
+        DOB:  <%= breeder.dob.toDateString() %> 
+        </p>
+      </div>
+     
+    </div>
+  </div>
+  <div class="ui segment">
+    <p>
+      <%= breeder.description%>
+    </p>
+  </div>
+  <div class="ui horizontal segments">
+    <div class="ui  segment">
+      <p>Sex: 
+        <%= breeder.sex %>
+      </p>
+    </div>
+    
+   
+  </div>
+  <div class="ui horizontal segments">
+    
+    <div class="ui segment">
+      <p><%= breeder.breed %></p>
+    </div>
+  </div>
+
+   
+  <div class="ui segment">
+  <a class="ui green button" href="/breeder">Back</a>
+<div class="ui buttons right floated">
+  <a href="/breeder/<%= breeder._id %>/edit" class="ui yellow button">Edit</a>
+  <div class="or"></div>
+  <button class="ui  negative button" id="test">Delete</button>
+  <div class="ui modal test">
+    <div class="header">Are you sure you want to delete <%= breeder.tag %>? </div>
+    <div class="content">
+      <p>If you delete, all data associated with <%= breeder.tag %> will be deleted permanently.</p>
+    </div>
+    <div class="actions">
+      <div class="ui buttons right floated ">
+        <div class="segments horizontal ui">
+          <div class="ui segment">
+            <a href="" class="ui cancel mini yellow button">No</a>
+          </div>
+          <div class="ui segment">
+            <form action="/breeder/<%= breeder._id %>?_method=DELETE " method="POST">
+              <button class="ui negative button ">Yes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- ADD EVENT-->
+
+
+
+
+
+<div class="ui styled accordion horizontal content">
+
+
+
+
+ 
+<!-- Start of Breeding record -->
+<div class=" title">
+  <i class="dropdown icon"></i>
+  Breeding Record
+</div>
+<div class=" content">
+  Update  <%= breeder.tag %>'s breeding record
+    <div class="accordion">
+      <div class="active  title">
+        <i class="dropdown icon"></i>
+        Mating
+      </div>
+      <div class="active content">
+
+
+        <div class="ui form">
+          <form class="myFormValidate" action="/breeder/<%= breeder._id %>/breeding" method="POST">
+            <div class="field required">
+              <label for="exposedDate">Date of Exposure</label>
+              <input type="Date" id="exposedDate" name="breed[exposedDate]">
+            </div>
+            <div class="field required">
+              <label for="sire">Sire Tag No</label>
+              <input type="text" id="sire" name="breed[sire]">
+            </div>
+            <button class="button ui green">Submit</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+<% for(let breed of breeder.breeding){ %>
+        <div class="ui horizontal segments">
+          <div class="ui segment">
+            <p>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;"><%= breed.exposedDate.toDateString() %></font>
+              </font>
+            </p>
+          </div>
+          <div class="ui segment">
+            <p>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+                <div class="accordion">
+                  <div class="  title">
+                    <i class="edit icon"></i>
+                
+                  </div>
+                  <div class=" content">
+                
+                
+                    <div class="ui form">
+                      <form class="myFormValidate"
+                        action="/breeder/<%= breeder._id %>/breeding/<%= breed._id %>?_method=PUT" method="POST">
+                        <div class=" field required">
+                          <div class="ui ">
+                            <label for="parturitionDate">Date of Parturition</label>
+                            <input type="date" id="parturitionDate" name="breed[parturitionDate]">
+                          </div>
+                        </div>
+                        <div class="field required">
+                          <label for="litterNo">Number of Litter</label>
+                          <input type="number" id="litterNo" name="breed[litterNo]">
+                        </div>
+                        <button class="button ui green">Submit</button>
+                      </form>
+                    </div>
+                  </div>
+                
+                </div>
+
+                
+                </font>
+              </font>
+            </p>
+          </div>
+          <div class="ui segment">
+            <p>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+<button class="tiny negative ui button "></button><i class="ui trash icon feedBtns"></i></button>
+<div class="ui modal feedBtn">
+  <div class="header">Are you sure you want to delete? </div>
+  <div class="content">
+    <p>If you delete, it will be deleted permanently.</p>
+  </div>
+  <div class="actions">
+    <div class="ui buttons right floated ">
+      <div class="segments horizontal ui">
+        <div class="ui segment">
+          <a href="" class="ui cancel mini yellow button">No</a>
+        </div>
+        <div class="ui segment">
+          <form
+            action="/breeder/<%= breeder._id %>/breeding/<%= breed._id %>?_method=DELETE "
+            method="POST">
+            <button class="tiny negative ui button">Yes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+                
+                </font>
+              </font>
+            </p>
+          </div>
+        </div>
+      <% } %>
+
+
+
+    <div class="title">
+      <i class="dropdown icon"></i>
+      Breeding Details
+    </div>
+    <div class="content">
+
+      <table class="ui celled selectable unstackable table">
+        <thead>
+          <tr>
+            <th>Exposed Date</th>
+            <th>Parturition Date</th>
+            <th>Sire</th>
+            <th>Litter No</th>
+            
+          </tr>
+        </thead>
+        
+        <% for(let breed of breeder.breeding){ %>
+          <tbody>
+            <tr>
+              <td>
+                <%= breed.exposedDate.toDateString() %> 
+              </td>
+              
+              <td>
+              <%= breed.parturitionDate ? breed.parturitionDate.toDateString() : breed.parturitionDate %>
+              </td>
+              <td>
+                <%= breed.sire%>
+              </td>
+              <!--Update breeding activity-->
+              <td>
+              <%= breed.litterNo%>
+              </td>
+             
+            </tr>
+            <% } %>
+             
+                
+      </table>
+    </div>
+</div>
+
+<!-- End of Breeding record -->
+
+
+
+
+
+  
+ 
+
+                                </div>
+                              </div>
+                          </div>
+
+                        </div>
+  </div>
+</div>
+
+
+
+</div>
+<!--Farmstock Starts-->
+
+
+<div class="ui  accordion">
+  <div class="title">
+
+    <a class="ui green button">Add a Livestock</a>
+  </div>
+  <div class=" content">
+    <div class="ui   grid">
+      <div class="ui eleven wide column centered">
+
+        <div class="ui raised segment">
+          <form class="myFormValidate" action="/breeder/<%= breeder._id %>/offspring" method="POST"
+            enctype="multipart/form-data">
+            <div class="ui form">
+
+
+              <div class="field required">
+                <label for="tag"> Tag No </label>
+                <input type="text" id="tag" name="farmstock[tag]" placeholder="Tag No">
+              </div>
+              <div class="field required">
+                <label for="variety">Breed</label>
+                <input type="text" id="variety" name="farmstock[breed]" placeholder="Breed">
+              </div>
+              <div class="field required">
+                <label for="sire">Sire</label>
+                <input type="text" id="sire" name="farmstock[sire]" placeholder="Sire">
+              </div>
+              <div class="field required">
+                <label for="dam">Dam</label>
+                <input type="text" id="dam" name="farmstock[dam]" placeholder="Dam" >
+              </div>
+              <div class="ui form">
+                <div class="field required">
+                  <label for="sex">Sex</label>
+                  <div class="ui selection dropdown">
+                    <input type="hidden" id="sex" name="farmstock[sex]">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Sex</div>
+                    <div class="menu">
+                      <div class="item" data-value="Male">Male</div>
+                      <div class="item" data-value="Female">Female</div>
+                      <div class="item" data-value="Other">Other</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field required">
+                <label for="category">Category</label>
+                <select name="farmstock[category]" id="status" class="ui dropdown search">
+                  <option value="">Select Category</option>
+                  <option value="Poultry">Poultry</option>
+                  <option value="Fishery">Fishery</option>
+                  <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
+                  <option value="Others">Others(Pig, Rabbit, Snail...)</option>
+              
+                </select>
+              </div>
+              <div class="field required">
+                <label for="dob">DOB</label>
+                <input type="date" id="dob" name="farmstock[dob]" placeholder="DOB">
+              </div>
+              <div class="field required">
+                <label for="pstage">Production Stage</label>
+                <input type="text" id="pstage" name="farmstock[productionStage]" placeholder="Production Stage">
+              </div>
+              <div class="field required">
+                <label for="hStatus">Health Status</label>
+                <input type="text" id="hStatus" name="farmstock[healthStatus]" placeholder="Health Status">
+              </div>
+
+              <div class="field required">
+                <label for="image">Image</label>
+                <input type="file" id="image" name="image" placeholder="Image">
+              </div>
+              <div class="field required">
+                <label for="description">Brief Description</label>
+                <textarea name="farmstock[description]" id="description" cols="30" rows="3"></textarea>
+              </div>
+              <button class="ui button fluid green">Add Animal</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<% for(let farmstock of breeder.farmstock){ %>
+  <a href="/breeder/<%= breeder._id %>/offspring/<%= farmstock._id %>">
+    <%= farmstock.tag %>
+  </a>
+ 
+  <% } %>
+
+
+

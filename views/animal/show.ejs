@@ -1,0 +1,1357 @@
+<% layout('layouts/boilerplate') %>
+<%let totalIncome=0; %>
+<% let totalExpense=0; %>
+<% let eggSum=0; %>
+<% let eggTotal=0; %>
+<% let deathSum=0; %>
+<% let deathRate=0; %>
+<% let feedSum=0; %>
+<% let feedTotal=0; %>
+<% let bWeight = 0; %>
+<% let bWt = 0; %>
+<% let wtGain = 0; %>
+<% let fcrPWtGain; %>
+<% let initBWeight = 0; %>
+<% let eggNumber = 0; %>
+
+<!--Mortality Rate logic-->
+<% for (let mortality of animal.mortality) {%>
+    
+        <% deathRate +=mortality.amount %>
+     <% } %>
+<% let mortalityRate = Math.round(((deathRate/animal.quantity) * 100)*100)/100 %> 
+<% let initValue = 0 %>
+<% let currentPopulation = animal.quantity - deathRate%>
+<!--Egg production Logic-->
+
+<% for (let egg of animal.egg) {%>
+    <% eggNumber = egg.quantity %> 
+    <% eggTotal += egg.quantity %> 
+    <% } %>  
+<% let dayEggNumber = eggNumber * 30 %>
+<!--HDEP per day-->
+<% let henDay=(dayEggNumber/currentPopulation) * 100 %>
+<!--HDEP Overtime-->
+<%let eggSumOvertime = eggTotal * 30 %>
+<% let henDayOvertime =Math.round(((eggSumOvertime/currentPopulation) * 100)*100)/100 %>
+<!--HHEP Overtime-->
+
+    <% let henHouseOvertime=Math.round((eggSumOvertime/animal.quantity)*100)/100  %>
+<!--FCR per dozen egg-->
+<% for (let feed of animal.feed) {%>
+
+    <% feedTotal += feed.quantity %>
+        <% } %>
+ <% for (let weight of animal.weight) {%>
+        
+  <% bWeight =weight.weight %>
+  <% initBWeight = weight.initWeight %> 
+ <% } %>
+
+ <% let avFeed = feedTotal / currentPopulation %> 
+ <% let fcrPDozen = Math.round(((feedTotal * 12) / eggTotal)*100)/100 %> 
+ <% if(bWeight > initBWeight){ %>
+    
+    <%  wtGain = bWeight - initBWeight%>
+    <%  } %> 
+ <% if(wtGain && wtGain > 0){%>
+    <% fcrPWtGain = Math.round((avFeed/wtGain)*100)/100 %> 
+    <% } %>
+    <div class="ui segments">
+        <div class="ui segment">
+            <div class="ui three column centered grid ">
+                <div class="column">
+                    <div class="ui medium rounded image owl-carousel owl-theme">
+                        <img src="<%= animal.image%> ">
+                    </div>
+                </div>
+            </div>
+            <div class="ui segments">
+                <div class="ui horizontal segments">
+                    <div class="ui huge header segment">
+                        <p>
+                            <%= animal.name %>
+                        </p>
+                    </div>
+                    <div class="ui huge header segment">
+                        <p>
+                            <%= animal.batch %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="ui horizontal segments">
+                    <div class="ui  segment">
+                        <p>
+                         Belongs to   <%= animal.category %> Category 
+                        </p>
+                    </div>
+                    <div class="ui  segment">
+                        <p>
+                            <%= animal.breed %>
+                        </p>
+                    </div>
+                    <div class="ui  segment">
+                        <p>
+                          Gotten from  <%= animal.source %>
+                        </p>
+                    </div>
+                </div>
+                </div>
+                <div class="ui horizontal segments">
+                    <div class="ui  segment">
+                        <p>
+                            Arrived on <%= animal.dateOfArrival.toDateString() %>
+                        </p>
+                    </div>
+                    <div class="ui segment">
+                        <p>
+                           Remark: <%= animal.description%>
+                        </p>
+                    </div>
+                </div>
+            
+            
+            <div class="ui horizontal segments">
+                <div class="ui  segment">
+                    <p> Starting Population:
+                        <%= animal.quantity %>
+                    </p>
+                </div>
+                <div class="ui  segment">
+                    <p>Current Population:
+                        <%= currentPopulation %>
+                    </p>
+                </div>
+                <div class="ui  segment">
+                    <p>Mortality Rate:
+                        <%= deathRate > 0 ? mortalityRate : initValue  %>%
+                    </p>
+                </div>
+
+            </div>
+            <div class="ui horizontal segments">
+                <div class="ui  segment">
+                    <p>
+                    Laid <%= eggSumOvertime %> eggs (<%= eggTotal %> Crates)
+                    </p>
+                </div>
+                <div class="ui  segment">
+                    <p>
+                        
+                        Hen Day Egg Production (HDEP) <%= eggSumOvertime> 0 ? henDayOvertime : initValue %>%
+                    </p>
+                </div>
+                <div class="ui  segment">
+                    <p>
+                        Hen House Egg Production (HHEP) <%= eggSumOvertime> 0 ? henHouseOvertime : initValue %>
+                    </p>
+                </div>
+            </div>
+<div class="ui horizontal segments">
+    <div class="ui  segment">
+        <p>FCR per Dozen Egg:
+            <%= feedTotal > 0 && eggTotal > 0 ? fcrPDozen : initValue %>
+        </p>
+    </div>
+    <div class="ui  segment">
+        <p>FCR per Body Weight:
+            <%=  fcrPWtGain  %>
+        </p>
+    </div>
+    
+
+</div>
+
+            <div class="ui segment">
+                <a class="ui green button" href="/animal">Back</a>
+                <div class="ui buttons right floated">
+                    <a href="/animal/<%= animal._id %>/edit" class="ui yellow button">Edit</a>
+                    <div class="or"></div>
+                    <button class="ui  negative button" id="test">Delete</button>
+                    <div class="ui modal test">
+                        <div class="header">Are you sure you want to delete <%= animal.name %>? </div>
+                        <div class="content">
+                            <p>If you delete, all data associated with <%= animal.name %> will be deleted permanently.
+                            </p>
+                        </div>
+                        <div class="actions">
+                            <div class="ui buttons right floated ">
+                                <div class="segments horizontal ui">
+                                    <div class="ui segment">
+                                        <a href="" class="ui cancel mini yellow button">No</a>
+                                    </div>
+                                    <div class="ui segment">
+                                        <form action="/animal/<%= animal._id %>?_method=DELETE " method="POST">
+                                            <button class="ui negative button ">Yes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+                <!--New accordion-->
+                   
+    </div>
+
+    
+<div class="ui styled accordion">
+
+
+<!--Start of Task-->
+<div class="title">
+    <i class="dropdown icon"></i>
+    Tasks
+</div>
+<div class="content">
+    Add and View Tasks
+    <div class="accordion transition hidden">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Add New Task
+        </div>
+        <div class="content">
+            <div class="ui   grid">
+                <div class="ui eleven wide column centered">
+
+                    <div class="ui raised segment">
+                        <form class="myFormValidate" action="/animal/<%= animal._id %>/task" method="POST">
+                            <div class="ui  form">
+                            
+                                <div class="field required">
+                                    <label for="task">Task</label>
+                                    <input type="text" id="task" name="task[task]" placeholder="Task">
+                                </div>
+                                <div class="field required">
+                                    <label for="name">Animal</label>
+                                    <input type="text" id="task" name="task[name]" value="<%= animal.name %> ">
+                                </div>
+                                <div class="field required">
+                                    <label for="startDate"> Start Date </label>
+                                    <input type="date" id="startDate" name="task[startDate]" placeholder="Start Date">
+                                </div>
+                                <div class="field required">
+                                    <label for="deadline">Deadline</label>
+                                    <input type="date" id="deadline" name="task[deadline]" placeholder="Deadline">
+                                </div>
+                                <div class="ui form">
+                                    <div class="field  required">
+                                        <label for="worker">Workers</label>
+                                        <select multiple="" name="task[workers]" id="worker" class="ui search dropdown">
+                                            <option value="">Select Staff</option>
+                                            <% for(let worker of staff) {%>
+                                                <option value="<%= worker.fname %> ">
+                                                    <%= worker.fname %>
+                                                </option>
+                                                <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ui form">
+                                    <div class="field  required">
+                                        <label for="leader">Lead by</label>
+                                        <select name="task[leader]" id="leader" class="ui search dropdown">
+                                            <option value="">Select Leader</option>
+                                            <% for(let leader of staff) {%>
+                                                <option value="<%= leader.fname %> ">
+                                                    <%= leader.fname %>
+                                                </option>
+                                                <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field required">
+                                    <label for="status">Status</label>
+                                    <select name="task[status]" id="status" class="ui dropdown search">
+                                        <option value="">Select Status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="In progress">In progress</option>
+                            
+                                    </select>
+                                </div>
+                                <div class="field  required">
+                                    <label for="note">Note</label>
+                                    <textarea name="task[instructions]" id="note" cols="30" rows="3"></textarea>
+                                </div>
+                                <button class="ui button fluid green">Create Task</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="title">
+            <i class="dropdown icon"></i>
+            View Tasks
+        </div>
+        <div class="content">
+            <table class="ui celled selectable unstackable table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Deadline</th>
+                        <th>Leader</th>
+
+                        <th class="right aligned">Action</th>
+
+                    </tr>
+                </thead>
+                <% for(let task of animal.tasks){ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= task.task %>
+                            </td>
+                            <td>
+                                <%= task.deadline.toDateString()%>
+                            </td>
+                            <td>
+                                <%= task.leader %>
+                            </td>
+
+                            <td>
+                                <button class="ui  negative taskBtns button">Completed</button>
+                                <div class="ui modal taskBtn">
+                                    <div class="header">Are you sure this task has been completed? </div>
+                                    <div class="content">
+                                        <p>Once completed, this task will be erased
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form
+                                                        action="/animal/<%= animal._id %>/event/<%= task._id %>/complete"
+                                                        method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+<!--End of Task-->
+
+
+
+    <!--Start of event-->
+    <div class="title">
+        <i class="dropdown icon"></i>
+        Events
+    </div>
+    <div class="content">
+        Add and View Events
+        <div class="accordion transition hidden">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Add New Event
+            </div>
+            <div class="content">
+                <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+
+                        <div class="ui raised segment">
+                            <form class="myFormValidate" action="/animal/<%= animal._id %>/event" method="POST">
+                                <div class="ui  form">
+
+                                    <div class="field required">
+                                        <label for="event">Event</label>
+                                        <input type="text" id="event" name="event[event]" placeholder="Event Name">
+                                    </div>
+                                    <div class="field required">
+                                        <label for="date">Date</label>
+                                        <input type="date" id="date" name="event[date]" placeholder="Date">
+                                    </div>
+                                    <div class="ui form">
+                                        <div class="field required">
+                                            <label for="leader">Lead by</label>
+                                            <select name="event[leader]" id="leader" class="ui search dropdown">
+                                                <option value="">Select Leader</option>
+
+                                                <% for(let leader of staff){ %>
+                                                    <option value="<%= leader.fname %> ">
+                                                        <%= leader.fname %>
+                                                    </option>
+                                                    <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="field  required">
+                                        <label for="note">Remark</label>
+                                        <textarea name="event[note]" id="note" cols="30" rows="3"> </textarea>
+                                    </div>
+                                    <button class="ui button fluid green">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                View Events
+            </div>
+            <div class="content">
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Leader</th>
+
+                            <th class="right aligned">Action</th>
+
+                        </tr>
+                    </thead>
+                    <% for(let event of animal.events){ %>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= event.event %>
+                                </td>
+                                <td>
+                                    <%= event.date.toDateString()%>
+                                </td>
+                                <td>
+                                    <%= event.leader %>
+                                </td>
+
+                                <td>
+                                <button class="ui  negative eventBtns button">Delete</button>
+                                <div class="ui modal eventBtn">
+                                    <div class="header">Are you sure you want to delete? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/animal/<%= animal._id %>/event/<%= event._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </td>
+                            </tr>
+                            <% } %>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End of event-->
+
+    <!--Start of Egg Record-->
+    <div class="title">
+        <i class="dropdown icon"></i>
+        Egg Record
+    </div>
+    <div class="content">
+        Add and View Egg Record
+        <div class="accordion transition hidden">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Add New Egg Record
+            </div>
+            <div class="content">
+                <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+
+                        <div class="ui raised segment">
+                            <form class="myFormValidate" action="/animal/<%= animal._id %>/egg" method="POST">
+                                <div class="ui  form">
+
+                                    <div class="field required">
+                                        <label for="quantity">Number of Crates</label>
+                                        <input type="number" id="quantity" name="egg[quantity]"
+                                            placeholder="No of Crate Picked">
+                                    </div>
+                                    <div class="field required">
+                                        <label for="date">Date</label>
+                                        <input type="date" id="date" name="egg[date]" placeholder="Date">
+                                    </div>
+
+                                    <button class="ui button fluid green">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                View Egg Record
+            </div>
+            <div class="content">
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Crates</th>
+
+                            <th class="right aligned">Action</th>
+
+                        </tr>
+                    </thead>
+                    <% for(let egg of animal.egg){ %>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= egg.date.toDateString()%>
+                                </td>
+                                <td>
+                                    <%= dayEggNumber%>
+                                </td>
+                                <td>
+                                    <%= egg.quantity%>
+                                </td>
+
+                                <td>
+                                <button class="ui  negative eggBtns button">Delete</button>
+                                <div class="ui modal eggBtn">
+                                    <div class="header">Are you sure you want to delete? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated  will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/animal/<%= animal._id %>/egg/<%= egg._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <% eggSum +=egg.quantity%>
+                                <% } %>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td><%= dayEggNumber %></td>
+                                        <td>
+                                            <%= eggSum %>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End of Egg Record-->
+
+
+    <!--Start of Mortality Record-->
+    <div class="title">
+        <i class="dropdown icon"></i>
+        Mortality Record
+    </div>
+    <div class="content">
+        Add and View Mortality Record
+        <div class="accordion transition hidden">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Add New Mortality Record
+            </div>
+            <div class="content">
+                <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+
+                        <div class="ui raised segment">
+                            <form class="myFormValidate" action="/animal/<%= animal._id %>/mortality" method="POST">
+                                <div class="ui  form">
+
+                                    <div class="field required">
+                                        <label for="cause">Cause</label>
+                                        <input type="text" id="cause" name="mortality[cause]"
+                                            placeholder="Cause of Death">
+                                    </div>
+                                    <div class="field required">
+                                        <label for="amount">Quantity</label>
+                                        <input type="number" id="amount" name="mortality[amount]"
+                                            placeholder="No of Death">
+                                    </div>
+                                    <div class="field required">
+                                        <label for="date">Date</label>
+                                        <input type="date" id="date" name="mortality[date]" placeholder="Date">
+                                    </div>
+
+                                    <button class="ui button fluid green">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                View Mortality Record
+            </div>
+            <div class="content">
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th>Cause</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+
+                            <th class="right aligned">Action</th>
+
+                        </tr>
+                    </thead>
+                    <% for(let mortality of animal.mortality){ %>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= mortality.cause%>
+                                </td>
+                                <td>
+                                    <%= mortality.date.toDateString()%>
+                                </td>
+                                <td>
+                                    <%= mortality.amount%>
+                                </td>
+
+                                <td>
+                                <button class="ui  negative mortalityBtns button">Delete</button>
+                                <div class="ui modal mortalityBtn">
+                                    <div class="header">Are you sure you want to delete ? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated with  will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/animal/<%= animal._id %>/mortality<%= mortality._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <% deathSum +=mortality.amount%>
+                                <% } %>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td></td>
+                                        <td>
+                                            <%= deathSum %>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End of Mortality Record-->
+
+
+    <!--Start of Feed Record-->
+    <div class="title">
+        <i class="dropdown icon"></i>
+        Feed Record
+    </div>
+    <div class="content">
+        Add and View Feed Record
+        <div class="accordion transition hidden">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Add New Feed Record
+            </div>
+            <div class="content">
+                <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+
+                        <div class="ui raised segment">
+                            <form class="myFormValidate" action="/animal/<%= animal._id %>/feed" method="POST">
+                                <div class="ui  form">
+
+                                    <div class="field required">
+                                        <label for="quantity">Quantity(KG)</label>
+                                        <input type="number" id="quantity" name="feed[quantity]"
+                                            placeholder="Weight of Feed">
+                                    </div>
+                                    <div class="field required">
+                                        <label for="brand">Feed Brand</label>
+                                        <input type="text" id="brand" name="feed[brand]" placeholder="Feed Brand">
+                                    </div>
+
+                                    <button class="ui button fluid green">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                View Feed Record
+            </div>
+            <div class="content">
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Quantity</th>
+                            <th class="right aligned">Action</th>
+                        </tr>
+                    </thead>
+                    <% for(let feed of animal.feed){ %>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= feed.brand%>
+                                </td>
+                                <td>
+                                    <%= feed.quantity%>
+                                </td>
+
+
+                                <td>
+                                <button class="ui  negative feedBtns button">Delete</button>
+                                <div class="ui modal feedBtn">
+                                    <div class="header">Are you sure you want to delete? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/animal/<%= animal._id %>/feed/<%= feed._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <% feedSum +=feed.quantity%>
+                                <% } %>
+                                    <tr>
+                                        <td>Total</td>
+
+                                        <td>
+                                            <%= feedSum %>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End of Feed Record-->
+
+    <!--Start of Weight Record-->
+    <div class="title">
+        <i class="dropdown icon"></i>
+        Weight Record
+    </div>
+    <div class="content">
+        Add and View Weight Record
+        <div class="accordion transition hidden">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Add New Weight Record
+            </div>
+            <div class="content">
+                
+                <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+
+                        <div class="ui raised segment">
+                            <form class="myFormValidate" action="/animal/<%= animal._id %>/weight" method="POST">
+                                <div class="ui  form">
+                                   
+                                   <% if(initBWeight === 0) {%> 
+                                    <div class="field required">
+                                        <label for="weight">Initial Weight(KG)</label>
+                                        <input type="number" id="weight" name="weight[initWeight]" placeholder="Weight from Start">
+                                    </div>
+                                    <% } else{%> 
+                                        <div class="field required">
+                                            <label for="weight">Initial Weight(KG)</label>
+                                            <input type="number" id="weight" name="weight[initWeight]" value=<%= initBWeight %>  readonly>
+                                        </div>
+                                        <%  }%>  
+                                <% if(initBWeight > 0) {%>
+                                    <div class="field required">
+                                        <label for="weight">Average Weight(KG)</label>
+                                        <input type="number" id="weight" name="weight[weight]"
+                                            placeholder="Average Weight">
+                                    </div>
+                                    <% }%>
+                                    <div class="field required">
+                                        <label for="date">Date</label>
+                                        <input type="date" id="date" name="weight[date]" placeholder="Date">
+                                    </div>
+
+                                    <button class="ui button fluid green">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                View Weight Record
+            </div>
+            <div class="content">
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Weight</th>
+                            <th>Weight Gain</th>
+
+                            <th class="right aligned">Action</th>
+
+                        </tr>
+                    </thead>
+                    <% for(let weight of animal.weight){ %>
+                        <%bWt=weight.weight%>
+                            <%initBWeight=weight.initWeight%>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= weight.date.toDateString()%>
+                                </td>
+                                <td>
+                                    <%=  bWt %>
+                                </td>
+                                <td>
+                                    <% let gain=bWt - initBWeight%>
+                                    
+                                        <%= gain %> 
+                                       
+                                    
+                                </td>
+
+                                <td>
+                                <button class="ui  negative weightBtns button">Delete</button>
+                                <div class="ui modal weightBtn">
+                                    <div class="header">Are you sure you want to delete? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/animal/<%= animal._id %>/weight/<%= weight._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                                
+                            <% } %>
+
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End of Weight Record-->
+
+    <!--Start of Finance-->
+    <div class="title">
+        <i class="dropdown icon"></i>
+        Finance
+    </div>
+    <div class="content">
+        <p>View and Add income and Expense for <%= animal.name %>
+        </p>
+        <!--Start of Income-->
+        <div class="accordion transition hidden">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Income
+            </div>
+            <div class="content">
+                <p class="transition hidden">Add and view Income record</p>
+                <div class="accordion transition hidden">
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        Add Income
+                    </div>
+                    <div class="content">
+                        <div class="ui   grid">
+                            <div class="ui eleven wide column centered">
+
+                                <div class="ui raised segment">
+                                    <form class="myFormValidate" action="/animal/<%= animal._id %>/income"
+                                        method="POST">
+                                        <div class="ui  form">
+
+                                            <div class="field required">
+                                                <label for="income">Income</label>
+                                                <input type="text" id="income" name="income[income]"
+                                                    placeholder="Income">
+                                            </div>
+                                            <div class="field required">
+                                                <label for="amount">Amount</label>
+                                                <input type="number" id="amount" name="income[amount]"
+                                                    placeholder="Amount">
+                                            </div>
+                                            <div class="field required">
+                                                <label for="date">Date</label>
+                                                <input type="date" id="date" name="income[date]" placeholder="Date">
+                                            </div>
+                                            <div class="ui form">
+                                                <div class="field required">
+                                                    <label for="category">Category</label>
+                                                    <select name="income[category]" id="category"
+                                                        class="ui search dropdown">
+                                                        <option value="">Category</option>
+                                                        <option value="Fishery">Fishery</option>
+                                                        <option value="Poultry">Poultry</option>
+                                                        <option value="Pig">Pig</option>
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="field  required">
+                                                <label for="note">Note</label>
+                                                <textarea name="income[note]" id="note" cols="30" rows="3"> </textarea>
+                                            </div>
+                                            <button class="ui button fluid green">Add</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        View Income record
+                    </div>
+                    <div class="content">
+                        <table class="ui celled selectable unstackable table">
+                            <thead>
+                                <tr>
+                                    <th>Revenue</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th class="right aligned">Action</th>
+
+                                </tr>
+                            </thead>
+                            <% for(let income of animal.inflow){ %>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <%= income.income %>
+                                        </td>
+
+                                        <td>
+                                            <%= income.date !==undefined ? income.date.toDateString() : '' %>
+                                        </td>
+
+
+                                        <td>
+                                            <%= income.amount !==undefined ? income.amount : '' %>
+                                        </td>
+
+                                        <td class="right aligned">
+                                        <button class="ui  negativeincometBtns button">Delete</button>
+                                        <div class="ui modal incomeBtn">
+                                            <div class="header">Are you sure you want to delete? </div>
+                                            <div class="content">
+                                                <p>If you delete, all data associated will be deleted permanently.
+                                                </p>
+                                            </div>
+                                            <div class="actions">
+                                                <div class="ui buttons right floated ">
+                                                    <div class="segments horizontal ui">
+                                                        <div class="ui segment">
+                                                            <a href="" class="ui cancel mini yellow button">No</a>
+                                                        </div>
+                                                        <div class="ui segment">
+                                                            <form action="/animal/<%= animal._id %>/income/<%= income._id %>?_method=DELETE " method="POST">
+                                                                <button class="ui negative button ">Yes</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </td>
+
+                                    </tr>
+                                    <% income.amount !==undefined ? totalIncome +=income.amount : totalIncome +=0 %>
+                                        <% } %>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td></td>
+                                                <td>
+                                                    <%= totalIncome %>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--End of income-->
+
+        </div>
+        <!--Start of Expense-->
+        <div class="accordion transition hidden">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Expense
+            </div>
+            <div class="content">
+                <p class="transition hidden">Add and view Income record</p>
+                <div class="accordion transition hidden">
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        Add Expense
+                    </div>
+                    <div class="content">
+                        <div class="ui   grid">
+                            <div class="ui eleven wide column centered">
+
+                                <div class="ui raised segment">
+                                    <form class="myFormValidate" action="/animal/<%= animal._id %>/expense"
+                                        method="POST">
+                                        <div class="ui  form">
+
+                                            <div class="field required">
+                                                <label for="expense">Expense</label>
+                                                <input type="text" id="expense" name="expense[expense]"
+                                                    placeholder="Expense">
+                                            </div>
+                                            <div class="field required">
+                                                <label for="amount">Amount</label>
+                                                <input type="number" id="amount" name="expense[amount]"
+                                                    placeholder="Amount">
+                                            </div>
+                                            <div class="field required">
+                                                <label for="date">Date</label>
+                                                <input type="date" id="date" name="expense[date]" placeholder="Date">
+                                            </div>
+                                            <div class="ui form">
+                                                <div class="field required">
+                                                    <label for="category">Category</label>
+                                                    <select name="expense[category]" id="category"
+                                                        class="ui search dropdown">
+                                                        <option value="">Category</option>
+                                                        <option value="Fishery">Fishery</option>
+                                                        <option value="Poultry">Poultry</option>
+                                                        <option value="Pig">Pig</option>
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="field  required">
+                                                <label for="note">Note</label>
+                                                <textarea name="expense[note]" id="note" cols="30" rows="3"> </textarea>
+                                            </div>
+                                            <button class="ui button fluid green">Add</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        View Expense record
+                    </div>
+                    <div class="content">
+                        <table class="ui celled selectable unstackable table">
+                            <thead>
+                                <tr>
+                                    <th>Expense</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th class="right aligned">Action</th>
+
+                                </tr>
+                            </thead>
+                            <% for(let expense of animal.expenses){ %>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <%= expense.expense %>
+                                        </td>
+
+                                        <td>
+                                            <%= expense.date !==undefined ? expense.date.toDateString() : '' %>
+                                        </td>
+
+
+                                        <td>
+                                            <%= expense.amount !==undefined ? expense.amount : '' %>
+                                        </td>
+
+                                        <td class="right aligned">
+                                        <button class="ui  negative expenseBtns button">Delete</button>
+                                        <div class="ui modal expenseBtn">
+                                            <div class="header">Are you sure you want to delete? </div>
+                                            <div class="content">
+                                                <p>If you delete, all data associated will be deleted permanently.
+                                                </p>
+                                            </div>
+                                            <div class="actions">
+                                                <div class="ui buttons right floated ">
+                                                    <div class="segments horizontal ui">
+                                                        <div class="ui segment">
+                                                            <a href="" class="ui cancel mini yellow button">No</a>
+                                                        </div>
+                                                        <div class="ui segment">
+                                                            <form action="/animal/<%= animal._id %>/expense/<%= expense._id %>?_method=DELETE " method="POST">
+                                                                <button class="ui negative button ">Yes</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </td>
+
+                                    </tr>
+                                    <% expense.amount !==undefined ? totalExpense +=expense.amount : totalExpense +=0 %>
+                                        <% } %>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td></td>
+                                                <td>
+                                                    <%= totalExpense %>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--End of expense-->
+
+
+            <!-- start Finance summarry-->
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Finance Summary
+            </div>
+            <div class="content">
+                <% let livestockProfit=totalIncome - totalExpense %>
+                    <div class="ui horizontal segments">
+                        <div class="ui green segment">
+                            <p>Total Income</p>
+                        </div>
+                        <div class="ui yellow segment">
+                            <p>
+                                <%= totalIncome %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui horizontal segments">
+                        <div class="ui green segment">
+                            <p>Total Expense</p>
+                        </div>
+                        <div class="ui yellow segment">
+                            <p>
+                                <%= totalExpense %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui horizontal segments">
+                        <div class="ui green segment">
+                            <p>Livestock Net profit</p>
+                        </div>
+                        <div class="ui yellow segment">
+                            <p>
+                                <%= livestockProfit %>
+                            </p>
+                        </div>
+                    </div>
+            </div>
+            <!--End of summary-->
+        </div>
+        <!--End of finance-->
+
+
+    </div>
+    <!--End of new accordion-->
+
+
+</div>
+
+
+    
+    <!--Farmstock Starts-->
+
+
+    <div class="ui  accordion">
+        <div class="title">
+
+            <a class="ui green button">Add a Livestock</a>
+        </div>
+        <div class=" content">
+            <div class="ui   grid">
+                <div class="ui eleven wide column centered">
+
+                    <div class="ui raised segment">
+                        <form class="myFormValidate" action="/animal/<%= animal._id %>/batchmember" method="POST"
+                            enctype="multipart/form-data">
+                            <div class="ui form">
+
+
+                                <div class="field required">
+                                    <label for="tag"> Tag No </label>
+                                    <input type="text" id="tag" name="farmstock[tag]" placeholder="Tag No">
+                                </div>
+                                <div class="field required">
+                                    <label for="variety">Breed</label>
+                                    <input type="text" id="variety" name="farmstock[breed]" placeholder="Breed">
+                                </div>
+                                <div class="field required">
+                                    <label for="sire">Sire</label>
+                                    <input type="text" id="sire" name="farmstock[sire]" placeholder="Sire">
+                                </div>
+                                <div class="field required">
+                                    <label for="dam">Dam</label>
+                                    <input type="text" id="dam" name="farmstock[dam]" placeholder="Dam">
+                                </div>
+                                <div class="ui form">
+                                    <div class="field required">
+                                        <label for="sex">Sex</label>
+                                        <div class="ui selection dropdown">
+                                            <input type="hidden" id="sex" name="farmstock[sex]">
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Sex</div>
+                                            <div class="menu">
+                                                <div class="item" data-value="Male">Male</div>
+                                                <div class="item" data-value="Female">Female</div>
+                                                <div class="item" data-value="Other">Other</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field required">
+                                    <label for="category">Category</label>
+                                    <select name="farmstock[category]" id="status" class="ui dropdown search">
+                                        <option value="">Select Category</option>
+                                        <option value="Poultry">Poultry</option>
+                                        <option value="Fishery">Fishery</option>
+                                        <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
+                                        <option value="Others">Others(Pig, Rabbit, Snail...)</option>
+
+                                    </select>
+                                </div>
+                                <div class="field required">
+                                    <label for="dob">DOB</label>
+                                    <input type="date" id="dob" name="farmstock[dob]" placeholder="DOB">
+                                </div>
+                                <div class="field required">
+                                    <label for="pstage">Production Stage</label>
+                                    <input type="text" id="pstage" name="farmstock[productionStage]"
+                                        placeholder="Production Stage">
+                                </div>
+                                <div class="field required">
+                                    <label for="hStatus">Health Status</label>
+                                    <input type="text" id="hStatus" name="farmstock[healthStatus]"
+                                        placeholder="Health Status">
+                                </div>
+
+                                <div class="field required">
+                                    <label for="image">Image</label>
+                                    <input type="file" id="image" name="image" placeholder="Image">
+                                </div>
+                                <div class="field required">
+                                    <label for="description">Brief Description</label>
+                                    <textarea name="farmstock[description]" id="description" cols="30"
+                                        rows="3"></textarea>
+                                </div>
+                                <button class="ui button fluid green">Add Animal</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <% for(let farmstock of animal.farmstock){ %>
+        <a href="/animal/<%= animal._id %>/batchmember/<%= farmstock._id %>">
+            <%= farmstock.tag %>
+        </a>
+
+        <% } %>

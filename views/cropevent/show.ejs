@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui raised segments">
+    <div class="ui segment green">
+        <p class="ui huge header">
+            <%= event.event %>
+        </p>
+    </div>
+    <div class="ui piled segments">
+        <div class="ui yellow segment">
+            <p>Done on <%= event.date.toDateString() %></p>
+        </div>
+        <div class="ui segment">
+            <p>Lead by <%= event.leader %></p>
+        </div>
+        <div class="ui segment">
+            <p>Remark: <%= event.note %></p>
+        </div>
+    </div>
+    <div class="ui segment">
+    <a class="ui green button" href="/cropevent">Back</a>
+    <div class="ui buttons right floated">
+            <a href="/cropevent/<%=event._id %>/edit" class="ui yellow button">Edit</a>
+            <div class="or"></div>
+            <button class="ui  negative button" id="test">Delete</button>
+            <div class="ui modal test">
+                <div class="header">Are you sure you want to delete <%= event.event %>? </div>
+                <div class="content">
+                    <p>If you delete, all data associated with <%= event.event %> will be deleted permanently.</p>
+                </div>
+                <div class="actions">
+                    <div class="ui buttons right floated ">
+                        <div class="segments horizontal ui">
+                            <div class="ui segment">
+                                <a href="" class="ui cancel mini yellow button">No</a>
+                            </div>
+                            <div class="ui segment">
+                                <form action="/cropevent/<%= event._id %>?_method=DELETE " method="POST">
+                                    <button class="ui negative button ">Yes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

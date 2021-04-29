@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <% let totalExpense=0; %>
+    <a class="button green ui" href="/expense/new">Add an Event</a>
+            <h1> Livestock Expense</h1>
+
+            <table class="ui celled selectable unstackable table">
+                <thead>
+                    <tr>
+                        <th>Expense</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th class="right aligned">Action</th>
+
+                    </tr>
+                </thead>
+                <% for(let expense of expenses){ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= expense.expense %>
+                            </td>
+
+                            <td>
+                                <%=  expense.date.toDateString()  %>
+                            </td>
+
+
+                            <td>
+                                <%= expense.amount %>
+                            </td>
+
+                            <td class="right aligned">
+                                <a href="/expense/<%= expense._id %>"><i
+                                        class=" green caret square right outline float right icon"></i></a>
+                            </td>
+
+                        </tr>
+                        <% expense.amount !==undefined ?  totalExpense  +=expense.amount : totalExpense +=0 %>
+                            <% } %>
+                                <tr>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td>
+                                        <%= totalExpense %>
+                                    </td>
+                                    <td></td>
+                                </tr>
+            </table>

@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+    <div class="ui   grid">
+        <div class="ui eleven wide column centered">
+            <a class="ui green button" href="/cropinflow">Back</a>
+            <div class="ui raised segment">
+                <form class="myFormValidate" action="/cropinflow" method="POST">
+                    <div class="ui  form">
+
+                        <div class="field required">
+                            <label for="income">Income</label>
+                            <input type="text" id="income" name="income[income]" placeholder="Income">
+                        </div>
+                        <div class="ui form">
+                            <div class="field  required">
+                                <label for="name">Crop</label>
+                                <select name="income[name]" id="name" class="ui search dropdown">
+                                    <option value="">Select Crop</option>
+                                    <% for(let crops of crop) {%>
+                                        <option value="<%= crops.crop %> ">
+                                            <%= crops.crop %>
+                                        </option>
+                                        <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field required">
+                            <label for="amount">Amount</label>
+                            <input type="number" id="amount" name="income[amount]" placeholder="Amount">
+                        </div>
+                        <div class="field required">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="income[date]" placeholder="Date">
+                        </div>
+                       
+                        <div class="field  required">
+                            <label for="note">Note</label>
+                            <textarea name="income[note]" id="note" cols="30" rows="3"> </textarea>
+                        </div>
+                        <button class="ui button fluid green">Add</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>

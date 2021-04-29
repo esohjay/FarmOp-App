@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate')%>
+
+
+    <div class="ui   grid">
+        <div class="ui eleven wide column centered">
+            <h1 class="ui huge header">Login</h1>
+            <div class="ui raised segment">
+                <form class="regFormValidae" action="/login" method="POST">
+                    <div class="ui  form">
+
+                        <div class="field required">
+                            <label for="username">Username</label>
+                            <input type="text" id="username"  name="username" placeholder="Username">
+                        </div>
+                        <div class="field required">
+                            <label for="passwordLogin">Password</label>
+                            <input type="password" id="passwordLogin" name="password" placeholder="Password">
+                        </div>
+                        
+                        <button class="ui button fluid green">Login</button>
+                    </div>
+
+                </form>
+                <p>Don't have an account? <a href="/register">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+
+   

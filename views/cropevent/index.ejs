@@ -1,0 +1,37 @@
+<% layout('layouts/boilerplate') %>
+<a class="button green ui" href="/cropevent/new">Add an Event</a>
+<h1>Crop</h1>
+<table class="ui celled selectable unstackable table">
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Leader</th>
+                <th>Remark</th>
+                <th class="right aligned">Action</th>
+    
+            </tr>
+        </thead>
+        <% for(let event of events){ %>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= event.event %>
+                    </td>
+                    <td>
+                        <%= event.date.toDateString()%>
+                    </td>
+                    <td>
+                        <%= event.leader %>
+                    </td>
+                    <td>
+                        <%= event.note %>
+                    </td>
+                    <td>
+                        <a href="/cropevent/<%= event._id %>"><i
+                                class=" green caret square right outline float right icon"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+    
+    </table>

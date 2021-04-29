@@ -1,0 +1,67 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui   grid">
+    <div class="ui eleven wide column centered">
+        <a class="ui green button" href="/breeder">Back</a>
+        <div class="ui raised segment">
+            <form class="myFormValidate" action="/breeder" method="POST" enctype="multipart/form-data">
+                <div class="ui form">
+
+                   
+                    <div class="field required">
+                        <label for="tag"> Tag No </label>
+                        <input type="text" id="tag" name="breeder[tag]" placeholder="Tag No">
+                    </div>
+                    <div class="field required">
+                        <label for="variety">Breed</label>
+                        <input type="text" id="variety" name="breeder[breed]" placeholder="Breed">
+                    </div>
+                    <div class="field required">
+                        <label for="sire">Sire</label>
+                        <input type="text" id="sire" name="breeder[sire]" placeholder="Sire">
+                    </div>
+                    <div class="field required">
+                        <label for="dam">Dam</label>
+                        <input type="text" id="dam" name="breeder[dam]" placeholder="Dam">
+                    </div>
+                    <div class="field required">
+                        <label for="dob">DOB</label>
+                        <input type="date" id="dob" name="breeder[dob]" placeholder="DOB">
+                    </div>
+                    <div class="ui form">
+                        <div class="field required">
+                            <label for="sex">Sex</label>
+                            <div class="ui selection dropdown">
+                                <input type="hidden" id="sex" name="breeder[sex]">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Sex</div>
+                                <div class="menu">
+                                    <div class="item" data-value="Male">Male</div>
+                                    <div class="item" data-value="Female">Female</div>
+                                    <div class="item" data-value="Other">Other</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                   
+                   <div class="field required">
+                        <label for="image">Image</label>
+                        <input type="file" id="image" name="image" placeholder="Image" >
+                    </div>
+                    <div class="field required">
+                        <label for="description">Brief Description</label>
+                        <textarea name="breeder[description]" id="description" cols="30" rows="3"></textarea>
+                    </div>
+                    <button class="ui button fluid green">Add Animal</button>
+                </div>
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+    

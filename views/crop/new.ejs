@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui   grid">
+    <div class="ui eleven wide column centered">
+        <a class="ui green button" href="/crop">Back</a>
+        <div class="ui raised segment">
+            <form action="/crop" class="myFormValidate" method="POST" enctype="multipart/form-data">
+                <div class="ui  form">
+
+                    <div class="field required">
+                        <label for="name">Name of Crop</label>
+                        <input type="text" id="name" name="crop[crop]" placeholder="Crop Name">
+                    </div>
+                    <div class="field required">
+                        <label for="variety"> Variety </label>
+                        <input type="text" id="variety" name="crop[variety]" placeholder="Crop Variety">
+                    </div>
+                    <div class="ui form">
+                        <div class="field  required">
+                            <label for="field">Field</label>
+                            <select id="field" name="crop[field]" class="ui search dropdown">
+                                <option value="">Select Field</option>
+                                <% for(let location of field) {%>
+                                    <option value="<%= location.name %>. <%= location.location %>  ">
+                                        <%= location.name %>. <%= location.location %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+                    </div>
+
+                   
+                    <div class="field required">
+                        <label for="date">Plant Date</label>
+                        <input type="date" id="date" name="crop[date]" placeholder="Plant Date">
+                    </div>
+                    <div class="field required">
+                        <label for="coverage">Size of Land Covered</label>
+                        <input type="text" id="coverage" name="crop[coverage]" placeholder="Size Covered">
+                    </div>
+                    <div class="field required">
+                        <label for="imageadd">Image</label>
+                        <input type="file" id="imageadd" name="image" placeholder="Image" >
+                    </div>
+                    <div class="field required">
+                    <label for="description">Brief Description</label>
+                    <textarea name="crop[description]" id="description" cols="30" rows="3"></textarea>
+                    </div>
+                    <button class="ui button fluid green">Add Crop</button>
+                </div>
+                <div class="ui error  message"></div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+    

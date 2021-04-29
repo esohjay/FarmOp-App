@@ -1,0 +1,697 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui green segments">
+  <div class="ui segment">
+    
+      <div class="ui three column centered grid">
+        <div class="column">
+          <div class="ui medium rounded image ">
+            <img src="<%= crop.image.url %> ">
+          </div>
+        </div>
+      </div>
+     
+  <div class="ui segments">
+    <div class="ui huge header segment">
+      <p><%= crop.crop %></p>
+    </div>
+    <div class="ui segment">
+      <p><span class="date">Planted: <%= crop.date.toDateString() %></span></p>
+    </div>
+    <div class="ui segment">
+      <p><p>Variety: <%= crop.variety %></p>
+    </div>
+    
+  </div>
+  <div class="ui segment">
+    <p><%= crop.description %></p>
+  </div>
+  <div class="ui horizontal segments">
+    <div class="ui segment">
+      <p>Covered <%= crop.coverage %></p>
+    </div>
+    <div class="ui segment">
+      <p><i class=" yellow map marker alternate icon"></i>
+      <%= crop.field %>
+        </a></p>
+    </div>
+    
+  </div>
+  <div class="ui segment">
+    <a class="ui green button" href="/crop">Back</a>
+    <div class="ui buttons right floated">
+      <a  href="/crop/<%= crop._id %>/edit" class="ui yellow button">Edit</a>
+      <div class="or"></div>
+      <button class="ui  negative button" id="test">Delete</button>
+      <div class="ui modal test">
+        <div class="header">Are you sure you want to delete <%= crop.crop %>? </div>
+        <div class="content">
+          <p>If you delete, all data associated with <%= crop.crop %> will be deleted permanently.</p>
+        </div>
+        <div class="actions">
+          <div class="ui buttons right floated ">
+            <div class="segments horizontal ui">
+              <div class="ui segment">
+                <a href="" class="ui cancel mini yellow button">No</a>
+              </div>
+              <div class="ui segment">
+                <form action="/crop/<%= crop._id %>?_method=DELETE " method="POST">
+                  <button class="ui negative mini button ">Yes</button>
+                </form>
+              </div>
+              
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- ADD EVENT-->
+
+<div class="ui styled accordion">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    Events
+  </div>
+  <div class=" content">
+    View and add new event to <%= crop.crop %>
+      <div class="accordion">
+        <div class="active  title">
+          <i class="dropdown icon"></i>
+          Add Event
+        </div>
+        <div class="active content">
+
+
+          <div class="ui  form">
+            <form class="myFormValidate" action="/crop/<%= crop._id %>/event" method="POST">
+              <div class="field required">
+                <label for="event">Event</label>
+                <input id="event" name="event[event]" value="[<%= crop.crop %>]" type="text" placeholder="Event">
+              </div>
+              <div class="fields">
+
+                <div class="field required">
+                  <label for="date">Date</label>
+                  <input type="date" id="date" name="event[date]" placeholder="Date">
+                </div>
+
+                <div class="ui form">
+                  <div class="field required">
+                    <label for="leader">Lead by</label>
+                    <div class="ui selection dropdown">
+                      <input type="hidden" id="leader" name="event[leader]">
+                      <i class="dropdown icon"></i>
+                      <div class="default text">Leader</div>
+                      <div class="menu">
+                        <% for(let leader of staff){ %>
+                          <div class="item" data-value="<%= leader.fname %>"><%= leader.fname %></div>
+                          <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+               
+
+              </div>
+
+              <div class="field required">
+                <label for="remark">Remark</label>
+                <textarea name="event[note]" id="remark" cols="30" rows="3"></textarea>
+              </div>
+              <button class="ui button fluid green">Add an Event</button>
+              <div class="ui error message"></div>
+            </form>
+          </div>
+        </div>
+
+
+
+        <!-- ADD EVENT END-->
+
+      </div>
+      <div class="title">
+        <i class="dropdown icon"></i>
+        All Events
+      </div>
+      <div class="content">
+
+        <table class="ui celled selectable unstackable table">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Date</th>
+              <th>Leader</th>
+              <th>Remark</th>
+              <th class="right aligned">Action</th>
+
+            </tr>
+          </thead>
+          <% for(let event of crop.events){ %>
+            <tbody>
+              <tr>
+                <td>
+                  <%= event.event %>
+                </td>
+                <td>
+                  <%= event.date.toDateString()%>
+                </td>
+                <td>
+                  <%= event.leader %>
+                </td>
+                <td>
+                  <%= event.note %>
+                </td>
+                <td class="right aligned">
+                  <button class="tiny negative ui button eventBtns" ><i class="ui trash icon"></i></button>
+                    <div class="ui modal eventBtn">
+                    <div class="header">Are you sure you want to delete <%= event.event %> event? </div>
+                    <div class="content">
+                      <p>If you delete,  <%= event.event %> event will be deleted permanently.</p>
+                    </div>
+                    <div class="actions">
+                      <div class="ui buttons right floated ">
+                        <div class="segments horizontal ui">
+                          <div class="ui segment">
+                            <a href="" class="ui cancel mini yellow button">No</a>
+                          </div>
+                          <div class="ui segment">
+                            <form action="/crop/<%= crop._id %>/event/<%= event._id %>?_method=DELETE " method="POST">
+                              <button class="tiny negative ui button ">Yes</button>
+                            </form>
+                          </div>
+                   </div>
+                  </div>
+                    </div>
+                  </div>
+
+
+                </td>
+              </tr>
+              <% } %>
+
+        </table>
+
+
+
+
+      </div>
+
+
+  </div>
+
+  <!--Start of Task-->
+
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    Tasks
+  </div>
+  <div class=" content">
+    View and add new task for <%= crop.crop %>
+      <div class="accordion">
+        <div class="active  title">
+          <i class="dropdown icon"></i>
+          Add a Task
+        </div>
+        <div class="active content">
+  
+  
+          <div class="ui  form">
+            <form class="myFormValidate" action="/crop/<%= crop._id %>/task" method="POST">
+            <div class="ui  form">
+            
+              <div class="field required">
+                <label for="task">Task</label>
+                <input type="text" id="task" name="task[task]" placeholder="Task">
+              </div>
+              <div class="ui form">
+                <div class="field  required">
+                  <label for="name">Crop</label>
+                  <input type="text" id="task" name="task[name]" value="<%= crop.crop %> ">
+                </div>
+              </div>
+              <div class="field required">
+                <label for="startDate"> Start Date </label>
+                <input type="date" id="startDate" name="task[startDate]" placeholder="Start Date">
+              </div>
+              <div class="field required">
+                <label for="deadline">Deadline</label>
+                <input type="date" id="deadline" name="task[deadline]" placeholder="Deadline">
+              </div>
+              <div class="ui form">
+                <div class="field  required">
+                  <label for="worker">Workers</label>
+                  <select multiple="" name="task[workers]" id="worker" class="ui search dropdown">
+                    <option value="">Select Staff</option>
+                    <% for(let worker of staff) {%>
+                      <option value="<%= worker.fname %> ">
+                        <%= worker.fname %>
+                      </option>
+                      <% } %>
+                  </select>
+                </div>
+              </div>
+              <div class="ui form">
+                <div class="field  required">
+                  <label for="leader">Lead by</label>
+                  <select name="task[leader]" id="leader" class="ui search dropdown">
+                    <option value="">Select Leader</option>
+                    <% for(let leader of staff) {%>
+                      <option value="<%= leader.fname %> ">
+                        <%= leader.fname %>
+                      </option>
+                      <% } %>
+                  </select>
+                </div>
+              </div>
+              <div class="field required">
+                <label for="status">Status</label>
+                <select name="task[status]" id="status" class="ui dropdown search">
+                  <option value="">Select Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                  <option value="In progress">In progress</option>
+            
+                </select>
+              </div>
+              <div class="field  required">
+                <label for="note">Note</label>
+                <textarea name="task[instructions]" id="note" cols="30" rows="3"></textarea>
+              </div>
+              <button class="ui button fluid green">Create Task</button>
+            </div>
+            </form>
+          </div>
+        </div>
+  
+  
+  
+        <!-- ADD EVENT END-->
+  
+      </div>
+      <div class="title">
+        <i class="dropdown icon"></i>
+        All Tasks
+      </div>
+      <div class="content">
+  
+        <table class="ui celled selectable unstackable table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Deadline</th>
+              <th>Leader</th>
+              
+              <th class="right aligned">Action</th>
+  
+            </tr>
+          </thead>
+          <% for(let task of crop.tasks){ %>
+            <tbody>
+              <tr>
+                <td>
+                  <%= task.task %>
+                </td>
+                <td>
+                  <%= task.deadline.toDateString()%>
+                </td>
+                <td>
+                  <%= task.leader %>
+                </td>
+                
+                <td class="right aligned">
+                  <button class="tiny negative ui button taskBtns">Completed</i></button>
+                  <div class="ui modal taskBtn">
+                    <div class="header">Are you sure you have completed <%= task.task %> task? </div>
+                    <div class="content">
+                      <p>If you so, <%= task.task %> task will be removed.</p>
+                    </div>
+                    <div class="actions">
+                      <div class="ui buttons right floated ">
+                        <div class="segments horizontal ui">
+                          <div class="ui segment">
+                            <a href="" class="ui cancel mini yellow button">No</a>
+                          </div>
+                          <div class="ui segment">
+                            <form action="/crop/<%= crop._id %>/event/<%= task._id %>/complete" method="POST">
+                              <button class="tiny negative ui button ">Yes</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+  
+                </td>
+              </tr>
+              <% } %>
+  
+        </table>
+  
+  
+  
+  
+      </div>
+  
+  
+  </div>
+
+  <!--End of Task-->
+
+  <div class="title">
+    <i class="dropdown icon"></i>
+    Finance
+  </div>
+  <div class="content">
+    Summary of <%= crop.crop %> transactions
+
+      <% let incomeTotal=0; %>
+        <% let expenseTotal=0; %>
+          <% for(let income of crop.inflow) {%>
+            <% incomeTotal +=income.amount %>
+              <% } %>
+                <% for(let expense of crop.expenses) {%>
+                  <% expenseTotal +=expense.amount %>
+                    <% } %>
+                      <% let profit=incomeTotal - expenseTotal %>
+
+                  <div class="ui horizontal segments">
+                    <div class="ui green segment">
+                      <p>Income generated from <%= crop.crop %>
+                      </p>
+                    </div>
+                    <div class="ui yellow segment">
+                      <p>
+                        <%= incomeTotal %>
+                      </p>
+                    </div>
+                  </div>
+
+
+                    <div class="ui horizontal segments">
+                      <div class="ui green segment">
+                        <p>Expenditure on <%= crop.crop %></p>
+                      </div>
+                      <div class="ui yellow segment">
+                        <p>
+                          <%= expenseTotal %>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="ui horizontal segments">
+                      <div class="ui green segment">
+                        <p>Net profit for <%= crop.crop %></p>
+                      </div>
+                      <div class="ui yellow segment">
+                        <p>
+                          <%= profit %>
+                        </p>
+                      </div>
+                    </div>
+
+
+                        
+
+                        <div class="accordion">
+                          <div class="active title">
+                            <i class="dropdown icon"></i>
+                            Income
+                          </div>
+                          <div class="active content">
+                            <p>View and add new Income made from <%= crop.crop %>
+                            </p>
+                            <div class="accordion">
+                              <div class="title">
+                                <i class="dropdown icon"></i>
+                                Add Income
+                              </div>
+                              <div class="content">
+
+
+                                <div class="ui  form">
+                                  <form class="myFormValidate" action="/crop/<%= crop._id %>/income" method="POST">
+                                    <div class="field required">
+                                      <label for="income">Income</label>
+                                      <input type="text" id="income" name="income[income]" value="[<%= crop.crop %>]  "
+                                        placeholder="Income">
+                                    </div>
+                                    <div class="fields">
+
+                                      <div class="field required">
+                                        <label for="date">Date</label>
+                                        <input type="date" id="date" name="income[date]" placeholder="Date">
+                                      </div>
+                                      <div class="field required">
+                                        <label for="receipt">Receipt No</label>
+                                        <input type="text" id="receipt" name="income[image]">
+                                      </div>
+                                      <div class="field required">
+                                        <label for="amount">Amount</label>
+                                        <input type="number" id="amount" name="income[amount]">
+                                      </div>
+
+                                    </div>
+
+                                    <div class="field required">
+                                      <label for="note">Note</label>
+                                      <textarea name="income[note]" id="note" cols="30" rows="3"></textarea>
+                                    </div>
+                                    <button class="ui button fluid green">Add an Income</button>
+                                    <div class="ui error message"></div>
+                                  </form>
+                                </div>
+
+
+
+                                <!--Income End-->
+
+                              </div>
+                              <div class="title">
+                                <i class="dropdown icon"></i>
+                                Income Details for <%= crop.crop %>
+                              </div>
+                              <div class="content">
+
+
+                                <!--INcome-->
+                                <table class="ui celled selectable unstackable table">
+                                  <thead>
+                                    <tr>
+                                      <th>Revenue</th>
+                                      <th>Date</th>
+                                      <th>Amount</th>
+                                      <th class="right aligned">Action</th>
+
+                                    </tr>
+                                  </thead>
+                                  <% for(let income of crop.inflow){ %>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <%= income.income %>
+                                        </td>
+                                        <td>
+                                          <%= income.date.toDateString() %>
+                                        </td>
+                                        <td>
+                                          <%= income.amount %>
+                                        </td>
+                                        <td class="right aligned">
+
+                                            <button class="tiny negative ui button incomeBtns" ><i class="ui trash icon"></i></button>
+                                            <div class="ui modal incomeBtn">
+                                              <div class="header">Are you sure you want to delete <%= income.income %> income? </div>
+                                              <div class="content">
+                                                <p>If you delete, <%= income.income %> income will be deleted permanently.</p>
+                                              </div>
+                                              <div class="actions">
+                                                <div class="ui buttons right floated ">
+                                                  <div class="segments horizontal ui">
+                                                    <div class="ui segment">
+                                                      <a href="" class="ui cancel mini yellow button">No</a>
+                                                    </div>
+                                                    <div class="ui segment">
+                                                      <form action="/crop/<%= crop._id %>/income/<%= income._id %>?_method=DELETE " method="POST">
+                                                        <button class=" ui tiny button negative">Yes</button>
+                                                      </form>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                          
+                                        </td>
+                                      </tr>
+                                      <% } %>
+                                        <tr>
+                                          <td>Total</td>
+                                          <td></td>
+                                          <td>
+                                            <%= incomeTotal %>
+                                          </td>
+                                          <td></td>
+                                        </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="title">
+                            <i class="dropdown icon"></i>
+                            Expenses
+                          </div>
+                          <div class="content">
+                            View and add all expenses on <%= crop.crop %>
+                              <div class="accordion">
+                                <div class="title">
+                                  <i class="dropdown icon"></i>
+                                  Add Expenses
+                                </div>
+                                <div class="content">
+
+
+                                  <div class="ui  form">
+                                    <form class="myFormValidate" action="/crop/<%= crop._id %>/expense" method="POST">
+                                      <div class="field required">
+                                        <label for="expense">Expense</label>
+                                        <input type="text" id="expense" name="expense[expense]"
+                                          value="[<%= crop.crop %>] " placeholder="Expense">
+                                      </div>
+                                      <div class="fields">
+
+                                        <div class="field required">
+                                          <label for="date">Date</label>
+                                          <input type="date" id="date" name="expense[date]" placeholder="Date">
+                                        </div>
+                                        <div class="field required">
+                                          <label for="receipt">Receipt No</label>
+                                          <input type="text" id="receipt" name="expense[image]">
+                                        </div>
+                                        <div class="field required">
+                                          <label for="amount">Amount</label>
+                                          <input type="number" id="amount" name="expense[amount]">
+                                        </div>
+
+                                      </div>
+
+                                      <div class="field required">
+                                        <label for="note">Note</label>
+                                        <textarea name="expense[note]" id="note" cols="30" rows="3"></textarea>
+                                      </div>
+                                      <button class="ui button fluid green">Add an Expense</button>
+                                      <div class="ui error message"></div>
+                                    </form>
+                                  </div>
+
+
+                                  <!--Expense End-->
+                                </div>
+                                <div class="title">
+                                  <i class="dropdown icon"></i>
+                                  Expense Details
+                                </div>
+                                <div class="content">
+
+                                  <table class="ui celled selectable unstackable table">
+                                    <thead>
+                                      <tr>
+                                        <th>Expenditure</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th class="right aligned">Action</th>
+
+                                      </tr>
+                                    </thead>
+                                    <% for(let expense of crop.expenses){ %>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <%= expense.expense %>
+                                          </td>
+                                          <td>
+                                            <%= expense.date.toDateString() %>
+                                          </td>
+                                          <td>
+                                            <%= expense.amount %>
+                                          </td>
+                                          <td class="right aligned">
+
+
+                                            <button class="tiny negative ui button expenseBtns"  ><i class="ui trash icon"></i></button>
+                                            <div class="ui modal expenseBtn">
+                                              <div class="header">Are you sure you want to delete <%= expense.expense %> expenses? </div>
+                                              <div class="content">
+                                                <p>If you delete, <%= expense.expense %> expenses will be deleted permanently.</p>
+                                              </div>
+                                              <div class="actions">
+                                                <div class="ui buttons right floated ">
+                                                  <div class="segments horizontal ui">
+                                                    <div class="ui segment">
+                                                      <a href="" class="ui cancel mini yellow button">No</a>
+                                                    </div>
+                                                    <div class="ui segment">
+                                                      <form action="/crop/<%= crop._id %>/expense/<%= expense._id %>?_method=DELETE" method="POST">
+                                                        <button class=" ui tiny button negative">Yes</button>
+                                                      </form>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+
+                                            
+                                          </td>
+                                        </tr>
+                                        <% } %>
+                                          <tr>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td>
+                                              <%= expenseTotal %>
+                                            </td>
+                                            <td></td>
+                                          </tr>
+                                  </table>
+
+                                  <!--Expense-->
+
+                                </div>
+                              </div>
+                          </div>
+
+                        </div>
+  </div>
+</div>
+
+
+
+
+<!--Finance End-->
+
+
+
+
+<!--Finance-->
+
+
+</div>
+
+
+ 
+
+
+
+

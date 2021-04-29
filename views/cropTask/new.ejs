@@ -1,0 +1,80 @@
+<% layout('layouts/boilerplate') %>
+<div class="ui   grid">
+<div class="ui eleven wide column centered">
+    <div class="ui raised segment">
+<form class="myFormValidate" action="/croptask" method="POST">
+    <div class="ui  form">
+        
+            <div class="field required">
+                <label for="task">Task</label>
+                <input type="text" id="task" name="task[task]" placeholder="Task">
+            </div>
+            <div class="ui form">
+                <div class="field  required">
+                    <label for="name">Crop</label>
+                    <select name="task[name]" id="name" class="ui search dropdown">
+                        <option value="">Select Crop</option>
+                        <% for(let crops of crop) {%>
+                            <option value="<%= crops.crop %> ">
+                                <%= crops.crop %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="field required">
+                <label for="startDate"> Start Date </label>
+                <input type="date" id="startDate" name="task[startDate]" placeholder="Start Date">
+            </div>
+            <div class="field required">
+                <label for="deadline">Deadline</label>
+                <input type="date" id="deadline" name="task[deadline]" placeholder="Deadline">
+            </div>
+            <div class="ui form">
+                <div class="field  required">
+                    <label for="worker">Workers</label>
+                    <select multiple="" name="task[workers]" id="worker" class="ui search dropdown">
+                        <option value="">Select Staff</option>
+                        <% for(let worker of staff) {%>
+                            <option value="<%= worker.fname %> ">
+                                <%= worker.fname %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="ui form">
+                <div class="field  required">
+                    <label for="leader">Lead by</label>
+                    <select  name="task[leader]" id="leader" class="ui search dropdown">
+                        <option value="">Select Leader</option>
+                        <% for(let leader of staff) {%>
+                            <option value="<%= leader.fname %> ">
+                                <%= leader.fname %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+            </div>
+                <div class="field required">
+                    <label  for="status">Status</label>
+                    <select  name="task[status]" id="status" class="ui dropdown search">
+                        <option value="">Select Status</option>
+                        <option value="Pending" >Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="In progress">In progress</option>
+                    
+                    </select>
+                </div>
+                <div class="field  required">
+                    <label for="note">Note</label>
+                    <textarea name="task[instructions]" id="note" cols="30" rows="3"></textarea>
+                </div>
+                <button class="ui button fluid green">Create Task</button>
+    </div>
+        
+</form>
+
+</div>
+</div>
+</div>

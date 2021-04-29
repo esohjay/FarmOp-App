@@ -1,0 +1,21 @@
+<%if (success && success.length){%>
+  <div class="ui positive small message">
+    <i class="close icon"></i>
+    <div class="header">
+      <%= success %>
+    </div>
+    
+  </div>
+    
+<%}%> 
+
+<%if (error && error.length){%>
+
+  <div class="ui negative small message">
+    <i class="close icon"></i>
+    <div class="header">
+      <%= error %>
+    </div>
+  </div>
+     
+<%}%> 

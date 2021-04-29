@@ -1,0 +1,22 @@
+<% layout('layouts/boilerplate') %>
+<a class="button green ui" href="/task/new">Add a Task</a>
+<% for(let task of tasks){ %> 
+    
+
+<div class="ui green raised segment">
+    <div class="ui  very relaxed styled unstackable items">
+        <div class="item">
+                        <div class="middle aligned content">
+                            <div class="header">
+                                <%= task.task %>
+                                    <a href="/task/<%= task._id %>"><i
+                                            class=" green caret square right outline float right icon"></i></a>
+                            </div>
+                            <div class="extra">
+                                <%= task.startDate.toDateString() %>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>
+<%} %>
