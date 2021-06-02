@@ -1,85 +1,100 @@
 <% layout('layouts/boilerplate') %>
-<div class="ui   grid">
-<div class="ui eleven wide column centered">
+<div class="ui grid">
+  <div class="ui eleven wide column centered">
     <div class="ui raised segment">
-<form class="myFormValidate" action="/task" method="POST">
-    <div class="ui  form">
-        
+      <form class="myFormValidate" action="/task" method="POST">
+        <div class="ui form">
+          <div class="field required">
+            <label for="task">Task</label>
+            <input type="text" id="task" name="task[task]" placeholder="Task" />
+          </div>
+          <div class="field required">
+            <label for="name">Animal</label>
+            <select name="task[name]" id="name" class="ui tag dropdown search">
+              <option value="">Select Name</option>
+              <option value="Poultry">Chicken</option>
+              <option value="Fishery">CatFish</option>
+              <option value="Ruminant">Cattle</option>
+              <option value="Others">Sheep</option>
+              <option value="Poultry">Goat</option>
+              <option value="Fishery">Rabbit</option>
+              <option value="Ruminant">Snail</option>
+              <option value="Others">Grasscutter</option>
+              <option value="Fishery">Horse</option>
+              <option value="Ruminant">Donkey</option>
+              <option value="Others">Guinea Pig</option>
+            </select>
+          </div>
+          <div class="field required">
+            <label for="startDate"> Start Date </label>
+            <input
+              type="date"
+              id="startDate"
+              name="task[startDate]"
+              placeholder="Start Date"
+            />
+          </div>
+          <div class="field required">
+            <label for="deadline">Deadline</label>
+            <input
+              type="date"
+              id="deadline"
+              name="task[deadline]"
+              placeholder="Deadline"
+            />
+          </div>
+          <div class="ui form">
             <div class="field required">
-                <label for="task">Task</label>
-                <input type="text" id="task" name="task[task]" placeholder="Task">
+              <label for="worker">Workers</label>
+              <select
+                multiple=""
+                name="task[workers]"
+                id="worker"
+                class="ui search dropdown"
+              >
+                <option value="">Select Staff</option>
+                <% for(let worker of staff) {%>
+                <option value="<%= worker.fname %>"><%= worker.fname %></option>
+                <% } %>
+              </select>
             </div>
+          </div>
+          <div class="ui form">
             <div class="field required">
-                <label for="name">Animal</label>
-                <select name="task[name]" id="name" class="ui tag dropdown search">
-                    <option value="">Select Name</option>
-                    <option value="Poultry">Chicken</option>
-                    <option value="Fishery">CatFish</option>
-                    <option value="Ruminant">Cattle</option>
-                    <option value="Others">Sheep</option>
-                    <option value="Poultry">Goat</option>
-                    <option value="Fishery">Rabbit</option>
-                    <option value="Ruminant">Snail</option>
-                    <option value="Others">Grasscutter</option>
-                    <option value="Fishery">Horse</option>
-                    <option value="Ruminant">Donkey</option>
-                    <option value="Others">Guinea Pig</option>
-            
-                </select>
+              <label for="leader">Lead by</label>
+              <select
+                name="task[leader]"
+                id="leader"
+                class="ui search dropdown"
+              >
+                <option value="">Select Leader</option>
+                <% for(let leader of staff) {%>
+                <option value="<%= leader.fname %>"><%= leader.fname %></option>
+                <% } %>
+              </select>
             </div>
-            <div class="field required">
-                <label for="startDate"> Start Date </label>
-                <input type="date" id="startDate" name="task[startDate]" placeholder="Start Date">
-            </div>
-            <div class="field required">
-                <label for="deadline">Deadline</label>
-                <input type="date" id="deadline" name="task[deadline]" placeholder="Deadline">
-            </div>
-            <div class="ui form">
-                <div class="field  required">
-                    <label for="worker">Workers</label>
-                    <select multiple="" name="task[workers]" id="worker" class="ui search dropdown">
-                        <option value="">Select Staff</option>
-                        <% for(let worker of staff) {%>
-                            <option value="<%= worker.fname %> ">
-                                <%= worker.fname %>
-                            </option>
-                            <% } %>
-                    </select>
-                </div>
-            </div>
-            <div class="ui form">
-                <div class="field  required">
-                    <label for="leader">Lead by</label>
-                    <select  name="task[leader]" id="leader" class="ui search dropdown">
-                        <option value="">Select Leader</option>
-                        <% for(let leader of staff) {%>
-                            <option value="<%= leader.fname %> ">
-                                <%= leader.fname %>
-                            </option>
-                            <% } %>
-                    </select>
-                </div>
-            </div>
-                <div class="field required">
-                    <label  for="status">Status</label>
-                    <select  name="task[status]" id="status" class="ui dropdown search">
-                        <option value="">Select Status</option>
-                        <option value="Pending" >Pending</option>
-                        <option value="Completed">Completed</option>
-                        <option value="In progress">In progress</option>
-                    
-                    </select>
-                </div>
-                <div class="field  required">
-                    <label for="note">Note</label>
-                    <textarea name="task[instructions]" id="note" cols="30" rows="3"></textarea>
-                </div>
-                <button class="ui button fluid green">Create Task</button>
+          </div>
+          <div class="field required">
+            <label for="status">Status</label>
+            <select name="task[status]" id="status" class="ui dropdown search">
+              <option value="">Select Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+              <option value="In progress">In progress</option>
+            </select>
+          </div>
+          <div class="field required">
+            <label for="note">Note</label>
+            <textarea
+              name="task[instructions]"
+              id="note"
+              cols="30"
+              rows="3"
+            ></textarea>
+          </div>
+          <button class="ui button fluid green">Create Task</button>
+        </div>
+      </form>
     </div>
-        
-</form>
-
-</div>
-</div>
+  </div>
 </div>

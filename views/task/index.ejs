@@ -1,22 +1,58 @@
 <% layout('layouts/boilerplate') %>
 <a class="button green ui" href="/task/new">Add a Task</a>
-<% for(let task of tasks){ %> 
-    
 
-<div class="ui green raised segment">
-    <div class="ui  very relaxed styled unstackable items">
-        <div class="item">
-                        <div class="middle aligned content">
-                            <div class="header">
-                                <%= task.task %>
-                                    <a href="/task/<%= task._id %>"><i
-                                            class=" green caret square right outline float right icon"></i></a>
-                            </div>
-                            <div class="extra">
-                                <%= task.startDate.toDateString() %>
-                            </div>
-                        </div>
-        </div>
-    </div>
+ <%- include('../partials/animalTask') %>
+ <h1 class="ui center aligned header">Livestock Tasks</h1>
+<table class="ui celled selectable unstackable table">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Deadline</th>
+                <th>Members</th>
+                <th>Status</th>
+                <th class="right aligned">Action</th>
+    
+            </tr>
+        </thead>
+        <% for(let task of tasks.docs){ %>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= task.task %>
+                    </td>
+                    <td>
+                        <%= task.deadline.toDateString()%>
+                    </td>
+                    <td>
+                        <%= task.workers.join(', ') %>
+                    </td>
+                    <td>
+                        <%= task.status %>
+                    </td>
+                    <td>
+                        <a href="/task/<%= task._id %>"><i
+                                class=" green caret square right outline float right icon"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+    
+    </table>
+  
+ <% if (tasks.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (tasks.prevPage) {%>
+  <a class="ui button" href="/task?page=<%= tasks.prevPage %> "><i class="left chevron icon"></i></a>
+  <% } %>
+   <%for (let i = 1; i <= tasks.totalPages; i++) {%>
+  <a class="ui button" href="/task?page=<%= i %>"
+      <%= i === tasks.page ? "style = color:pink!important;" : "style = color:green!important;" %>><%= i %></a>
+      <% } %>
+      <% if (tasks.nextPage ) {%>
+  <a class="ui button" href="/task?page=<%= tasks.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
 </div>
-<%} %>
+</div>
+</div>
+<% } %>

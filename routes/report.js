@@ -82,7 +82,7 @@ router.get('/activities/crop/:id',catchAsync( async (req, res) => {
     res.render('report/crop/show', { cropEvents})
 }))
 router.get('/activities/livestock/:id',catchAsync( async (req, res) => {
-    const {id} = req.params
+    const {id} = req.params;
     const livestockEvents = await Event.findById(id)
     
     res.render('report/livestock/show', {livestockEvents})

@@ -12,7 +12,7 @@ const FarmStock = require('../models/farmstock');
 
 
 router.post('/', isLoggedin, upload.single('image'), validateFarmstock, catchAsync( async (req, res) => {
-   const {id} = req.params
+  try {const {id} = req.params
    
     const breeder = await Breeder.findById(id)
     const farmstock = new FarmStock(req.body.farmstock)
@@ -23,7 +23,20 @@ router.post('/', isLoggedin, upload.single('image'), validateFarmstock, catchAsy
    await farmstock.save()
    await breeder.save()
    
-   res.redirect(`/breeder/${breeder._id}`)
+   res.redirect(`/breeder/${breeder._id}`)}
+   catch(err){
+       const {name , tag, category, sire, dam, breed, sex,  productionStage, description, healthStatus } = req.body.farmstock;
+       let error = err.message;
+       if(error.includes('duplicate') && error.includes('index: tag_1 dup key')){
+            req.flash('error', 'Tag Number already exist')
+            //error = 'Tag Number already exist'
+            //res.redirect('/animal/new' , {name , batch, category, breed, quantity, source, description })
+             res.redirect('back')
+       }
+     
+       
+     
+    }
 }));
 
 

@@ -9,8 +9,27 @@
 
                     <div class="field required">
                         <label for="tag"> Tag No </label>
-                        <input type="text" id="tag" name="breeder[tag]" value="<%= breeder.tag %>">
+                        <input type="text" id="tag" name="breeder[tag]" value="<%= breeder.tag %>" readonly>
                     </div>
+                    <div class="field required">
+            <label for="name">Name</label>
+            <select name="breeder[name]" id="name" class="ui dropdown search">
+              <option value="<%= breeder.name %> ">
+                <%= breeder.name %>
+              </option>
+              <option value="Chicken">Chicken</option>
+              <option value="Catfish">CatFish</option>
+              <option value="Cattle">Cattle</option>
+              <option value="Sheep">Sheep</option>
+              <option value="Goat">Goat</option>
+              <option value="Rabbit">Rabbit</option>
+              <option value="Snail">Snail</option>
+              <option value="Grasscutter">Grasscutter</option>
+              <option value="Horse">Horse</option>
+              <option value="Donkey">Donkey</option>
+              <option value="Guinea Pig">Guinea Pig</option>
+            </select>
+          </div>
                     <div class="field required">
                         <label for="variety">Breed</label>
                         <input type="text" id="variety" name="breeder[breed]" value="<%= breeder.breed %>">

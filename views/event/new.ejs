@@ -1,70 +1,69 @@
-
-
 <% layout('layouts/boilerplate') %>
-    <div class="ui   grid">
-        <div class="ui eleven wide column centered">
-            <a class="ui green button" href="/event">Back</a>
-            <div class="ui raised segment">
-                <form class="myFormValidate" action="/event" method="POST">
-                    <div class="ui  form">
+<div class="ui grid">
+  <div class="ui eleven wide column centered">
+    <a class="ui green button" href="/event">Back</a>
+    <div class="ui raised segment">
+      <form class="myFormValidate" action="/event" method="POST">
+        <div class="ui form">
+          <div class="field required">
+            <label for="event">Event</label>
+            <input
+              type="text"
+              id="event"
+              name="event[event]"
+              placeholder="Event Name"
+            />
+          </div>
+          <div class="field required">
+            <label for="name">Animal</label>
+            <select name="event[name]" id="name" class="ui dropdown search">
+              <option value="">Select Name</option>
+              <option value="Poultry">Chicken</option>
+              <option value="Fishery">CatFish</option>
+              <option value="Ruminant">Cattle</option>
+              <option value="Others">Sheep</option>
+              <option value="Poultry">Goat</option>
+              <option value="Fishery">Rabbit</option>
+              <option value="Ruminant">Snail</option>
+              <option value="Others">Grasscutter</option>
+              <option value="Fishery">Horse</option>
+              <option value="Ruminant">Donkey</option>
+              <option value="Others">Guinea Pig</option>
+            </select>
+          </div>
+          <div class="field required">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              name="event[date]"
+              placeholder="Date"
+            />
+          </div>
+          <div class="ui form">
+            <div class="field required">
+              <label for="leader">Lead by</label>
+              <select
+                name="event[leader]"
+                id="leader"
+                class="ui search dropdown"
+              >
+                <option value="">Select Leader</option>
 
-                        <div class="field required">
-                            <label for="event">Event</label>
-                            <input type="text" id="event" name="event[event]" placeholder="Event Name">
-                        </div>
-                        <div class="field required">
-                            <label for="name">Animal</label>
-                            <select name="event[name]" id="name" class="ui dropdown search">
-                                <option value="">Select Name</option>
-                                <option value="Poultry">Chicken</option>
-                                <option value="Fishery">CatFish</option>
-                                <option value="Ruminant">Cattle</option>
-                                <option value="Others">Sheep</option>
-                                <option value="Poultry">Goat</option>
-                                <option value="Fishery">Rabbit</option>
-                                <option value="Ruminant">Snail</option>
-                                <option value="Others">Grasscutter</option>
-                                <option value="Fishery">Horse</option>
-                                <option value="Ruminant">Donkey</option>
-                                <option value="Others">Guinea Pig</option>
-                        
-                            </select>
-                        </div>
-                        <div class="field required">
-                            <label for="date">Date</label>
-                            <input type="date" id="date" name="event[date]" placeholder="Date">
-                        </div>
-                        <div class="ui form">
-                            <div class="field required">
-                                <label for="leader">Lead by</label>
-                                <select name="event[leader]" id="leader" class="ui search dropdown">
-                                    <option value="">Select Leader</option>
-                                       
-                                    <% for(let leader of user){ %>
-                                        <option value="<%= leader.fname %> ">
-                                            <%= leader.fname %>
-                                        </option>
-                                        <% } %>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="field  required">
-                            <label for="note">Remark</label>
-                            <textarea name="event[note]" id="note" cols="30" rows="3"> </textarea>
-                        </div>
-                        <button class="ui button fluid green">Add</button>
-                    </div>
-
-                </form>
-
+                <% for(let leader of user){ %>
+                <option value="<%= leader.fname %>"><%= leader.fname %></option>
+                <% } %>
+              </select>
             </div>
+          </div>
+          <div class="field required">
+            <label for="note">Remark</label>
+            <textarea name="event[note]" id="note" cols="30" rows="3">
+            </textarea>
+          </div>
+          <button class="ui button fluid green">Add</button>
         </div>
+      </form>
     </div>
-
-
-
-
-
-
-
-    
+  </div>
+</div>

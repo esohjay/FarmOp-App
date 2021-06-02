@@ -1,26 +1,17 @@
 <% layout('layouts/boilerplate') %>
 
-    <a class="ui green button"  href="/animal/new">Add a Batch</a>
-
-
-  <% for(let animal of animals){ %> 
+    
+  <%- include('../partials/animal') %>
+<div class="ui grid stackable padded">
+          
+  <% for(let animal of animals.docs){ %> 
+    <div class="eight wide computer eight wide tablet sixteen wide mobile column">
     <div class="ui green raised segment">
       <div class="ui  very relaxed styled unstackable items">
         <div class="item">
 
         <a href="/animal/<%= animal._id %>" class="ui tiny image">
-
-
-
-         
-
-
-
-
-
-
-        
-         
+  
         </a>
 
 
@@ -53,11 +44,30 @@
     </div>
 
 
-
+</div>
     <%} %>
+</div>
 
+<% if (animals.totalPages> 1) {%>
+  <div class="ui   grid">
+    <div class="ui eleven wide column centered">
+      <div class="ui raised segment">
+        <% if (animals.prevPage) {%>
+          <a class="ui green button" href="/animal?page=<%= animals.prevPage %> ">Prev</a>
+          <% } %>
+            <%for (let i=1; i <=animals.totalPages; i++) {%>
 
-
+              <a href="/animal?page=<%= i %>" <%=i===animals.page ? "style = color:yellow;"
+                : "style = color:green;" %>
+                ><%= i %> </a>
+              <% } %>
+                <% if (animals.nextPage ) {%>
+                  <a class="ui green button" href="/animal?page=<%= animals.nextPage %> ">Next</a>
+                  <% } %>
+      </div>
+    </div>
+  </div>
+  <% } %>
 
 
 

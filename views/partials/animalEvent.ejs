@@ -1,0 +1,123 @@
+<% let nameFilter=[]; %> <% let eventFilter=[]; %>  
+
+  
+ 
+  
+ <div class="ui form">
+  <form action="/event" method="GET">
+  <div class="fields">
+    <div class="field">
+      <label>From</label>
+      <input type="date" value="<%=
+                  query.date ? query.date.from : '' %>" name="date[from]">
+    </div>
+    <div class="field">
+      <label>To</label>
+      <input type="date" value="<%=
+                  query.date ? query.date.to : '' %>" name="date[to]">
+    </div>
+   
+  </div>
+  </form>
+</div>
+
+
+
+
+     <div class="ui labeled icon top right pointing dropdown right floated button">
+  <i class="sliders horizontal icon"></i>
+  <span class="text">Sort</span>
+  <div class="menu">
+    
+    <div class="header">
+      <i class="calendar alternate outline icon"></i>
+     Sort by Date  </a>
+    </div>
+    <div class="item">
+      <i class="sort up icon"></i>
+    <a class="ui sort-link" href="/event?asc=asc ">  Asc</a>
+    </div>
+    
+    <div class="item">
+      <i class="sort down icon"></i>
+      <a class="ui sort-link" href="/event?des=des">Desc </a>
+    </div>
+    <div class="divider"></div>
+   
+    <div class="item">
+      <i class="sitemap icon"></i>
+     <a class="ui sort-link" href="/event?byname=byname">Name</a>
+    </div>
+    <div class="item">
+      <i class="tags icon"></i>
+     <a class="ui sort-link" href="/event?bycategory=bycategory">Category </a>
+    </div>
+    
+  </div>
+</div>
+    
+  
+    <div class="ui accordion">
+      <div class="title">
+        <a class="ui green button">Filter</a>
+      </div>
+      <div class="content">
+        <div class="ui grid">
+          <div class="ui eleven wide column">
+            <form action="/event" method="GET">
+              <div class="ui segments">
+                <div class="ui horizontal segments">
+                  <div class="ui segment">
+                  <p>Name</p>
+                  <% names.forEach(function(name, i) { %> <%
+                  if(!nameFilter.includes(name)) {%> <% nameFilter.push(name) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="name[]"
+                        value="<%= name %>"
+                      />
+                      <label for="name"><%= name %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } )%>
+                </div>
+                 <div class="ui segment">
+                  <p>Event</p>
+                  <% for(let animalEvent of  animalEvents) {%> <%
+                  if(!eventFilter.includes(animalEvent)) {%> <%
+                  eventFilter.push(animalEvent) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="event[]"
+                        value="<%= animalEvent %>"
+                        <%= query.event && query.event.includes( animalEvent ) ? 'checked' : '' %>
+                      />
+                      <label for="category"><%= animalEvent %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } %>
+                </div>
+    
+                 </div>
+          
+   
+              </div>
+               <a class="ui red button" href="/event">Reset</a>
+              <button class="ui button" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

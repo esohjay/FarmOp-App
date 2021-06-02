@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const FeedSchema = new Schema({
-    brand: String,
-    quantity: Number
-})
+  brand: String,
+  createdAt: { type: Date, default: Date.now() },
+  quantity: Number,
+});
 
-module.exports = mongoose.model('Feed', FeedSchema)
+module.exports = mongoose.model("Feed", FeedSchema);

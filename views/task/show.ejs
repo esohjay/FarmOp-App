@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="ui segments">
-  <div class="ui  centered huge header segment">
+  <div class="ui centered huge header segment">
     <p><%= task.task %></p>
   </div>
   <div class="ui segments">
@@ -11,24 +11,19 @@
   </div>
   <div class="ui horizontal segments">
     <div class="ui segment">
-      <p> Start Date: 
-        <%= task.startDate.toDateString() %>
-      </p>
+      <p>Start Date: <%= task.startDate.toDateString() %></p>
     </div>
     <div class="ui segment">
-      <p><%= task.status %>
-      </p>
+      <p><%= task.status %></p>
     </div>
     <div class="ui segment">
-      <p> Deadline:
-        <%= task.deadline.toDateString() %>
-      </p>
+      <p>Deadline: <%= task.deadline.toDateString() %></p>
     </div>
   </div>
   <div class="ui segment">
-    <p> Team Memebers: <%= task.workers %></p>
+    <p>Team Memebers: <%= task.workers.join(", ") %></p>
   </div>
-  
+
   <div class="ui segment">
     <p><%= task.instructions %></p>
   </div>
@@ -37,29 +32,34 @@
     <div class="ui buttons right floated">
       <a href="/task/<%= task._id %>/edit" class="ui yellow button">Edit</a>
       <div class="or"></div>
-      <button class="ui  negative button" id="test">Delete</button>
+      <button class="ui negative button" id="test">Delete</button>
       <div class="ui modal test">
-        <div class="header">Are you sure you want to delete <%= task.task %> task? </div>
+        <div class="header">
+          Are you sure you want to delete <%= task.task %> task?
+        </div>
         <div class="content">
-          <p>If you delete,  <%= task.task %> task will be deleted permanently.</p>
+          <p>
+            If you delete, <%= task.task %> task will be deleted permanently.
+          </p>
         </div>
         <div class="actions">
-          <div class="ui buttons right floated ">
+          <div class="ui buttons right floated">
             <div class="segments horizontal ui">
               <div class="ui segment">
                 <a href="" class="ui cancel mini yellow button">No</a>
               </div>
               <div class="ui segment">
-                <form action="/task/<%= task._id %>?_method=DELETE " method="POST">
-                  <button class="ui negative button ">Yes</button>
+                <form
+                  action="/task/<%= task._id %>?_method=DELETE "
+                  method="POST"
+                >
+                  <button class="ui negative button">Yes</button>
                 </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
     </div>
   </div>
 </div>
-

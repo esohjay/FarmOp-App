@@ -2,9 +2,10 @@
 
 
     <% let totalExpense=0; %>
-    <a class="button green ui" href="/expense/new">Add an Event</a>
-            <h1> Livestock Expense</h1>
-
+    <a class="button green ui" href="/expense/new">Add an Expense</a>
+            
+    <%- include('../partials/animalexpense') %>
+    <h1 class=" ui header center aligned"> Livestock Expense</h1>
             <table class="ui celled selectable unstackable table">
                 <thead>
                     <tr>
@@ -15,7 +16,7 @@
 
                     </tr>
                 </thead>
-                <% for(let expense of expenses){ %>
+                <% for(let expense of expenses.docs){ %>
                     <tbody>
                         <tr>
                             <td>
@@ -48,3 +49,24 @@
                                     <td></td>
                                 </tr>
             </table>
+
+             <% if (expenses.totalPages > 1) {%>
+<div class="ui   grid">
+  <div class="ui eleven wide column centered">
+    <div class="ui raised segment">
+      <% if (expenses.prevPage) {%>
+        <a class="ui green button" href="/expense?page=<%= expenses.prevPage %> ">Prev</a>
+        <% } %> 
+  <%for (let i = 1; i <= expenses.totalPages; i++) {%>
+    
+    <a href="/expense?page=<%= i %>"
+      <%= i === expenses.page ? "style = color:yellow;" : "style = color:green;" %> 
+      ><%= i %> </a>
+  <%  }  %> 
+      <% if (expenses.nextPage ) {%>
+        <a class="ui green button" href="/expense?page=<%= expenses.nextPage %> ">Next</a>
+        <% } %>
+    </div>
+  </div>
+</div>
+<% } %>

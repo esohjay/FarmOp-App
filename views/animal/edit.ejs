@@ -36,7 +36,7 @@
                     </div>
                     <div class="field required">
                         <label for="tag"> Batch ID </label>
-                        <input type="text" id="tag" name="animal[batch]" value="<%= animal.batch %> ">
+                        <input type="text" id="tag" name="animal[batch]" value="<%= animal.batch %> " readonly>
                     </div>
                     <div class="field required">
                         <label for="variety">Breed</label>
@@ -47,7 +47,10 @@
                         <label for="source">Source</label>
                         <input type="text" id="source" name="animal[source]" value="<%= animal.source %> ">
                     </div>
-                    
+                    <div class="field required">
+                        <label for="variety">Quantity</label>
+                        <input type="number" id="variety" name="animal[quantity]" value=<%=animal.quantity %> placeholder="Quantity">
+                    </div>
                     <div class="field required">
                         <label for="description">Brief Description</label>
                         <textarea name="animal[description]" id="description" cols="30" rows="3"  ><%= animal.description %></textarea>

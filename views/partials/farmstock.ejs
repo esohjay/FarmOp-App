@@ -1,0 +1,288 @@
+<% let nameFilter=[]; %> <% let categoryFilter=[]; %> <% let damFilter=[]; %> <%
+let sireFilter=[]; %> <% let pStageFilter=[]; %> <% let batchFilter=[]; %> <%
+let breedFilter=[]; %>
+
+  
+    
+  
+ 
+     <form action="/farmstock" method="GET">
+  <div class="ui action input">
+  <input type="text" placeholder="Tag no" name="search">
+  <button class="ui icon button">
+    <i class="search icon"></i>
+  </button>
+</div>
+ </form> 
+    <a class="ui green button" href="/farmstock/new">Add a Livestock</a>
+
+
+<div class="ui labeled icon top right pointing dropdown right floated button">
+  <i class="sliders horizontal icon"></i>
+  <span class="text">Sort</span>
+  <div class="menu">
+    
+    <div class="header">
+      <i class="calendar alternate outline icon"></i>
+     Sort by Date  </a>
+    </div>
+    <div class="item">
+      <i class="sort up icon"></i>
+    <a class="ui sort-link" href="/farmstock?bydate=bydate ">  Asc</a>
+    </div>
+    
+    <div class="item">
+      <i class="sort down icon"></i>
+      <a class="ui sort-link" href="/farmstock?bydatedes=bydatedes">Desc </a>
+    </div>
+    <div class="divider"></div>
+   
+    <div class="item">
+      <i class="sitemap icon"></i>
+     <a class="ui sort-link" href="/farmstock?byname=byname">Name</a>
+    </div>
+    <div class="item">
+      <i class="tags icon"></i>
+     <a class="ui sort-link" href="/farmstock?bycategory=bycategory">Category </a>
+    </div>
+    
+  </div>
+</div>
+
+
+
+ 
+  
+    <div class="ui accordion">
+      <div class="title">
+        <a class="ui green button">Filter</a>
+      </div>
+      <div class="content">
+        <div class="ui grid">
+          <div class="ui eleven wide column">
+            <form action="/farmstock" method="GET">
+              <div class="ui segments">
+                <div class="ui horizontal segments">
+                  <div class="ui segment">
+                  <p>Name</p>
+                  <% names.forEach(function(name, i) { %> <%
+                  if(!nameFilter.includes(name)) {%> <% nameFilter.push(name) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="name[]"
+                        value="<%= name %>"
+                      />
+                      <label for="name"><%= name %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } )%>
+                </div>
+                 <div class="ui segment">
+                  <p>Category</p>
+                  <% for(let category of categories) {%> <%
+                  if(!categoryFilter.includes(category)) {%> <%
+                  categoryFilter.push(category) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="category[]"
+                        value="<%= category %>"
+                      />
+                      <label for="category"><%= category %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } %>
+                </div>
+    
+                 </div>
+                
+                
+
+                  <div class="ui horizontal segments">
+                  <div class="ui segment">
+                  <p>Sire</p>
+                  <% for(let father of sire) {%> <%
+                  if(!sireFilter.includes(father)) {%> <%
+                  sireFilter.push(father) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="sire[]"
+                        value="<%= father %>"
+                      />
+                      <label for="sire"><%= father %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } %>
+                </div>
+                 <div class="ui segment">
+                  <p>Dam</p>
+                  <% for(let mother of dam) {%> <%
+                  if(!damFilter.includes(mother)) {%> <% damFilter.push(mother)
+                  %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="dam[]"
+                        value="<%= mother %>"
+                      />
+                      <label for="dam"><%= mother %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } %>
+                </div>
+    <div class="ui segment">
+                  <p>Batch</p>
+                  <% for(let group of batch) {%> <%
+                  if(!batchFilter.includes(group)) {%> <%
+                  batchFilter.push(group) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="batch[]"
+                        value="<%= group %>"
+                      />
+                      <label for="batch"><%= group %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } %>
+                </div>
+  </div>
+
+                
+                
+                
+
+                <div class="ui horizontal segments">
+                   <div class="ui segment">
+                  <p>Breed</p>
+                  <% for(let variety of breed) {%> <%
+                  if(!breedFilter.includes(variety)) {%> <%
+                  breedFilter.push(variety) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="breed[]"
+                        value="<%= variety %>"
+                      />
+                      <label for="breed"><%= variety %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } %>
+                </div>
+    
+                <div class="ui segment">
+                  <p>Production Stage</p>
+                  <% for(let stage of pStage) {%> <%
+                  if(!pStageFilter.includes(stage)) {%> <%
+                  pStageFilter.push(stage) %>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input
+                        type="checkbox"
+                        class="hidden"
+                        name="productionStage[]"
+                        value="<%= stage %>"
+                      />
+                      <label for="pStage"><%= stage %></label>
+                      <br />
+                    </div>
+                  </div>
+
+                  <% } %> <% } %>
+                </div>
+    
+  </div>
+
+               
+                <div class="ui horizontal segments">
+                  <div class="ui segment">
+                    <p>Sex</p>
+                    <div class="field">
+                      <div class="ui checkbox">
+                        <input
+                          type="checkbox"
+                          class="hidden"
+                          name="sex[]"
+                          value="Male"
+                        />
+                        <label for="sex">Male</label>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="ui checkbox">
+                        <input
+                          type="checkbox"
+                          class="hidden"
+                          name="sex[]"
+                          value="Female"
+                        />
+                        <label for="sex">Female</label>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui segment">
+                    <p>Health Status</p>
+                    <div class="field">
+                      <div class="ui checkbox">
+                        <input
+                          type="checkbox"
+                          class="hidden"
+                          name="healthStatus[]"
+                          value="Healthy"
+                        />
+                        <label for="sex">Healthy</label>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="ui checkbox">
+                        <input
+                          type="checkbox"
+                          class="hidden"
+                          name="healthStatus[]"
+                          value="Sick"
+                        />
+                        <label for="sex">Sick</label>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a class="ui red button" href="/farmstock">Reset</a>
+              <button class="ui button" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+

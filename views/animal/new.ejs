@@ -1,4 +1,6 @@
 <% layout('layouts/boilerplate') %>
+
+
 <div class="ui   grid">
     <div class="ui eleven wide column centered">
         <a class="ui green button" href="/animal">Back</a>
@@ -8,8 +10,8 @@
                     
                     <div class="field required">
                         <label for="name">Name</label>
-                        <select name="animal[name]" id="name" class="ui tag dropdown search">
-                            <option value="">Select Name</option>
+                        <select name="animal[name]" id="name"  class="ui tag dropdown search">
+                            <option value="<%= name%>">Select Name</option>
                             <option value="Poultry">Chicken</option>
                             <option value="Fishery">CatFish</option>
                             <option value="Ruminant">Cattle</option>
@@ -26,8 +28,8 @@
                     </div>
                     <div class="field required">
                         <label for="category">Category</label>
-                        <select name="animal[category]" id="category" class="ui dropdown search">
-                            <option value="">Select Category</option>
+                        <select name="animal[category]" id="category"  class="ui dropdown search">
+                            <option value="<%= category %>">Select Category</option>
                             <option value="Poultry">Poultry</option>
                             <option value="Fishery">Fishery</option>
                             <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
@@ -37,28 +39,28 @@
                     </div>
                     <div class="field required">
                         <label for="tag"> Batch ID </label>
-                        <input type="text" id="tag" name="animal[batch]" placeholder="Batch ID">
+                        <input type="text" id="tag" name="animal[batch]" value="<%=batch %>" placeholder="Batch ID">
                     </div>
                     <div class="field required">
                         <label for="variety">Breed</label>
-                        <input type="text" id="variety" name="animal[breed]" placeholder="Breed">
+                        <input type="text" id="variety" name="animal[breed]" value="<%=breed %>" placeholder="Breed">
                     </div>
                     <div class="field required">
                         <label for="variety">Quantity</label>
-                        <input type="number" id="variety" name="animal[quantity]" placeholder="Quantity">
+                        <input type="number" id="variety" name="animal[quantity]" value="<%=quantity %>"  placeholder="Quantity">
                     </div>
                     <div class="field required">
                         <label for="date">Date of Arrival</label>
-                        <input type="date" id="date" name="animal[dateOfArrival]" placeholder="Date Arrived">
+                        <input type="date" id="date" name="animal[dateOfArrival]" value="<%=date %>" placeholder="Date Arrived">
                     </div>
                      <div class="field required">
                         <label for="source">Source</label>
-                        <input type="text" id="source" name="animal[source]" placeholder="Source">
+                        <input type="text" id="source" value="<%=source %>" name="animal[source]" placeholder="Source">
                     </div>
                     
                     <div class="field required">
                         <label for="description">Brief Description</label>
-                        <textarea name="animal[description]" id="description" placeholder="Remark" cols="30" rows="3"  ></textarea>
+                        <textarea name="animal[description]" id="description"   placeholder="Remark" cols="30" rows="3"  ><%=description %></textarea>
                     </div>
                     <button class="ui button fluid green">Add Animal</button>
                 </div>

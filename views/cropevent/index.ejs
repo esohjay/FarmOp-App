@@ -1,6 +1,10 @@
 <% layout('layouts/boilerplate') %>
+
+
+ <%- include('../partials/cropEvent') %>
+
 <a class="button green ui" href="/cropevent/new">Add an Event</a>
-<h1>Crop</h1>
+<h1 class="ui center aligned header">Crop Event</h1>
 <table class="ui celled selectable unstackable table">
         <thead>
             <tr>
@@ -12,7 +16,7 @@
     
             </tr>
         </thead>
-        <% for(let event of events){ %>
+        <% for(let event of events.docs){ %>
             <tbody>
                 <tr>
                     <td>
@@ -35,3 +39,24 @@
                 <% } %>
     
     </table>
+
+    <% if (events.totalPages > 1) {%>
+<div class="ui   grid">
+  <div class="ui eleven wide column centered">
+    <div class="ui raised segment">
+      <% if (events.prevPage) {%>
+        <a class="ui green button" href="/cropevent?page=<%= events.prevPage %> ">Prev</a>
+        <% } %> 
+  <%for (let i = 1; i <= events.totalPages; i++) {%>
+    
+    <a href="/cropevent?page=<%= i %>"
+      <%= i === events.page ? "style = color:yellow;" : "style = color:green;" %> 
+      ><%= i %> </a>
+  <%  }  %> 
+      <% if (events.nextPage ) {%>
+        <a class="ui green button" href="/cropevent?page=<%= events.nextPage %> ">Next</a>
+        <% } %>
+    </div>
+  </div>
+</div>
+<% } %>

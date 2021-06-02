@@ -1,22 +1,69 @@
 <% layout('layouts/boilerplate') %>
 <a class="button green ui" href="/croptask/new">Add a Task</a>
-<% for(let task of tasks){ %> 
-    
+<%- include('../partials/cropTask') %>
 
-<div class="ui green raised segment">
-    <div class="ui  very relaxed styled unstackable items">
-        <div class="item">
-                        <div class="middle aligned content">
-                            <div class="header">
-                                <%= task.task %>
-                                    <a href="/croptask/<%= task._id %>"><i
-                                            class=" green caret square right outline float right icon"></i></a>
-                            </div>
-                            <div class="extra">
-                                <%= task.startDate.toDateString() %>
-                            </div>
-                        </div>
-        </div>
+
+<h1 class="ui center aligned header">Crop Tasks</h1>
+<table class="ui celled selectable unstackable table">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Deadline</th>
+                <th>Members</th>
+                <th>Status</th>
+                <th class="right aligned">Action</th>
+    
+            </tr>
+        </thead>
+        <% for(let task of tasks.docs){ %>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= task.task %>
+                    </td>
+                    <td>
+                        <%= task.deadline.toDateString()%>
+                    </td>
+                    <td>
+                        <%= task.workers.join(', ') %>
+                    </td>
+                    <td>
+                        <%= task.status %>
+                    </td>
+                    <td>
+                        <a href="/croptask/<%= task._id %>"><i
+                                class=" green caret square right outline float right icon"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+    
+    </table>
+
+
+
+
+
+
+
+
+
+  <% if (tasks.totalPages > 1) {%>
+<div class="ui   grid">
+  <div class="ui eleven wide column centered">
+    <div class="ui raised segment">
+      <% if (tasks.prevPage) {%>
+        <a class="ui green button" href="/croptask?page=<%= tasks.prevPage %> ">Prev</a>
+        <% } %> 
+  <%for (let i = 1; i <= tasks.totalPages; i++) {%>
+    
+    <a href="/croptask?page=<%= i %>"
+      <%= i === tasks.page ? "style = color:yellow;" : "style = color:green;" %> 
+      ><%= i %> </a>
+  <%  }  %> 
+      <% if (tasks.nextPage ) {%>
+        <a class="ui green button" href="/croptask?page=<%= tasks.nextPage %> ">Next</a>
+        <% } %>
     </div>
+  </div>
 </div>
-<%} %>
+<% } %>

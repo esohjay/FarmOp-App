@@ -289,7 +289,24 @@
             enctype="multipart/form-data">
             <div class="ui form">
 
-
+              <div class="field required">
+                <label for="name">Name</label>
+                <select name="farmstock[name]" id="name" class="ui tag dropdown search">
+                  <option value="">Select Name</option>
+                  <option value="Poultry">Chicken</option>
+                  <option value="Fishery">CatFish</option>
+                  <option value="Ruminant">Cattle</option>
+                  <option value="Others">Sheep</option>
+                  <option value="Poultry">Goat</option>
+                  <option value="Fishery">Rabbit</option>
+                  <option value="Ruminant">Snail</option>
+                  <option value="Others">Grasscutter</option>
+                  <option value="Fishery">Horse</option>
+                  <option value="Ruminant">Donkey</option>
+                  <option value="Others">Guinea Pig</option>
+              
+                </select>
+              </div>
               <div class="field required">
                 <label for="tag"> Tag No </label>
                 <input type="text" id="tag" name="farmstock[tag]" placeholder="Tag No">

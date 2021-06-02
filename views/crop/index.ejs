@@ -1,8 +1,20 @@
 <% layout('layouts/boilerplate') %>
-
-    <a class="ui green button" href="/crop/new">Add a Crop</a>
-
-    <% for(let crop of crops){ %>
+<div class="ui segment">
+ <a class="ui green button" href="/crop/new">Add a Crop</a>
+    
+    <div class="ui centered form">
+<form  action="/crop" method="GET">
+      <div class="ui right floated input">
+        <input type="text" placeholder="Search..." name="search" />
+      </div>
+      <button class="ui tiny button" type="submit"> <i class="search icon"></i></button>
+    </form>
+    </div>
+</div>
+   
+<div class="ui grid stackable padded">
+    <% for(let crop of crops.docs){ %>
+        <div class="eight wide computer eight wide tablet sixteen wide mobile column">
 <div class="ui green raised segment">
     <div class="ui  very relaxed styled unstackable items">
         <div class="item">
@@ -35,6 +47,28 @@
     </div>
 </div>
 
-       
+      </div> 
 
         <%} %>
+</div>
+        <% if (crops.totalPages> 1) {%>
+            <div class="ui   grid">
+                <div class="ui eleven wide column centered">
+                    <div class="ui raised segment">
+                        <% if (crops.prevPage) {%>
+                            <a class="ui green button" href="/crop?page=<%= crops.prevPage %> ">Prev</a>
+                            <% } %>
+                                <%for (let i=1; i <=crops.totalPages; i++) {%>
+        
+                                    <a href="/crop?page=<%= i %>" <%=i===crops.page ? "style = color:yellow;"
+                                        : "style = color:green;" %>
+                                        ><%= i %> </a>
+                                    <% } %>
+                                        <% if (crops.nextPage ) {%>
+                                            <a class="ui green button"
+                                                href="/crop?page=<%= crops.nextPage %> ">Next</a>
+                                            <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>

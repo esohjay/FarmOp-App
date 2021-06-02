@@ -125,3 +125,10 @@ body > .ui.container {
   color: #fff;
 }
 /* Nav */
+
+.color-red {
+  color: red;
+}
+.color-green {
+  color: green;
+}

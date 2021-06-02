@@ -1,103 +1,151 @@
 <% layout('layouts/boilerplate') %>
 
-<div class="ui   grid">
-    <div class="ui eleven wide column centered">
-        <a class="ui green button" href="/farmstock">Back</a>
-        <div class="ui raised segment">
-            <form class="myFormValidate" action="/farmstock" method="POST"
-                enctype="multipart/form-data">
-                <div class="ui form">
-                    <div class="field required">
-                        <label for="name">Animal Name</label>
-                        <select name="farmstock[name]" id="name" class="ui dropdown search">
-                            <option value="">Select Name</option>
-                            <option value="Poultry">Chicken</option>
-                            <option value="Fishery">CatFish</option>
-                            <option value="Ruminant">Cattle</option>
-                            <option value="Others">Sheep</option>
-                            <option value="Poultry">Goat</option>
-                            <option value="Fishery">Rabbit</option>
-                            <option value="Ruminant">Snail</option>
-                            <option value="Others">Grasscutter</option>
-                            <option value="Fishery">Horse</option>
-                            <option value="Ruminant">Donkey</option>
-                            <option value="Others">Guinea Pig</option>
-                    
-                        </select>
-                    </div>
-            
-                    <div class="field required">
-                        <label for="tag"> Tag No </label>
-                        <input type="text" id="tag" name="farmstock[tag]" placeholder="Tag">
-                    </div>
-                    <div class="field required">
-                        <label for="variety">Breed</label>
-                        <input type="text" id="variety" name="farmstock[breed]" placeholder="Breed">
-                    </div>
-                    <div class="field required">
-                        <label for="dob">date of Birth</label>
-                        <input type="date" id="dob" name="farmstock[dob]" placeholder="DOB">
-                    </div>
-                    <div class="field required">
-                        <label for="sire">Sire</label>
-                        <input type="text" id="sire" name="farmstock[sire]" placeholder="Sire Tag No">
-                    </div>
-                    <div class="field required">
-                        <label for="dam">Dam</label>
-                        <input type="text" id="dam" name="farmstock[dam]" placeholder="Dam Tag No" ">
-                    </div>
-                    <div class="ui form">
-                        <div class="field required">
-                            <label for="sex">Sex</label>
-                            <div class="ui selection dropdown">
-                                <input type="hidden" id="sex" name="farmstock[sex]">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">Sex</div>
-                                <div class="menu">
-                                    <div class="item" data-value="Male">Male</div>
-                                    <div class="item" data-value="Female">Female</div>
-                                    <div class="item" data-value="Other">Other</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field required">
-                        <label for="category">Category</label>
-                        <select name="farmstock[category]" id="status" class="ui dropdown search">
-                            <option value="">Select Category</option>
-                            <option value="Poultry">Poultry</option>
-                            <option value="Fishery">Fishery</option>
-                            <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
-                            <option value="Others">Others(Pig, Rabbit, Snail...)</option>
-                    
-                        </select>
-                    </div>
-                    <div class="field required">
-                        <label for="pstage">Production Stage</label>
-                        <input type="text" id="pstage" name="farmstock[productionStage]" placeholder="Production Stage">
-                    </div>
-                    <div class="field required">
-                        <label for="hStatus">Health Status</label>
-                        <input type="text" id="hStatus" name="farmstock[healthStatus]" placeholder="Health Status">
-                    </div>
-            
-                    <div class="field required">
-                        <label for="image">Image</label>
-                        <input type="file" id="image" name="image" placeholder="Image">
-                    </div>
-                    <div class="field required">
-                        <label for="description">Brief Description</label>
-                        <textarea name="farmstock[description]" id="description" cols="30" rows="3"></textarea>
-                    </div>
-                    <button class="ui button fluid green">Add Animal</button>
+<div class="ui grid">
+  <div class="ui eleven wide column centered">
+    <a class="ui green button" href="/farmstock">Back</a>
+    <div class="ui raised segment">
+      <form
+        class="myFormValidate"
+        action="/farmstock"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="ui form">
+          <div class="field required">
+            <label for="name">Animal Name</label>
+            <select name="farmstock[name]" id="name" class="ui dropdown search">
+              <option value="<%= name %> ">Select Name</option>
+              <option value="Chicken">Chicken</option>
+              <option value="Catfish">CatFish</option>
+              <option value="Cattle">Cattle</option>
+              <option value="Sheep">Sheep</option>
+              <option value="Goat">Goat</option>
+              <option value="Rabbit">Rabbit</option>
+              <option value="Snail">Snail</option>
+              <option value="Grasscutter">Grasscutter</option>
+              <option value="Horse">Horse</option>
+              <option value="Donkey">Donkey</option>
+              <option value="Guinea Pig">Guinea Pig</option>
+            </select>
+          </div>
+
+          <div class="field required">
+            <label for="tag"> Tag No </label>
+            <input
+              type="text"
+              id="tag"
+              value="<%=tag %>"
+              name="farmstock[tag]"
+              placeholder="Tag"
+            />
+          </div>
+          <div class="field required">
+            <label for="variety">Breed</label>
+            <input
+              type="text"
+              id="variety"
+              value="<%=breed %>"
+              name="farmstock[breed]"
+              placeholder="Breed"
+            />
+          </div>
+          <div class="field required">
+            <label for="dob">date of Birth</label>
+            <input
+              type="date"
+              id="dob"
+              name="farmstock[dob]"
+              placeholder="DOB"
+            />
+          </div>
+          <div class="field required">
+            <label for="sire">Sire</label>
+            <input
+              type="text"
+              id="sire"
+              value="<%=sire %>"
+              name="farmstock[sire]"
+              placeholder="Sire Tag No"
+            />
+          </div>
+          <div class="field required">
+            <label for="dam">Dam</label>
+            <input type="text" id="dam" value="<%=dam %>" name="farmstock[dam]"
+            placeholder="Dam Tag No" ">
+          </div>
+          <div class="ui form">
+            <div class="field required">
+              <label for="sex">Sex</label>
+              <div class="ui selection dropdown">
+                <input
+                  type="hidden"
+                  id="sex"
+                  value="<%= sex %> "
+                  name="farmstock[sex]"
+                />
+                <i class="dropdown icon"></i>
+                <div class="default text">Sex</div>
+                <div class="menu">
+                  <div class="item" data-value="Male">Male</div>
+                  <div class="item" data-value="Female">Female</div>
+                  <div class="item" data-value="Other">Other</div>
                 </div>
-            
-            </form>
+              </div>
+            </div>
+          </div>
+          <div class="field required">
+            <label for="category">Category</label>
+            <select
+              name="farmstock[category]"
+              id="status"
+              class="ui dropdown search"
+            >
+              <option value="<%= category %> ">Select Category</option>
+              <option value="Poultry">Poultry</option>
+              <option value="Fishery">Fishery</option>
+              <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
+              <option value="Others">Others(Pig, Rabbit, Snail...)</option>
+            </select>
+          </div>
+          <div class="field required">
+            <label for="pstage">Production Stage</label>
+            <input
+              type="text"
+              id="pstage"
+              value="<%=productionStage %>"
+              name="farmstock[productionStage]"
+              placeholder="Production Stage"
+            />
+          </div>
+          <div class="field required">
+            <label for="hStatus">Health Status</label>
+            <input
+              type="text"
+              id="hStatus"
+              value="<%=healthStatus %>"
+              name="farmstock[healthStatus]"
+              placeholder="Health Status"
+            />
+          </div>
 
+          <div class="field required">
+            <label for="image">Image</label>
+            <input type="file" id="image" name="image" placeholder="Image" />
+          </div>
+          <div class="field required">
+            <label for="description">Brief Description</label>
+            <textarea
+              name="farmstock[description]"
+              id="description"
+              cols="30"
+              rows="3"
+            >
+<%= description %> </textarea
+            >
+          </div>
+          <button class="ui button fluid green">Add Animal</button>
         </div>
+      </form>
     </div>
+  </div>
 </div>
-
-
-
-    

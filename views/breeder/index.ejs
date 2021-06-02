@@ -1,34 +1,50 @@
 <% layout('layouts/boilerplate') %>
 
-    <a class="ui green button"  href="/breeder/new">Add a Livestock</a>
 
-<% for(let breed of breeder){ %> 
-  <div class="ui green raised segment">
-<div class="ui  very relaxed styled unstackable items">
+<%- include('../partials/breeder') %> 
+<div class="ui grid stackable padded">
+<% for(let breed of breeder.docs){ %>
+ <div class="eight wide computer eight wide tablet sixteen wide mobile column">
+<div class="ui green raised segment">
+  <div class="ui very relaxed styled unstackable items">
     <div class="item">
-        
-            <a href="/breeder/<%= breed._id %>" class="ui tiny image">
-                <img src="<%= breed.image.url %>">
-            </a>
-            
+      <a href="/breeder/<%= breed._id %>" class="ui tiny image">
+        <img src="<%= breed.image.url %>" />
+      </a>
 
-                    <div class="middle aligned content">
-                        <div class="header">
-                            <%= breed.tag %>
-                                <a href="/breeder/<%= breed._id %>"><i
-                                        class=" green caret square right outline float right icon"></i></a>
-
-
-                        </div>
-                        <div class="extra">
-                            <%= breed.dob.toDateString() %>
-                        </div>
-                    </div>
+      <div class="middle aligned content">
+        <div class="header">
+          <%= breed.tag %>
+          <a href="/breeder/<%= breed._id %>"
+            ><i class="green caret square right outline float right icon"></i
+          ></a>
+        </div>
+        <div class="extra"><%= breed.dob.toDateString() %></div>
+      </div>
     </div>
-
-</div>
   </div>
+</div>
+</div>
 
-    
-    
 <%} %>
+</div>
+<% if (breeder.totalPages > 1) {%>
+<div class="ui   grid">
+  <div class="ui eleven wide column centered">
+    <div class="ui raised segment">
+      <% if (breeder.prevPage) {%>
+        <a class="ui green button" href="/breeder?page=<%= breeder.prevPage %> ">Prev</a>
+        <% } %> 
+  <%for (let i = 1; i <= breeder.totalPages; i++) {%>
+    
+    <a href="/breeder?page=<%= i %>"
+      <%= i === breeder.page ? "style = color:yellow;" : "style = color:green;" %> 
+      ><%= i %> </a>
+  <%  }  %> 
+      <% if (breeder.nextPage ) {%>
+        <a class="ui green button" href="/breeder?page=<%= breeder.nextPage %> ">Next</a>
+        <% } %>
+    </div>
+  </div>
+</div>
+<% } %>

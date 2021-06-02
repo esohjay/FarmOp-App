@@ -130,6 +130,7 @@
                 </div>
 
             </div>
+            <% if(animal.category === "Poultry") {%> 
             <div class="ui horizontal segments">
                 <div class="ui  segment">
                     <p>
@@ -148,12 +149,15 @@
                     </p>
                 </div>
             </div>
+            <% } %> 
 <div class="ui horizontal segments">
+     <% if(animal.category === "Poultry") {%> 
     <div class="ui  segment">
         <p>FCR per Dozen Egg:
             <%= feedTotal > 0 && eggTotal > 0 ? fcrPDozen : initValue %>
         </p>
     </div>
+    <% } %> 
     <div class="ui  segment">
         <p>FCR per Body Weight:
             <%=  fcrPWtGain  %>
@@ -1270,7 +1274,24 @@
                         <form class="myFormValidate" action="/animal/<%= animal._id %>/batchmember" method="POST"
                             enctype="multipart/form-data">
                             <div class="ui form">
-
+                                <div class="field required">
+                                    <label for="name">Name</label>
+                                    <select name="farmstock[name]" id="name" class="ui tag dropdown search">
+                                        <option value="">Select Name</option>
+                                        <option value="Poultry">Chicken</option>
+                                        <option value="Fishery">CatFish</option>
+                                        <option value="Ruminant">Cattle</option>
+                                        <option value="Others">Sheep</option>
+                                        <option value="Poultry">Goat</option>
+                                        <option value="Fishery">Rabbit</option>
+                                        <option value="Ruminant">Snail</option>
+                                        <option value="Others">Grasscutter</option>
+                                        <option value="Fishery">Horse</option>
+                                        <option value="Ruminant">Donkey</option>
+                                        <option value="Others">Guinea Pig</option>
+                                
+                                    </select>
+                                </div>
 
                                 <div class="field required">
                                     <label for="tag"> Tag No </label>
@@ -1349,9 +1370,21 @@
 
         </div>
     </div>
-    <% for(let farmstock of animal.farmstock){ %>
-        <a href="/animal/<%= animal._id %>/batchmember/<%= farmstock._id %>">
+     <div class="ui middle aligned divided list"> 
+            <% for(let farmstock of animal.farmstock){ %>
+       
+  <div class="item">
+    <div class="right floated content">
+      <div class="ui button">Add</div>
+    </div>
+    <img class="ui avatar image" src="<%= farmstock.image.url %> ">
+    <div class="content">
+       <a href="/animal/<%= animal._id %>/batchmember/<%= farmstock._id %>">
             <%= farmstock.tag %>
         </a>
+    </div>
+  </div>
+      
 
         <% } %>
+        </div>

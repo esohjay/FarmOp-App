@@ -1,0 +1,196 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui segments">
+  <div class="ui segments">
+    <h1 class="ui header centered"><%= currentUser.username %></h1>
+    <div class="ui horizontal segments">
+      <div class="ui segment">
+        <p><%= currentUser.fname %></p>
+      </div>
+      <div class="ui segment">
+        <p><%= currentUser.lname %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui stacked segments">
+    <div class="ui segment">
+      <p><%= currentUser.sex %></p>
+    </div>
+    <div class="ui segment">
+      <p><%= currentUser.phone %></p>
+    </div>
+    <div class="ui segment">
+      <p><%= currentUser.email %></p>
+    </div>
+  </div>
+
+  <div class="ui raised segments">
+    <div class="ui segment">
+      <p>
+        Role: <%= currentUser.role === '' ? 'Role not assigned yet' :
+        currentUser.role %>
+      </p>
+    </div>
+    <div class="ui segment">
+      <p>
+        Role Description: <%= currentUser.roleDescription === undefined ? 'No '
+        : currentUser.roleDescription %>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="ui three stackable cards">
+  <% if(events && events.length) {%>
+  <div class="card green">
+    <div class="content">
+      <div class="header">Recent Livestock Events</div>
+      <div class="description">
+        <div class="ui celled list">
+          <% for (let event of events) {%>
+          <div class="item">
+            <div class="content">
+              <a href="/event/<%= event._id %>">
+                <div class="header"><%= event.event %></div></a
+              >
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <a href="/event"
+      ><div class="ui bottom attached button">
+        <i class="info circle icon"></i>
+        View all
+      </div></a
+    >
+  </div>
+  <% } %> <% if(cEvents && cEvents.length) {%>
+  <div class="card green">
+    <div class="content">
+      <div class="header">Recent Crop Events</div>
+      <div class="description">
+        <div class="ui celled list">
+          <% for (let event of cEvents) {%>
+          <div class="item">
+            <div class="content">
+              <a href="/cropevent/<%= event._id %>">
+                <div class="header"><%= event.event %></div></a
+              >
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <a href="/cropevent"
+      ><div class="ui bottom attached button">
+        <i class="info circle icon"></i>
+        View all
+      </div></a
+    >
+  </div>
+  <% } %> <% if(tasks && tasks.length) {%>
+  <div class="card teal">
+    <div class="content">
+      <div class="header">Recent Livestock Tasks</div>
+      <div class="description">
+        <div class="ui celled list">
+          <% for (let task of tasks) {%>
+          <div class="item">
+            <div class="content">
+              <a href="/task/<%= task._id %>">
+                <div class="header"><%= task.task %></div></a
+              >
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <a href="/task"
+      ><div class="ui bottom attached button">
+        <i class="info circle icon"></i>
+        View all
+      </div></a
+    >
+  </div>
+  <% } %> <% if(cTasks && cTasks.length) {%>
+  <div class="card teal">
+    <div class="content">
+      <div class="header">Recent Crop Tasks</div>
+      <div class="description">
+        <div class="ui celled list">
+          <% for (let task of cTasks) {%>
+          <div class="item">
+            <div class="content">
+              <a href="/croptask/<%= task._id %>">
+                <div class="header"><%= task.task %></div></a
+              >
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <a href="/croptask"
+      ><div class="ui bottom attached button">
+        <i class="info circle icon"></i>
+        View all
+      </div></a
+    >
+  </div>
+  <% } %> <% if(currentUser.isAdmin === true) {%> <% if(sales && sales.length)
+  {%>
+  <div class="card teal">
+    <div class="content">
+      <div class="header">Recent Livestock Sales</div>
+      <div class="description">
+        <div class="ui celled list">
+          <% for (let sale of sales) {%>
+          <div class="item">
+            <div class="content">
+              <a href="/income/<%= sale._id %>">
+                <div class="header"><%= sale.income %></div></a
+              >
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <a href="/income"
+      ><div class="ui bottom attached button">
+        <i class="info circle icon"></i>
+        View all
+      </div></a
+    >
+  </div>
+  <% } %> <% if(cIncome && cIncome.length) {%>
+  <div class="card teal">
+    <div class="content">
+      <div class="header">Recent Crop Sales</div>
+      <div class="description">
+        <div class="ui celled list">
+          <% for (let sale of cIncome) {%>
+          <div class="item">
+            <div class="content">
+              <a href="/cropinflow/<%= sale._id %>">
+                <div class="header"><%= sale.income %></div></a
+              >
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <a href="/cropinflow"
+      ><div class="ui bottom attached button">
+        <i class="info circle icon"></i>
+        View all
+      </div></a
+    >
+  </div>
+  <% } %> <% } %>
+</div>

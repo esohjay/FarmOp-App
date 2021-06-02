@@ -3,8 +3,9 @@
 
     <% let totalIncome=0; %>
     <a class="button green ui" href="/income/new">Add an Event</a>
-            <h1> Livestock Income</h1>
-
+            
+            <%- include('../partials/animalIncome') %>
+            <h1 class=" ui header center aligned"> Livestock Income</h1>
             <table class="ui celled selectable unstackable table">
                 <thead>
                     <tr>
@@ -15,7 +16,7 @@
 
                     </tr>
                 </thead>
-                <% for(let income of inflow){ %>
+                <% for(let income of inflow.docs){ %>
                     <tbody>
                         <tr>
                             <td>
@@ -48,3 +49,24 @@
                                     <td></td>
                                 </tr>
             </table>
+
+               <% if (inflow.totalPages > 1) {%>
+<div class="ui   grid">
+  <div class="ui eleven wide column centered">
+    <div class="ui raised segment">
+      <% if (inflow.prevPage) {%>
+        <a class="ui green button" href="/income?page=<%= inflow.prevPage %> ">Prev</a>
+        <% } %> 
+  <%for (let i = 1; i <= inflow.totalPages; i++) {%>
+    
+    <a href="/income?page=<%= i %>"
+      <%= i === inflow.page ? "style = color:yellow;" : "style = color:green;" %> 
+      ><%= i %> </a>
+  <%  }  %> 
+      <% if (inflow.nextPage ) {%>
+        <a class="ui green button" href="/income?page=<%= inflow.nextPage %> ">Next</a>
+        <% } %>
+    </div>
+  </div>
+</div>
+<% } %>
