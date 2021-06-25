@@ -18,6 +18,7 @@ router.post('/', isLoggedin, validateEvent, catchAsync( async (req, res) => {
     const crop = await Crop.findById(id)
     
    const event = new cropEvent(req.body.event)
+   event.creator = req.user._id
    crop.events.push(event);
    
    await event.save()

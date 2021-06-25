@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
+const changeDate = require("../utils/changeDate")
 
 const CTask = require("../models/cropTask");
 const Event = require("../models/cropEvent");
@@ -31,7 +32,7 @@ router.get(
     let names = [];
     let cropTasks = [];
 
-    const tasks = await CTask.paginate(dbQuery, dbOption || options);
+    const tasks = await CTask.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of tasks.docs) {
       names.push(result.name);
       cropTasks.push(result.task);
@@ -49,8 +50,8 @@ router.get(
   "/new",
   isLoggedin,
   catchAsync(async (req, res) => {
-    const staff = await User.find({});
-    const crop = await Crop.find({});
+    const staff = await User.find({farmId: req.user._id});
+    const crop = await Crop.find({creator: req.user._id});
 
     res.render("cropTask/new", { staff, crop });
   })
@@ -61,6 +62,8 @@ router.post(
   validateTask,
   catchAsync(async (req, res) => {
     const task = new CTask(req.body.task);
+    task.creator = req.user._id
+    //task.workers = req.body.workers;
     await task.save();
     res.redirect(`/croptask/${task._id}`);
   })
@@ -70,8 +73,8 @@ router.get(
   isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const task = await CTask.findById(id).populate("staff");
-    const staff = await User.find({});
+    const task = await CTask.findById(id)
+    const staff = await User.find({farmId: req.user._id});
     if (!task) {
       req.flash("error", "No task found");
       return res.redirect("/croptask");
@@ -84,9 +87,12 @@ router.get(
   isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const staff = await User.find({});
+    const staff = await User.find({farmId: req.user._id});
     const task = await CTask.findById(id);
-    res.render("cropTask/edit", { task, staff });
+     const crop = await Crop.find({creator: req.user._id});
+    const deadline = changeDate(task.deadline)
+    const startDate = changeDate(task.startDate)
+    res.render("cropTask/edit", { task, staff, deadline, crop, startDate });
   })
 );
 router.post(
@@ -112,7 +118,7 @@ router.post(
 router.put(
   "/:id",
   isLoggedin,
-  validateTaskEdit,
+  validateTask,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const task = await CTask.findByIdAndUpdate(id, { ...req.body.task });

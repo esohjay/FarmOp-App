@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 <div class="ui   grid">
     <div class="ui eleven wide column centered">
-        <a class="ui green button" href="/breeder">Back</a>
+        <a class="ui btn button" href="/breeder">Back</a>
         <div class="ui raised segment">
             <form class="myFormValidate" action="/breeder/<%= breeder._id %>?_method=PUT " method="POST" enctype="multipart/form-data">
                 <div class="ui form">
@@ -18,6 +18,10 @@
                 <%= breeder.name %>
               </option>
               <option value="Chicken">Chicken</option>
+               <option value="Turkey">Turkey</option>
+              <option value="Ostrich">Ostrich</option>
+              <option value="Guinea Fowl">Guinea Fowl</option>
+               <option value="Pig">Pig</option>
               <option value="Catfish">CatFish</option>
               <option value="Cattle">Cattle</option>
               <option value="Sheep">Sheep</option>
@@ -42,6 +46,25 @@
                         <label for="dam">Dam</label>
                         <input type="text" id="dam" name="breeder[dam]" value="<%= breeder.dam %>">
                     </div>
+
+
+
+                     <div class="field required">
+            <label for="category">Category</label>
+            <select
+              name="breeder[category]"
+              id="status"
+              class="ui dropdown search"
+            >
+              <option value="<%= breeder.category %> ">
+                <%=breeder.category %>
+              </option>
+              <option value="Poultry">Poultry</option>
+              <option value="Fishery">Fishery</option>
+              <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
+              <option value="Non-Ruminant">Non-Ruminant(Pig, Rabbit, Snail...)</option>
+            </select>
+          </div>
                     
                         <div class="ui form">
                             <div class="field">
@@ -54,7 +77,10 @@
                                     </div>
                                     </div>
 
-                   
+                                         <div class="field required">
+            <label for="dob">DOB</label>
+            <input type="date" id="dob" name="breeder[dob]" value="<%= dob %>" />
+          </div>
                 
                     <div class="field ">
                         <label for="image">Image</label>
@@ -64,9 +90,9 @@
                         <label for="description">Brief Description</label>
                         <textarea name="breeder[description]" id="description" cols="30" rows="3"  ><%= breeder.description %></textarea>
                     </div>
-                    <button class="ui button fluid green">Save</button>
+                    <button class="ui button fluid btn">Save</button>
                 </div>
-                <div class="ui error message"></div>
+               
             </form>
 
         </div>

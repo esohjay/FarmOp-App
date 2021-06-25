@@ -9,34 +9,35 @@ const {isLoggedin, validateFarmstock} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const FarmStock = require('../models/farmstock');
-
+const {setImage} = require("../utils/logics")
 
 router.post('/', isLoggedin, upload.single('image'), validateFarmstock, catchAsync( async (req, res) => {
-  try {const {id} = req.params
+  const {id} = req.params
    
     const breeder = await Breeder.findById(id)
     const farmstock = new FarmStock(req.body.farmstock)
-    const {path, filename} = req.file
-   farmstock.image = {url: path, filename: filename};
-  const newBreeder = breeder.farmstock.push(farmstock);
-   //animal.livestock.push(updatedLivestock)
+    farmstock.creator = req.user._id
+    const animalName = farmstock.name
+     
+      if (req.file) {
+        const { path, filename } = req.file;
+        farmstock.image = { url: path, filename: filename };
+      } else if (req.file === undefined) {
+         farmstock.image = setImage(farmstock.image, animalName) 
+     
+      }
+      const exist = await FarmStock.find({$and: [{creator: req.user._id}, {tag: farmstock.tag}]})
+      if(exist.length){
+        req.flash("error", "Tag Number already exist");
+       res.redirect("back");
+
+      }else{
+         breeder.farmstock.push(farmstock);
    await farmstock.save()
    await breeder.save()
-   
-   res.redirect(`/breeder/${breeder._id}`)}
-   catch(err){
-       const {name , tag, category, sire, dam, breed, sex,  productionStage, description, healthStatus } = req.body.farmstock;
-       let error = err.message;
-       if(error.includes('duplicate') && error.includes('index: tag_1 dup key')){
-            req.flash('error', 'Tag Number already exist')
-            //error = 'Tag Number already exist'
-            //res.redirect('/animal/new' , {name , batch, category, breed, quantity, source, description })
-             res.redirect('back')
-       }
-     
-       
-     
-    }
+    res.redirect(`/breeder/${breeder._id}`)
+      }
+ 
 }));
 
 

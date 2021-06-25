@@ -4,7 +4,7 @@
 <div class="ui grid">
   <div class="ui eleven wide column centered">
     <div class="ui raised segment">
-      <form action="/profile?_method=PUT" method="POST">
+      <form action="/user/update-profile?_method=PUT" method="POST">
         <div class="ui form">
           <div class="field required">
             <label for="username">Username:</label>
@@ -105,7 +105,7 @@
           </div>
           <div id="validation-message"></div>
           <br />
-          <button class="ui button fluid green" id="update-profile">
+          <button class="ui button fluid btn" id="submit-btn">
             Update
           </button>
         </div>

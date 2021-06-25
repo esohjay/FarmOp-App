@@ -14,6 +14,7 @@ router.post('/', isLoggedin, validateMortality, catchAsync( async (req, res) => 
    const {id} = req.params
     const animal = await Animal.findById(id)
     const animalMortality = new Mortality(req.body.mortality)
+    animalMortality.creator = req.user._id
    animal.mortality.push(animalMortality);
    
    await animalMortality.save()

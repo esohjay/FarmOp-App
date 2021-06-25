@@ -5,7 +5,11 @@ const cropIncomeSchema = new Schema({
   income: String,
   date: Date,
   name: String,
-  image: String,
+  creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   amount: Number,
   createdAt: { type: Date, default: Date.now() },
   note: String,

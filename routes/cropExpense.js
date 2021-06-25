@@ -16,6 +16,7 @@ router.post(
     const { id } = req.params;
     const crop = await Crop.findById(id);
     const expense = new cropExpense(req.body.expense);
+    expense.creator = req.user._id
     crop.expenses.push(expense);
     await expense.save();
     await crop.save();

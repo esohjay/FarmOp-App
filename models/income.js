@@ -8,6 +8,11 @@ const IncomeSchema = new Schema({
   amount: Number,
   note: String,
   createdAt: { type: Date, default: Date.now() },
+   creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 IncomeSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Income", IncomeSchema);

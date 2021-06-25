@@ -14,6 +14,7 @@ router.post('/', isLoggedin, validateEgg, catchAsync( async (req, res) => {
    const {id} = req.params
     const animal = await Animal.findById(id)
     const animalEgg = new Egg(req.body.egg)
+    animalEgg.creator = req.user._id
    animal.egg.push(animalEgg);
    
    await animalEgg.save()

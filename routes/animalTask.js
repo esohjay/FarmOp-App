@@ -4,8 +4,7 @@ const router = express.Router({mergeParams: true});
 const Animal = require('../models/animal')
 
 
-const User = require('../models/user')
-const Event = require('../models/event')
+
 const Task = require('../models/task')
 const {isLoggedin, validateTask} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
@@ -18,6 +17,7 @@ router.post('/', isLoggedin, validateTask, catchAsync(async (req, res) => {
     const animal = await Animal.findById(id)
     
    const task = new Task(req.body.task)
+   task.creator = req.user._id
    animal.tasks.push(task);
    
    await task.save()

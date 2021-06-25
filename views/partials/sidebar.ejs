@@ -2,35 +2,51 @@
   <div class="item">
     <div class="header">General</div>
     <div class="menu">
-      <a class="item" href="/profile">
+      <% if(currentUser) {%> 
+      <a class="item" href="/user/profile/<%= currentUser.id %>">
+        
         <div>
           <i class="icon tachometer alternate"></i>
           Dashboard
         </div>
       </a>
-
-      <% if(currentUser && currentUser.isAdmin){ %>
-      <a class="item" href="/register">
+        <% } %> 
+      <% if(!currentUser || currentUser && currentUser.isAdmin){ %>
+      <a class="item" href="/user/register">
         <div>
           <i class="user icon"></i>
-          Register a Staff
+          Register <%= currentUser && currentUser.isAdmin ? 'a staff' : '' %> 
         </div>
       </a>
       <% } %>
+      <% if(currentUser && currentUser.isAdmin) {%> 
+      <a class="item" href="/user">
+        
+        <div>
+          <i class="icon users alternate"></i>
+          Staff
+        </div>
+      </a>
+        <% } %> 
     </div>
   </div>
 
   <div class="ui styled accordion sidebar-accordion">
-    <div class="title active">
-      <i class="dropdown icon"></i>
+    <div class="title active sidebar-section">
+      <i class=" angle down icon"></i>
       Animal Section
     </div>
     <div class="content active">
       <div class="item">
         <div class="header">Animal Batch</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/animal/new">
             <div><i class="plus icon"></i>New Batch</div>
+          </a>
+          <% } %> 
+          <a class="item" href="/animal/new">
+            <div><i class="plus icon"></i>Create Group</div>
           </a>
           <a class="item" href="/animal">
             <div><i class="boxes icon"></i>Batches</div>
@@ -41,16 +57,18 @@
       <div class="item">
         <div class="header">Livestock</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/farmstock/new">
             <div><i class="plus icon"></i>New Livestock</div>
           </a>
+          <% } %> 
           <a class="item" href="/farmstock">
             <div><i class="sticker mule icon"></i>All Livestock</div>
           </a>
-          <a class="item" href="/farmstock">
+          <a class="item" href="/livestock/dead">
             <div><i class="ban icon"></i>Dead Livestock</div>
           </a>
-          <a class="item" href="/farmstock">
+          <a class="item" href="/livestock/sales">
             <div><i class="credit card outline icon"></i>Sold Livestock</div>
           </a>
         </div>
@@ -58,9 +76,10 @@
       <div class="item">
         <div class="header">Breeder</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/breeder/new">
             <div><i class="plus icon"></i>Add Breeder</div>
-          </a>
+          </a><% } %> 
           <a class="item" href="/breeder">
             <div><i class="sticker mule icon"></i>Breeders</div>
           </a>
@@ -69,15 +88,19 @@
       <div class="item">
         <div class="header">Finance</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/income/new">
             <div><i class="plus icon"></i>New Income</div>
           </a>
+          <% } %> 
           <a class="item" href="/income">
             <div><i class="money bill alternate outline icon"></i>Income</div>
           </a>
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/expense/new">
             <div><i class="plus icon"></i>New Expense</div>
           </a>
+          <% } %> 
           <a class="item" href="/expense">
             <div><i class="money bill alternate icon"></i>Expenses</div>
           </a>
@@ -87,9 +110,11 @@
       <div class="item">
         <div class="header">Event</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/event/new">
             <div><i class="plus icon"></i>Add Event</div>
           </a>
+          <% } %> 
           <a class="item" href="/event">
             <div><i class="folder open icon"></i>Events</div>
           </a>
@@ -99,28 +124,45 @@
       <div class="item">
         <div class="header">Task</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/task/new">
             <div><i class="plus icon"></i>Add Task</div>
           </a>
+          <%} %> 
           <a class="item" href="/task">
             <div><i class="tasks icon"></i>Tasks</div>
+          </a>
+        </div>
+      </div>
+       <div class="item">
+        <div class="header">Treatment</div>
+        <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
+          <a class="item" href="/treatment/new">
+            <div><i class="plus icon"></i>Add Treatment</div>
+          </a>
+          <% } %> 
+          <a class="item" href="/treatment">
+            <div><i class="eye dropper icon"></i>Treatments</div>
           </a>
         </div>
       </div>
     </div>
   </div>
   <div class="ui styled accordion sidebar-accordion">
-    <div class="title active">
-      <i class="dropdown icon"></i>
+    <div class="title active sidebar-section">
+      <i class="angle down icon"></i>
       Crop Section
     </div>
     <div class="content active">
       <div class="item">
         <div class="header">Crop</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/crop/new">
             <div><i class="plus icon"></i>New Crop</div>
           </a>
+          <% } %> 
           <a class="item" href="/crop">
             <div><i class="leaf icon"></i>Crops</div>
           </a>
@@ -130,11 +172,27 @@
       <div class="item">
         <div class="header">Field</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/field/new">
             <div><i class="plus icon"></i>Add Field</div>
           </a>
+          <% } %> 
           <a class="item" href="/field">
             <div><i class="map marker alternate icon"></i>All Fields</div>
+          </a>
+        </div>
+      </div>
+
+       <div class="item">
+        <div class="header">Input</div>
+        <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
+          <a class="item" href="/input/new">
+            <div><i class="plus icon"></i>Add Input</div>
+          </a>
+          <% } %> 
+          <a class="item" href="/input">
+            <div><i class="tint icon"></i>All Input</div>
           </a>
         </div>
       </div>
@@ -142,15 +200,19 @@
       <div class="item">
         <div class="header">Finance</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/cropinflow/new">
             <div><i class="plus icon"></i>New Income</div>
           </a>
+          <% } %> 
           <a class="item" href="/cropinflow">
             <div><i class="money bill alternate outline icon"></i>Income</div>
           </a>
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/cropexpense/new">
             <div><i class="plus icon"></i>New Expense</div>
           </a>
+          <% } %> 
           <a class="item" href="/cropexpense">
             <div><i class="money bill alternate icon"></i>Expenses</div>
           </a>
@@ -160,9 +222,11 @@
       <div class="item">
         <div class="header">Event</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/cropevent/new">
             <div><i class="plus icon"></i>Add Event</div>
           </a>
+          <% } %> 
           <a class="item" href="/cropevent">
             <div><i class="folder open icon"></i>Events</div>
           </a>
@@ -172,9 +236,11 @@
       <div class="item">
         <div class="header">Task</div>
         <div class="menu">
+          <% if(currentUser && currentUser.isAdmin) {%> 
           <a class="item" href="/croptask/new">
             <div><i class="plus icon"></i>Add Task</div>
           </a>
+          <% } %> 
           <a class="item" href="/croptask">
             <div><i class="tasks icon"></i>Tasks</div>
           </a>
@@ -196,22 +262,24 @@
   </div>
 
   <div class="right menu">
-    <a href="#" class="item">
+    <% if(currentUser ) {%> 
+    <a href="/notification" class="item">
       <i class="bell icon"></i>
     </a>
-    <div class="ui dropdown item">
+    <%} %> 
+    <div class="ui dropdown item right-menu">
       <i class="user cirlce icon"></i>
       <div class="menu">
         <% if(!currentUser) { %>
-        <a href="/login" class="item">
-          <i class="info circle icon"></i> Login</a
+        <a href="/user/login" class="item">
+          <i class="login circle icon"></i> Login</a
         >
 
         <% }else {%>
-        <a href="/update-profile" class="item">
+        <a href="/user/update-profile" class="item">
           <i class="edit icon"></i> Update Profile</a
         >
-        <a href="/logout" class="item">
+        <a href="/user/logout" class="item">
           <i class="sign-out icon"></i>
           Logout
         </a>

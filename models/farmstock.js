@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 const Lweight = require("./weight");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const Schema = mongoose.Schema;
-
+const Treatment = require("./treatment");
 const ImageSchema = new Schema({
   url: String,
   filename: String,
 });
 
 const FarmStockSchema = new Schema({
-  tag: { type: String, unique: true },
+  tag: String,
   breed: String,
   name: String,
   sex: String,
@@ -24,11 +24,21 @@ const FarmStockSchema = new Schema({
   sire: String,
   dam: String,
   createdAt: { type: Date, default: Date.now() },
-
+   creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   lWeight: [
     {
       type: Schema.Types.ObjectId,
       ref: "Lweight",
+    },
+  ],
+  treatments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Treatment",
     },
   ],
 });
@@ -37,6 +47,11 @@ FarmStockSchema.post("findOneAndDelete", async function (doc) {
     await Lweight.deleteMany({
       _id: {
         $in: doc.lWeight,
+      },
+    });
+    await Treatment.deleteMany({
+      _id: {
+        $in: doc.treatments,
       },
     });
   }

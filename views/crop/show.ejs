@@ -1,19 +1,19 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="ui green segments">
-  <div class="ui segment">
+  <div class="ui green segment">
     
       <div class="ui three column centered grid">
         <div class="column">
-          <div class="ui medium rounded image ">
+          <div class="ui medium circular image ">
             <img src="<%= crop.image.url %> ">
           </div>
         </div>
       </div>
      
   <div class="ui segments">
-    <div class="ui huge header segment">
-      <p><%= crop.crop %></p>
+    <div class="ui huge header green segment">
+      <p class="color-green"><%= crop.crop %></p>
     </div>
     <div class="ui segment">
       <p><span class="date">Planted: <%= crop.date.toDateString() %></span></p>
@@ -23,7 +23,7 @@
     </div>
     
   </div>
-  <div class="ui segment">
+  <div class="ui yellow segment">
     <p><%= crop.description %></p>
   </div>
   <div class="ui horizontal segments">
@@ -37,10 +37,10 @@
     </div>
     
   </div>
-  <div class="ui segment">
-    <a class="ui green button" href="/crop">Back</a>
+  <div class="ui green segment">
+    <a class="ui btn button" href="/crop">Back</a>
     <div class="ui buttons right floated">
-      <a  href="/crop/<%= crop._id %>/edit" class="ui yellow button">Edit</a>
+      <a  href="/crop/<%= crop._id %>/edit" class="ui btn2 button">Edit</a>
       <div class="or"></div>
       <button class="ui  negative button" id="test">Delete</button>
       <div class="ui modal test">
@@ -74,14 +74,14 @@
 <!-- ADD EVENT-->
 
 <div class="ui styled accordion">
-  <div class=" title">
+  <div class=" title color-green-h">
     <i class="dropdown icon"></i>
     Events
   </div>
   <div class=" content">
     View and add new event to <%= crop.crop %>
       <div class="accordion">
-        <div class="active  title">
+        <div class="active  title color-green-h">
           <i class="dropdown icon"></i>
           Add Event
         </div>
@@ -127,8 +127,8 @@
                 <label for="remark">Remark</label>
                 <textarea name="event[note]" id="remark" cols="30" rows="3"></textarea>
               </div>
-              <button class="ui button fluid green">Add an Event</button>
-              <div class="ui error message"></div>
+              <button class="ui button fluid btn">Add an Event</button>
+              
             </form>
           </div>
         </div>
@@ -138,7 +138,7 @@
         <!-- ADD EVENT END-->
 
       </div>
-      <div class="title">
+      <div class="title color-green-h">
         <i class="dropdown icon"></i>
         All Events
       </div>
@@ -147,11 +147,11 @@
         <table class="ui celled selectable unstackable table">
           <thead>
             <tr>
-              <th>Event</th>
-              <th>Date</th>
-              <th>Leader</th>
-              <th>Remark</th>
-              <th class="right aligned">Action</th>
+              <th class=" color-green">Event</th>
+              <th class=" color-green">Date</th>
+              <th class=" color-green">Leader</th>
+              <th class=" color-green">Remark</th>
+              <th class="right aligned color-green">Action</th>
 
             </tr>
           </thead>
@@ -171,7 +171,7 @@
                   <%= event.note %>
                 </td>
                 <td class="right aligned">
-                  <button class="tiny negative ui button eventBtns" ><i class="ui trash icon"></i></button>
+                  <i class="ui eventBtns trash icon"></i>
                     <div class="ui modal eventBtn">
                     <div class="header">Are you sure you want to delete <%= event.event %> event? </div>
                     <div class="content">
@@ -210,14 +210,14 @@
 
   <!--Start of Task-->
 
-  <div class=" title">
+  <div class=" title color-green-h">
     <i class="dropdown icon"></i>
     Tasks
   </div>
   <div class=" content">
     View and add new task for <%= crop.crop %>
       <div class="accordion">
-        <div class="active  title">
+        <div class="active  title color-green-h">
           <i class="dropdown icon"></i>
           Add a Task
         </div>
@@ -286,7 +286,7 @@
                 <label for="note">Note</label>
                 <textarea name="task[instructions]" id="note" cols="30" rows="3"></textarea>
               </div>
-              <button class="ui button fluid green">Create Task</button>
+              <button class="ui button fluid btn">Create Task</button>
             </div>
             </form>
           </div>
@@ -297,7 +297,7 @@
         <!-- ADD EVENT END-->
   
       </div>
-      <div class="title">
+      <div class="title color-green-h">
         <i class="dropdown icon"></i>
         All Tasks
       </div>
@@ -306,11 +306,11 @@
         <table class="ui celled selectable unstackable table">
           <thead>
             <tr>
-              <th>Task</th>
-              <th>Deadline</th>
-              <th>Leader</th>
+              <th class=" color-green">Task</th>
+              <th class=" color-green">Deadline</th>
+              <th class=" color-green">Leader</th>
               
-              <th class="right aligned">Action</th>
+              <th class="right aligned color-green">Action</th>
   
             </tr>
           </thead>
@@ -318,7 +318,7 @@
             <tbody>
               <tr>
                 <td>
-                  <%= task.task %>
+                  <a class="color-green-h" href="/croptask/<%= task._id %>"> <%= task.task %></a>
                 </td>
                 <td>
                   <%= task.deadline.toDateString()%>
@@ -328,7 +328,7 @@
                 </td>
                 
                 <td class="right aligned">
-                  <button class="tiny negative ui button taskBtns">Completed</i></button>
+                  <a><i class=" ui check green icon taskBtns"></i></a>
                   <div class="ui modal taskBtn">
                     <div class="header">Are you sure you have completed <%= task.task %> task? </div>
                     <div class="content">
@@ -367,7 +367,171 @@
 
   <!--End of Task-->
 
-  <div class="title">
+
+  <!--Start of Input-->
+
+  <div class=" title color-green-h">
+    <i class="dropdown icon"></i>
+    Input
+  </div>
+  <div class=" content">
+    View and add new input for <%= crop.crop %>
+      <div class="accordion">
+        <div class="active  title color-green-h">
+          <i class="dropdown icon"></i>
+          Add an Input
+        </div>
+        <div class="active content">
+  
+  
+          <div class="ui  form">
+            <form class="myFormValidate" action="/crop/<%= crop._id %>/input" method="POST">
+            <div class="ui form">
+          <div class="field required">
+            <label for="input">Input Type</label>
+            <input type="text" id="input" name="input[inputType]" placeholder="e.g Fertilizer" />
+          </div>
+          <div class="field required">
+            <label for="input">Crop</label>
+            <input type="text" id="input" name="input[inputType]" value="<%= crop.crop %>" readonly />
+          </div>
+          
+          <div class="field required">
+            <label for="drug"> Input Name </label>
+            <input
+              type="text"
+              id="drug"
+             
+              name="input[inputName]"
+              placeholder="e.g Urea Fertilizer"
+            />
+          </div>
+          <div class="field required">
+            <label for="dose"> Quantity </label>
+            <input
+              type="text"
+              id="dose"
+              
+              name="input[quantity]"
+              placeholder="quantity used"
+            />
+          </div>
+          <div class="field required">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              
+              name="input[date]"
+              placeholder="Date"
+            />
+          </div>
+           <div class="field required">
+            <label for="cost">Cost</label>
+            <input
+              type="number"
+              id="cost"
+             
+              name="input[cost]"
+              placeholder="Cost"
+            />
+          </div>
+          
+          <div class="field required">
+            <label for="note">Note</label>
+            <textarea
+              name="input[note]"
+              id="note"
+              cols="30"
+              rows="3"
+            ></textarea>
+          </div>
+          <button class="ui button fluid btn">Create Input</button>
+        </div>
+            </form>
+          </div>
+        </div>
+  
+  
+  
+        <!-- ADD Input END-->
+  
+      </div>
+      <div class="title color-green-h">
+        <i class="dropdown icon"></i>
+        All Input
+      </div>
+      <div class="content">
+  
+        <table class="ui celled selectable unstackable table">
+          <thead>
+            <tr>
+              <th class=" color-green">Input</th>
+              <th class=" color-green">Date</th>
+              <th class=" color-green">Name</th>
+               <th class=" color-green">Qty</th>
+              <th class="right aligned color-green">Action</th>
+  
+            </tr>
+          </thead>
+          <% for(let input of crop.inputs){ %>
+            <tbody>
+              <tr>
+                <td>
+                  <a class="color-green-h" href="/input/<%= input._id %>"> <%= input.inputType %></a>
+                </td>
+                <td>
+                  <%= input.date.toDateString()%>
+                </td>
+                <td>
+                  <%= input.inputName %>
+                </td>
+                <td>
+                  <%= input.quantity %>
+                </td>
+                <td class="right aligned">
+                  <a><i class=" ui check green icon taskBtns"></i></a>
+                  <div class="ui modal taskBtn">
+                    <div class="header">Are you sure you want to delete <%= input.inputType %>? </div>
+                    <div class="content">
+                      <p>If you so, <%= input.inputType %> will be removed.</p>
+                    </div>
+                    <div class="actions">
+                      <div class="ui buttons right floated ">
+                        <div class="segments horizontal ui">
+                          <div class="ui segment">
+                            <a href="" class="ui cancel mini yellow button">No</a>
+                          </div>
+                          <div class="ui segment">
+                            <form action="/crop/<%= crop._id %>/input/<%= input._id %>?_method=DELETE" method="POST">
+                              <button class="tiny negative ui button ">Yes</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+  
+                </td>
+              </tr>
+              <% } %>
+  
+        </table>
+  
+  
+  
+  
+      </div>
+  
+  
+  </div>
+
+  <!--End of Input-->
+
+
+
+  <div class="title color-green-h">
     <i class="dropdown icon"></i>
     Finance
   </div>
@@ -410,10 +574,10 @@
 
                     <div class="ui horizontal segments">
                       <div class="ui green segment">
-                        <p>Net profit for <%= crop.crop %></p>
+                        <p>Net profit for <%= crop.crop %> </p>
                       </div>
                       <div class="ui yellow segment">
-                        <p>
+                        <p class="<%= profit >= 0 ? 'color-green' : 'red' %> ">
                           <%= profit %>
                         </p>
                       </div>
@@ -423,7 +587,7 @@
                         
 
                         <div class="accordion">
-                          <div class="active title">
+                          <div class="active title color-green-h">
                             <i class="dropdown icon"></i>
                             Income
                           </div>
@@ -431,7 +595,7 @@
                             <p>View and add new Income made from <%= crop.crop %>
                             </p>
                             <div class="accordion">
-                              <div class="title">
+                              <div class="title color-green-h">
                                 <i class="dropdown icon"></i>
                                 Add Income
                               </div>
@@ -451,10 +615,7 @@
                                         <label for="date">Date</label>
                                         <input type="date" id="date" name="income[date]" placeholder="Date">
                                       </div>
-                                      <div class="field required">
-                                        <label for="receipt">Receipt No</label>
-                                        <input type="text" id="receipt" name="income[image]">
-                                      </div>
+                                     
                                       <div class="field required">
                                         <label for="amount">Amount</label>
                                         <input type="number" id="amount" name="income[amount]">
@@ -466,8 +627,8 @@
                                       <label for="note">Note</label>
                                       <textarea name="income[note]" id="note" cols="30" rows="3"></textarea>
                                     </div>
-                                    <button class="ui button fluid green">Add an Income</button>
-                                    <div class="ui error message"></div>
+                                    <button class="ui button fluid btn">Add an Income</button>
+                                    
                                   </form>
                                 </div>
 
@@ -476,7 +637,7 @@
                                 <!--Income End-->
 
                               </div>
-                              <div class="title">
+                              <div class="title color-green-h">
                                 <i class="dropdown icon"></i>
                                 Income Details for <%= crop.crop %>
                               </div>
@@ -487,10 +648,10 @@
                                 <table class="ui celled selectable unstackable table">
                                   <thead>
                                     <tr>
-                                      <th>Revenue</th>
-                                      <th>Date</th>
-                                      <th>Amount</th>
-                                      <th class="right aligned">Action</th>
+                                      <th class=" color-green">Revenue</th>
+                                      <th class=" color-green">Date</th>
+                                      <th class=" color-green">Amount</th>
+                                      <th class="right aligned color-green">Action</th>
 
                                     </tr>
                                   </thead>
@@ -508,11 +669,11 @@
                                         </td>
                                         <td class="right aligned">
 
-                                            <button class="tiny negative ui button incomeBtns" ><i class="ui trash icon"></i></button>
+                                            <i class="ui trash red incomeBtns icon"></i>
                                             <div class="ui modal incomeBtn">
                                               <div class="header">Are you sure you want to delete <%= income.income %> income? </div>
                                               <div class="content">
-                                                <p>If you delete, <%= income.income %> income will be deleted permanently.</p>
+                                                <p>If you delete, <%= income.income %> income   be deleted permanently.</p>
                                               </div>
                                               <div class="actions">
                                                 <div class="ui buttons right floated ">
@@ -536,7 +697,7 @@
                                       </tr>
                                       <% } %>
                                         <tr>
-                                          <td>Total</td>
+                                          <td class="color-green">Total</td>
                                           <td></td>
                                           <td>
                                             <%= incomeTotal %>
@@ -547,14 +708,14 @@
                               </div>
                             </div>
                           </div>
-                          <div class="title">
+                          <div class="title color-green-h">
                             <i class="dropdown icon"></i>
                             Expenses
                           </div>
                           <div class="content">
                             View and add all expenses on <%= crop.crop %>
                               <div class="accordion">
-                                <div class="title">
+                                <div class="title color-green-h">
                                   <i class="dropdown icon"></i>
                                   Add Expenses
                                 </div>
@@ -574,10 +735,7 @@
                                           <label for="date">Date</label>
                                           <input type="date" id="date" name="expense[date]" placeholder="Date">
                                         </div>
-                                        <div class="field required">
-                                          <label for="receipt">Receipt No</label>
-                                          <input type="text" id="receipt" name="expense[image]">
-                                        </div>
+                                       
                                         <div class="field required">
                                           <label for="amount">Amount</label>
                                           <input type="number" id="amount" name="expense[amount]">
@@ -589,15 +747,15 @@
                                         <label for="note">Note</label>
                                         <textarea name="expense[note]" id="note" cols="30" rows="3"></textarea>
                                       </div>
-                                      <button class="ui button fluid green">Add an Expense</button>
-                                      <div class="ui error message"></div>
+                                      <button class="ui button fluid btn">Add an Expense</button>
+                                     
                                     </form>
                                   </div>
 
 
                                   <!--Expense End-->
                                 </div>
-                                <div class="title">
+                                <div class="title color-green-h">
                                   <i class="dropdown icon"></i>
                                   Expense Details
                                 </div>
@@ -606,10 +764,10 @@
                                   <table class="ui celled selectable unstackable table">
                                     <thead>
                                       <tr>
-                                        <th>Expenditure</th>
-                                        <th>Date</th>
-                                        <th>Amount</th>
-                                        <th class="right aligned">Action</th>
+                                        <th class=" color-green">Expenditure</th>
+                                        <th class=" color-green">Date</th>
+                                        <th class=" color-green">Amount</th>
+                                        <th class="right aligned color-green">Action</th>
 
                                       </tr>
                                     </thead>
@@ -628,7 +786,7 @@
                                           <td class="right aligned">
 
 
-                                            <button class="tiny negative ui button expenseBtns"  ><i class="ui trash icon"></i></button>
+                                            <i class="ui expenseBtns red trash icon"></i>
                                             <div class="ui modal expenseBtn">
                                               <div class="header">Are you sure you want to delete <%= expense.expense %> expenses? </div>
                                               <div class="content">
@@ -657,7 +815,7 @@
                                         </tr>
                                         <% } %>
                                           <tr>
-                                            <td>Total</td>
+                                            <td class="color-green">Total</td>
                                             <td></td>
                                             <td>
                                               <%= expenseTotal %>

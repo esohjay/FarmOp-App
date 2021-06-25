@@ -1,16 +1,18 @@
 <% layout('layouts/boilerplate') %>
-<div class="ui segment">
- <a class="ui green button" href="/crop/new">Add a Crop</a>
-    
-    <div class="ui centered form">
-<form  action="/crop" method="GET">
-      <div class="ui right floated input">
-        <input type="text" placeholder="Search..." name="search" />
-      </div>
-      <button class="ui tiny button" type="submit"> <i class="search icon"></i></button>
-    </form>
-    </div>
+
+<form action="/crop" method="GET">
+  <div class="ui action input">
+  <input type="text" placeholder="Tag no" name="search">
+  <button class="ui icon btn2 button">
+    <i class="search icon"></i>
+  </button>
 </div>
+ </form> 
+
+ <a class="ui btn button" href="/crop/new">Add a Crop</a>
+    
+   
+
    
 <div class="ui grid stackable padded">
     <% for(let crop of crops.docs){ %>
@@ -32,8 +34,8 @@
                         <div class="middle aligned content">
                             <div class="header">
     
-                                <%= crop.crop %>
-                                    <a href="/crop/<%= crop._id %>"><i
+                                <a class="color-green-h" href="/crop/<%= crop._id %>"><%= crop.crop %>
+                                    <i
                                             class=" green caret square right outline float right icon"></i></a>
     
     
@@ -41,6 +43,29 @@
                             <div class="extra">
                                 <%= crop.date.toDateString() %>
                             </div>
+                            <div class="extra">
+            
+<div class="ui icon bottom right pointing dropdown right floated">
+  <i class="trash  icon"></i>
+  <div class="menu">
+    
+    <div class="item">Are you sure?</div>
+    <div class="item"><form action="/crop/<%= crop._id %>?_method=DELETE " method="POST">
+                 <button class="ui active button red right floated">
+            Delete
+              </button>
+              </form>
+            </div>
+             <div class="item">  </div>
+  </div>
+</div>
+          <div class="ui icon bottom left pointing ">
+ <a href="/crop/<%=crop._id %>/edit" ><i class="edit yellow icon"></i></a>
+ 
+            </div>      
+            
+           
+          </div>
                         </div>
         </div>
     
@@ -51,24 +76,24 @@
 
         <%} %>
 </div>
-        <% if (crops.totalPages> 1) {%>
-            <div class="ui   grid">
-                <div class="ui eleven wide column centered">
-                    <div class="ui raised segment">
-                        <% if (crops.prevPage) {%>
-                            <a class="ui green button" href="/crop?page=<%= crops.prevPage %> ">Prev</a>
-                            <% } %>
-                                <%for (let i=1; i <=crops.totalPages; i++) {%>
         
-                                    <a href="/crop?page=<%= i %>" <%=i===crops.page ? "style = color:yellow;"
-                                        : "style = color:green;" %>
-                                        ><%= i %> </a>
-                                    <% } %>
-                                        <% if (crops.nextPage ) {%>
-                                            <a class="ui green button"
-                                                href="/crop?page=<%= crops.nextPage %> ">Next</a>
-                                            <% } %>
-                    </div>
-                </div>
-            </div>
-            <% } %>
+
+
+            <% if (crops.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (crops.prevPage) {%>
+  <a class="ui btn page-num button" href="/crop?page=<%= crops.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
+  <%for (let i = 1; i <= crops.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/crop?page=<%= i %>"
+     <%= i===crops.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
+      <% if (crops.nextPage ) {%>
+  <a class="ui btn page-num button"  href="/crop?page=<%= crops.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
+</div>
+<% } %>

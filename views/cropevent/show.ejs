@@ -2,7 +2,7 @@
 
 <div class="ui raised segments">
     <div class="ui segment green">
-        <p class="ui huge header">
+        <p class="ui huge color-green header">
             <%= event.event %>
         </p>
     </div>
@@ -10,17 +10,20 @@
         <div class="ui yellow segment">
             <p>Done on <%= event.date.toDateString() %></p>
         </div>
-        <div class="ui segment">
+        <div class="ui black segment">
+            <p>Lead by <%= event.name %></p>
+        </div>
+        <div class="ui green segment">
             <p>Lead by <%= event.leader %></p>
         </div>
-        <div class="ui segment">
+        <div class="ui yellow segment">
             <p>Remark: <%= event.note %></p>
         </div>
     </div>
-    <div class="ui segment">
-    <a class="ui green button" href="/cropevent">Back</a>
+    <div class="ui green segment">
+    <a class="ui btn button" href="/cropevent">Back</a>
     <div class="ui buttons right floated">
-            <a href="/cropevent/<%=event._id %>/edit" class="ui yellow button">Edit</a>
+            <a href="/cropevent/<%=event._id %>/edit" class="ui btn2 button">Edit</a>
             <div class="or"></div>
             <button class="ui  negative button" id="test">Delete</button>
             <div class="ui modal test">

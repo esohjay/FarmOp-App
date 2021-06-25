@@ -8,6 +8,11 @@ const ExpenseSchema = new Schema({
   amount: Number,
   note: String,
   createdAt: { type: Date, default: Date.now() },
+   creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 ExpenseSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Expense", ExpenseSchema);

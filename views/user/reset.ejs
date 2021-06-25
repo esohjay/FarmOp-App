@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate')%>
+
+
+    <div class="ui   grid">
+        <div class="ui eleven wide column centered">
+            <h1 class="ui huge header">Reset Password</h1>
+            <div class="ui raised segment">
+                <form class="regFormValidae" action="/user/reset-password/<%= token %>?_method=PUT" method="POST">
+                    <div class="ui  form">
+
+                        <div class="field required">
+                            <label for="password">New password</label>
+                            <input type="password" id="new-password" name="password" placeholder="Password" autofocus>
+                        </div>
+                        <div class="field required">
+                            <label for="confirm"> Confirm Password</label>
+                            <input type="password" id="password-confirmation" name="confirm" placeholder="Confirm Password">
+                        </div>
+                        <div id="validation-message"></div>
+                        <button class="ui button fluid btn" id="submit-btn">Reset</button>
+                    </div>
+
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+
+   

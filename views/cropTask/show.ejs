@@ -1,25 +1,56 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="ui segments">
-  <div class="ui  centered huge header segment">
-    <p><%= task.task %></p>
+  <div class="ui  centered huge header green segment">
+    <p class="color-green"><%= task.task %></p>
   </div>
   <div class="ui segments">
     <div class="ui segment">
       <p>To be lead by <%= task.leader %></p>
     </div>
+    <div class="ui segment">
+      <p><%= task.name %>
+      </p>
+    </div>
   </div>
   <div class="ui horizontal segments">
-    <div class="ui segment">
+    <div class="ui yellow segment">
       <p> Start Date: 
         <%= task.startDate.toDateString() %>
       </p>
     </div>
-    <div class="ui segment">
-      <p><%= task.status %>
+    <div class="ui yellow segment">
+      <p><%= task.status %> <% if(task.status === "Completed") {%>
+        
+         
+                 <button class="ui  button btn mini taskBtns "> Add to event?</button>
+                                <div class="ui modal taskBtn">
+                                    <div class="header">Are you sure this task has been completed? </div>
+                                    <div class="content">
+                                        <p>Once completed, this task will be erased
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form
+                                                        action="/croptask/<%= task._id %>/complete"
+                                                        method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+      <% } %> 
       </p>
     </div>
-    <div class="ui segment">
+    <div class="ui yellow segment">
       <p> Deadline:
         <%= task.deadline.toDateString() %>
       </p>
@@ -29,13 +60,13 @@
     <p> Team Memebers: <%= task.workers %></p>
   </div>
   
-  <div class="ui segment">
+  <div class="ui green segment">
     <p><%= task.instructions %></p>
   </div>
-  <div class="ui segment">
-    <a class="ui green button" href="/task">Back</a>
+  <div class="ui yellow segment">
+    <a class="ui btn button" href="/croptask">Back</a>
     <div class="ui buttons right floated">
-      <a href="/croptask/<%= task._id %>/edit" class="ui yellow button">Edit</a>
+      <a href="/croptask/<%= task._id %>/edit" class="ui btn2 button">Edit</a>
       <div class="or"></div>
       <button class="ui  negative button" id="test">Delete</button>
       <div class="ui modal test">

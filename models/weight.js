@@ -6,6 +6,12 @@ const WeightSchema = new Schema({
   weight: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now() },
   initWeight: Number,
+  creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  
 });
 
 module.exports = mongoose.model("Weight", WeightSchema);

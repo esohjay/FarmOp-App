@@ -13,18 +13,26 @@
     </div>
     <div class="field">
       <label>To</label>
-      <input type="date" value="<%=
+      <div class="ui action input">
+        <input type="date" value="<%=
                   query.date ? query.date.to : '' %>" name="date[to]">
+  <button class="ui icon btn2  button">
+    <i class="search icon"></i>
+  </button>
+</div>
+
+                   
     </div>
-   
+  
   </div>
+  
   </form>
 </div>
 
 
 
 
-     <div class="ui labeled icon top right pointing dropdown right floated button">
+     <div class="ui labeled icon top right pointing dropdown right floated btn button">
   <i class="sliders horizontal icon"></i>
   <span class="text">Sort</span>
   <div class="menu">
@@ -59,7 +67,7 @@
   
     <div class="ui accordion">
       <div class="title">
-        <a class="ui green button">Filter</a>
+        <a class="ui btn button">Filter</a>
       </div>
       <div class="content">
         <div class="ui grid">
@@ -112,8 +120,8 @@
           
    
               </div>
-               <a class="ui red button" href="/event">Reset</a>
-              <button class="ui button" type="submit">Submit</button>
+               <a class="ui btn2 button" href="/event">Reset</a>
+              <button class="ui btn button" type="submit">Submit</button>
             </form>
           </div>
         </div>

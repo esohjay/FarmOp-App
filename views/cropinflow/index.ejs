@@ -2,17 +2,17 @@
 
 
     <% let totalIncome=0; %>
-    <a class="button green ui" href="/cropinflow/new">Add an Income</a>
+    <a class="button btn ui" href="/cropinflow/new">Add an Income</a>
            
         <%- include('../partials/cropIncome') %>
          <h1 class=" ui header center aligned"> Crop Income</h1>
             <table class="ui celled selectable unstackable table">
                 <thead>
                     <tr>
-                        <th>Revenue</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th class="right aligned">Action</th>
+                        <th class=" color-green">Revenue</th>
+                        <th class=" color-green">Date</th>
+                        <th class=" color-green">Amount</th>
+                        <th class="right aligned color-green">Action</th>
 
                     </tr>
                 </thead>
@@ -41,7 +41,7 @@
                         <% income.amount !==undefined ? totalIncome +=income.amount : totalIncome +=0 %>
                             <% } %>
                                 <tr>
-                                    <td>Total</td>
+                                    <td class="color-green">Total</td>
                                     <td></td>
                                     <td>
                                         <%= totalIncome %>
@@ -50,23 +50,24 @@
                                 </tr>
             </table>
 
-             <% if (inflow.totalPages > 1) {%>
-<div class="ui   grid">
+        
+
+
+<% if (inflow.totalPages > 1) {%>
+  <div class="ui   grid">
   <div class="ui eleven wide column centered">
-    <div class="ui raised segment">
-      <% if (inflow.prevPage) {%>
-        <a class="ui green button" href="/cropinflow?page=<%= inflow.prevPage %> ">Prev</a>
-        <% } %> 
+<div class="ui small basic icon buttons">
+   <% if (inflow.prevPage) {%>
+  <a class="ui btn page-num button" href="/cropinflow?page=<%= inflow.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
   <%for (let i = 1; i <= inflow.totalPages; i++) {%>
-    
-    <a href="/cropinflow?page=<%= i %>"
-      <%= i === inflow.page ? "style = color:yellow;" : "style = color:green;" %> 
-      ><%= i %> </a>
-  <%  }  %> 
+  <a class="ui btn button page-num   " href="/cropinflow?page=<%= i %>"
+     <%= i===inflow.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
       <% if (inflow.nextPage ) {%>
-        <a class="ui green button" href="/cropinflow?page=<%= inflow.nextPage %> ">Next</a>
-        <% } %>
-    </div>
-  </div>
+  <a class="ui btn page-num button"  href="/cropinflow?page=<%= inflow.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
 </div>
 <% } %>

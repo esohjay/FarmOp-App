@@ -12,7 +12,7 @@ const {
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
-
+const changeDate = require("../utils/changeDate")
 router.get(
   "/",
   isLoggedin,
@@ -29,7 +29,7 @@ router.get(
     };
 
     let names = [];
-    const expenses = await Expense.paginate(dbQuery, dbOption || options);
+    const expenses = await Expense.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of expenses.docs) {
       names.push(result.name);
     }
@@ -49,6 +49,7 @@ router.post(
   validateExpense,
   catchAsync(async (req, res) => {
     const expense = new Expense(req.body.expense);
+    expense.creator = req.user._id
     await expense.save();
     res.redirect(`/expense/${expense._id}`);
   })
@@ -59,6 +60,10 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const expense = await Expense.findById(id);
+    if (!expense) {
+      req.flash("error", "No record found");
+      return res.redirect("/expense");
+    }
     res.render("expense/show", { expense });
   })
 );
@@ -68,7 +73,8 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const expense = await Expense.findById(id);
-    res.render("expense/edit", { expense });
+    const date = changeDate(expense.date)
+    res.render("expense/edit", { expense, date });
   })
 );
 router.put(

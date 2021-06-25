@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 
 const Crop = require('../models/crop')
-const Event = require('../models/cropEvent')
+
 const CTask = require('../models/cropTask')
 const {isLoggedin, validateTask} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
@@ -17,6 +17,8 @@ router.post('/', isLoggedin, validateTask, catchAsync( async (req, res) => {
     const crop = await Crop.findById(id)
     
    const task = new CTask(req.body.task)
+   task.workers = req.body.workers;
+   task.creator = req.user._id
    crop.tasks.push(task);
    
    await task.save()

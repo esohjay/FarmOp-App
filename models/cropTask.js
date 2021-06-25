@@ -12,12 +12,12 @@ const cTaskSchema = new Schema({
   instructions: String,
   createdAt: { type: Date, default: Date.now() },
   name: String,
-  staff: [
+   priority: String,
+   creator: 
     {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-  ],
 });
 cTaskSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("CTask", cTaskSchema);

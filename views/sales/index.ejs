@@ -1,0 +1,64 @@
+<% layout('layouts/boilerplate') %>
+
+    
+ <table class="ui celled selectable unstackable table">
+                <thead>
+                    <tr>
+                        <th class=" color-green">Tag</th>
+                        <th class=" color-green">Name</th>
+                        <th class=" color-green">Batch</th>
+                        <th class=" color-green">Price</th>
+                        <th class="right aligned color-green">Action</th>
+
+                    </tr>
+                </thead>
+                <% for(let sales of sold.docs){ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= sales.tag %>
+                            </td>
+
+                            <td>
+                                <%= sales.name %>
+                            </td>
+                             <td>
+                                <%= sales.batch%>
+                            </td>
+
+                            <td>
+                                <%= sales.amount%>
+                            </td>
+
+                            <td class="right aligned">
+                                <a href="/livestock/sales/<%= sales._id %>"><i
+                                        class=" green caret square right outline float right icon"></i></a>
+                            </td>
+
+                        </tr>
+                       
+                            <% } %>
+                               
+            </table>
+
+
+
+
+<% if (sold.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (sold.prevPage) {%>
+  <a class="ui btn page-num button" href="/livestock/sales?page=<%= sold.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
+  <%for (let i = 1; i <= sold.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/livestock/sales?page=<%= i %>"
+     <%= i===sold.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
+      <% if (sold.nextPage ) {%>
+  <a class="ui btn page-num button"  href="/livestock/sales?page=<%= sold.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
+</div>
+<% } %>

@@ -58,23 +58,23 @@
     <% fcrPWtGain = Math.round((avFeed/wtGain)*100)/100 %> 
     <% } %>
     <div class="ui segments">
-        <div class="ui segment">
+        <div class="ui green segment">
             <div class="ui three column centered grid ">
                 <div class="column">
-                    <div class="ui medium rounded image owl-carousel owl-theme">
+                    <div class="ui medium rounded image ">
                         <img src="<%= animal.image%> ">
                     </div>
                 </div>
             </div>
             <div class="ui segments">
-                <div class="ui horizontal segments">
-                    <div class="ui huge header segment">
-                        <p>
+                <div class="ui horizontal  segments">
+                    <div class="ui huge header yellow segment">
+                        <p class="color-green">
                             <%= animal.name %>
                         </p>
                     </div>
-                    <div class="ui huge header segment">
-                        <p>
+                    <div class="ui huge header yellow segment">
+                        <p class="color-green">
                             <%= animal.batch %>
                         </p>
                     </div>
@@ -113,17 +113,17 @@
             
             
             <div class="ui horizontal segments">
-                <div class="ui  segment">
+                <div class="ui greenyellow segment">
                     <p> Starting Population:
                         <%= animal.quantity %>
                     </p>
                 </div>
-                <div class="ui  segment">
+                <div class="ui greenyellow segment">
                     <p>Current Population:
                         <%= currentPopulation %>
                     </p>
                 </div>
-                <div class="ui  segment">
+                <div class="ui greenyellow segment">
                     <p>Mortality Rate:
                         <%= deathRate > 0 ? mortalityRate : initValue  %>%
                     </p>
@@ -132,18 +132,18 @@
             </div>
             <% if(animal.category === "Poultry") {%> 
             <div class="ui horizontal segments">
-                <div class="ui  segment">
+                <div class="ui yellow segment">
                     <p>
                     Laid <%= eggSumOvertime %> eggs (<%= eggTotal %> Crates)
                     </p>
                 </div>
-                <div class="ui  segment">
+                <div class="ui yellow segment">
                     <p>
                         
                         Hen Day Egg Production (HDEP) <%= eggSumOvertime> 0 ? henDayOvertime : initValue %>%
                     </p>
                 </div>
-                <div class="ui  segment">
+                <div class="ui yellow segment">
                     <p>
                         Hen House Egg Production (HHEP) <%= eggSumOvertime> 0 ? henHouseOvertime : initValue %>
                     </p>
@@ -152,13 +152,13 @@
             <% } %> 
 <div class="ui horizontal segments">
      <% if(animal.category === "Poultry") {%> 
-    <div class="ui  segment">
+    <div class="ui green segment">
         <p>FCR per Dozen Egg:
             <%= feedTotal > 0 && eggTotal > 0 ? fcrPDozen : initValue %>
         </p>
     </div>
     <% } %> 
-    <div class="ui  segment">
+    <div class="ui green segment">
         <p>FCR per Body Weight:
             <%=  fcrPWtGain  %>
         </p>
@@ -167,11 +167,11 @@
 
 </div>
 
-            <div class="ui segment">
-                <a class="ui green button" href="/animal">Back</a>
+            <div class="ui yellow segment">
+                <a class="ui btn button" href="/animal">Back</a>
                 <div class="ui buttons right floated">
-                    <a href="/animal/<%= animal._id %>/edit" class="ui yellow button">Edit</a>
-                    <div class="or"></div>
+                    <a href="/animal/<%= animal._id %>/edit" class="ui btn2 button">Edit</a>
+                    
                     <button class="ui  negative button" id="test">Delete</button>
                     <div class="ui modal test">
                         <div class="header">Are you sure you want to delete <%= animal.name %>? </div>
@@ -205,18 +205,18 @@
     </div>
 
     
-<div class="ui styled accordion">
+<div class="ui styled accordion" >
 
 
 <!--Start of Task-->
-<div class="title">
+<div class="title color-green-h">
     <i class="dropdown icon"></i>
     Tasks
 </div>
 <div class="content">
     Add and View Tasks
     <div class="accordion transition hidden">
-        <div class="title">
+        <div class="title color-green-h">
             <i class="dropdown icon"></i>
             Add New Task
         </div>
@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="field required">
                                     <label for="name">Animal</label>
-                                    <input type="text" id="task" name="task[name]" value="<%= animal.name %> ">
+                                    <input type="text" id="task" name="task[name]" value="<%= animal.name %>" readonly>
                                 </div>
                                 <div class="field required">
                                     <label for="startDate"> Start Date </label>
@@ -284,14 +284,14 @@
                                     <label for="note">Note</label>
                                     <textarea name="task[instructions]" id="note" cols="30" rows="3"></textarea>
                                 </div>
-                                <button class="ui button fluid green">Create Task</button>
+                                <button class="ui button fluid btn">Create Task</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="title">
+        <div class="title color-green-h">
             <i class="dropdown icon"></i>
             View Tasks
         </div>
@@ -299,11 +299,11 @@
             <table class="ui celled selectable unstackable table">
                 <thead>
                     <tr>
-                        <th>Task</th>
-                        <th>Deadline</th>
-                        <th>Leader</th>
+                        <th class="color-green">Task</th>
+                        <th class="color-green">Deadline</th>
+                        <th class="color-green">Leader</th>
 
-                        <th class="right aligned">Action</th>
+                        <th class="right aligned color-green">Action</th>
 
                     </tr>
                 </thead>
@@ -320,8 +320,8 @@
                                 <%= task.leader %>
                             </td>
 
-                            <td>
-                                <button class="ui  negative taskBtns button">Completed</button>
+                            <td class="right aligned">
+                                <i class="ui  check icon green taskBtns ">Completed</i>
                                 <div class="ui modal taskBtn">
                                     <div class="header">Are you sure this task has been completed? </div>
                                     <div class="content">
@@ -359,14 +359,14 @@
 
 
     <!--Start of event-->
-    <div class="title">
+    <div class="title color-green-h">
         <i class="dropdown icon"></i>
         Events
     </div>
     <div class="content">
         Add and View Events
         <div class="accordion transition hidden">
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Event
             </div>
@@ -381,6 +381,10 @@
                                     <div class="field required">
                                         <label for="event">Event</label>
                                         <input type="text" id="event" name="event[event]" placeholder="Event Name">
+                                    </div>
+                                     <div class="field required">
+                                        <label for="name">Animal</label>
+                                        <input type="text" id="name" name="event[name]" value="<%=animal.name  %>" placeholder="Animal Name" readonly>
                                     </div>
                                     <div class="field required">
                                         <label for="date">Date</label>
@@ -404,14 +408,14 @@
                                         <label for="note">Remark</label>
                                         <textarea name="event[note]" id="note" cols="30" rows="3"> </textarea>
                                     </div>
-                                    <button class="ui button fluid green">Add</button>
+                                    <button class="ui button fluid btn">Add</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Events
             </div>
@@ -419,11 +423,11 @@
                 <table class="ui celled selectable unstackable table">
                     <thead>
                         <tr>
-                            <th>Event</th>
-                            <th>Date</th>
-                            <th>Leader</th>
+                            <th class="color-green">Event</th>
+                            <th class="color-green">Date</th>
+                            <th class="color-green">Leader</th>
 
-                            <th class="right aligned">Action</th>
+                            <th class="right aligned color-green">Action</th>
 
                         </tr>
                     </thead>
@@ -440,8 +444,8 @@
                                     <%= event.leader %>
                                 </td>
 
-                                <td>
-                                <button class="ui  negative eventBtns button">Delete</button>
+                                <td class="right aligned">
+                                <i class="ui  trash icon red eventBtns"></i>
                                 <div class="ui modal eventBtn">
                                     <div class="header">Are you sure you want to delete? </div>
                                     <div class="content">
@@ -474,15 +478,160 @@
     </div>
     <!--End of event-->
 
+
+     <!--Start of Treatment-->
+    <div class="title color-green-h">
+        <i class="dropdown icon"></i>
+        Treatments
+    </div>
+    <div class="content">
+        Add and View Treatment
+        <div class="accordion transition hidden">
+            <div class="title color-green-h">
+                <i class="dropdown icon"></i>
+                Add New Treatment
+            </div>
+            <div class="content">
+                <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+
+                        <div class="ui raised segment">
+                            <form class="myFormValidate" action="/animal/<%= animal._id %>/treatment" method="POST">
+                                <div class="ui form">
+          <div class="field required">
+            <label for="treatment">Treatment</label>
+            <input type="text" id="treatment" name="treatment[treatmentName]"  placeholder="e.g vaccination" />
+          </div>
+           <div class="field required">
+            <label for="name">Animal</label>
+            <input type="text" id="name" name="treatment[name]"  value="<%= animal.name %>" readonly/>
+          </div>
+          <div class="field required">
+            <label for="drug"> Drug </label>
+            <input
+              type="text"
+              id="drug"
+              name="treatment[drug]"
+              placeholder="name of drug"
+            />
+          </div>
+          <div class="field required">
+            <label for="dose"> Dose </label>
+            <input
+              type="text"
+              id="dose"
+              name="treatment[dose]"
+              placeholder="dose given"
+            />
+          </div>
+          <div class="field required">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              name="treatment[date]"
+              placeholder="Date"
+            />
+          </div>
+           <div class="field required">
+            <label for="cost">Cost</label>
+            <input
+              type="number"
+              id="cost"
+              name="treatment[cost]"
+              placeholder="Cost"
+            />
+          </div>
+          
+          <div class="field required">
+            <label for="note">Note</label>
+            <textarea
+              name="treatment[note]"
+              id="note"
+              cols="30"
+              rows="3"
+            ></textarea>
+          </div>
+          <button class="ui button fluid btn">Create Treatment</button>
+        </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title color-green-h">
+                <i class="dropdown icon"></i>
+                View Treatments
+            </div>
+            <div class="content">
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th class="color-green">Treatments</th>
+                            <th class="color-green">Date</th>
+                            <th class="color-green">Drug</th>
+
+                            <th class="right aligned color-green">Action</th>
+
+                        </tr>
+                    </thead>
+                    <% for(let treatment of animal.treatments){ %>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= treatment.name %>
+                                </td>
+                                <td>
+                                    <%= treatment.date.toDateString()%>
+                                </td>
+                                <td>
+                                    <%= treatment.drug %>
+                                </td>
+
+                                <td class="right aligned">
+                                <i class="ui  trash icon red treatmentBtns"></i>
+                                <div class="ui modal treatmentBtn">
+                                    <div class="header">Are you sure you want to delete? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/animal/<%= animal._id %>/treatment<%= treatment._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </td>
+                            </tr>
+                            <% } %>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End of Treatment-->
+
+
     <!--Start of Egg Record-->
-    <div class="title">
+    <div class="title color-green-h">
         <i class="dropdown icon"></i>
         Egg Record
     </div>
     <div class="content">
         Add and View Egg Record
         <div class="accordion transition hidden">
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Egg Record
             </div>
@@ -504,14 +653,14 @@
                                         <input type="date" id="date" name="egg[date]" placeholder="Date">
                                     </div>
 
-                                    <button class="ui button fluid green">Add</button>
+                                    <button class="ui button fluid btn">Add</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Egg Record
             </div>
@@ -519,11 +668,11 @@
                 <table class="ui celled selectable unstackable table">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Quantity</th>
-                            <th>Crates</th>
+                            <th class="color-green">Date</th>
+                            <th class="color-green">Quantity</th>
+                            <th class="color-green">Crates</th>
 
-                            <th class="right aligned">Action</th>
+                            <th class="right aligned color-green">Action</th>
 
                         </tr>
                     </thead>
@@ -540,8 +689,8 @@
                                     <%= egg.quantity%>
                                 </td>
 
-                                <td>
-                                <button class="ui  negative eggBtns button">Delete</button>
+                                <td class="right aligned">
+                                <i class="ui  trash icon red eggBtns "></i>
                                 <div class="ui modal eggBtn">
                                     <div class="header">Are you sure you want to delete? </div>
                                     <div class="content">
@@ -568,7 +717,7 @@
                             <% eggSum +=egg.quantity%>
                                 <% } %>
                                     <tr>
-                                        <td>Total</td>
+                                        <td class="color-green">Total</td>
                                         <td><%= dayEggNumber %></td>
                                         <td>
                                             <%= eggSum %>
@@ -584,15 +733,21 @@
     <!--End of Egg Record-->
 
 
+
+
+   
+
+
+
     <!--Start of Mortality Record-->
-    <div class="title">
+    <div class="title color-green-h">
         <i class="dropdown icon"></i>
         Mortality Record
     </div>
     <div class="content">
         Add and View Mortality Record
         <div class="accordion transition hidden">
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Mortality Record
             </div>
@@ -619,14 +774,14 @@
                                         <input type="date" id="date" name="mortality[date]" placeholder="Date">
                                     </div>
 
-                                    <button class="ui button fluid green">Add</button>
+                                    <button class="ui button fluid btn">Add</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Mortality Record
             </div>
@@ -634,11 +789,11 @@
                 <table class="ui celled selectable unstackable table">
                     <thead>
                         <tr>
-                            <th>Cause</th>
-                            <th>Date</th>
-                            <th>Quantity</th>
+                            <th class="color-green">Cause</th>
+                            <th class="color-green">Date</th>
+                            <th class="color-green">Quantity</th>
 
-                            <th class="right aligned">Action</th>
+                            <th class="right aligned color-green">Action</th>
 
                         </tr>
                     </thead>
@@ -655,8 +810,8 @@
                                     <%= mortality.amount%>
                                 </td>
 
-                                <td>
-                                <button class="ui  negative mortalityBtns button">Delete</button>
+                                <td class="right aligned">
+                                <i class="ui  trash red icon mortalityBtns "></i>
                                 <div class="ui modal mortalityBtn">
                                     <div class="header">Are you sure you want to delete ? </div>
                                     <div class="content">
@@ -683,7 +838,7 @@
                             <% deathSum +=mortality.amount%>
                                 <% } %>
                                     <tr>
-                                        <td>Total</td>
+                                        <td class="color-green">Total</td>
                                         <td></td>
                                         <td>
                                             <%= deathSum %>
@@ -700,14 +855,14 @@
 
 
     <!--Start of Feed Record-->
-    <div class="title">
+    <div class="title color-green-h">
         <i class="dropdown icon"></i>
         Feed Record
     </div>
     <div class="content">
         Add and View Feed Record
         <div class="accordion transition hidden">
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Feed Record
             </div>
@@ -729,24 +884,24 @@
                                         <input type="text" id="brand" name="feed[brand]" placeholder="Feed Brand">
                                     </div>
 
-                                    <button class="ui button fluid green">Add</button>
+                                    <button class="ui button fluid btn">Add</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Feed Record
             </div>
             <div class="content">
                 <table class="ui celled selectable unstackable table">
                     <thead>
-                        <tr>
-                            <th>Brand</th>
-                            <th>Quantity</th>
-                            <th class="right aligned">Action</th>
+                        <tr >
+                            <th class="color-green">Brand</th>
+                            <th class="color-green">Quantity</th>
+                            <th class="right aligned color-green">Action</th>
                         </tr>
                     </thead>
                     <% for(let feed of animal.feed){ %>
@@ -760,8 +915,8 @@
                                 </td>
 
 
-                                <td>
-                                <button class="ui  negative feedBtns button">Delete</button>
+                                <td class="right aligned">
+                                <i class="ui  trash icon red feedBtns "></i>
                                 <div class="ui modal feedBtn">
                                     <div class="header">Are you sure you want to delete? </div>
                                     <div class="content">
@@ -788,7 +943,7 @@
                             <% feedSum +=feed.quantity%>
                                 <% } %>
                                     <tr>
-                                        <td>Total</td>
+                                        <td class="color-green">Total</td>
 
                                         <td>
                                             <%= feedSum %>
@@ -804,14 +959,14 @@
     <!--End of Feed Record-->
 
     <!--Start of Weight Record-->
-    <div class="title">
+    <div class="title color-green-h">
         <i class="dropdown icon"></i>
         Weight Record
     </div>
     <div class="content">
         Add and View Weight Record
         <div class="accordion transition hidden">
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Weight Record
             </div>
@@ -847,14 +1002,14 @@
                                         <input type="date" id="date" name="weight[date]" placeholder="Date">
                                     </div>
 
-                                    <button class="ui button fluid green">Add</button>
+                                    <button class="ui button fluid btn">Add</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Weight Record
             </div>
@@ -862,11 +1017,11 @@
                 <table class="ui celled selectable unstackable table">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Weight</th>
-                            <th>Weight Gain</th>
+                            <th class="color-green">Date</th>
+                            <th class="color-green">Weight</th>
+                            <th class="color-green">Weight Gain</th>
 
-                            <th class="right aligned">Action</th>
+                            <th class="right aligned color-green">Action</th>
 
                         </tr>
                     </thead>
@@ -889,8 +1044,8 @@
                                     
                                 </td>
 
-                                <td>
-                                <button class="ui  negative weightBtns button">Delete</button>
+                                <td class="right aligned">
+                                <i class="ui  red trash icon weightBtns"></i>
                                 <div class="ui modal weightBtn">
                                     <div class="header">Are you sure you want to delete? </div>
                                     <div class="content">
@@ -926,7 +1081,7 @@
     <!--End of Weight Record-->
 
     <!--Start of Finance-->
-    <div class="title">
+    <div class="title color-green-h">
         <i class="dropdown icon"></i>
         Finance
     </div>
@@ -935,14 +1090,14 @@
         </p>
         <!--Start of Income-->
         <div class="accordion transition hidden">
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Income
             </div>
             <div class="content">
                 <p class="transition hidden">Add and view Income record</p>
                 <div class="accordion transition hidden">
-                    <div class="title">
+                    <div class="title color-green-h">
                         <i class="dropdown icon"></i>
                         Add Income
                     </div>
@@ -971,23 +1126,16 @@
                                             </div>
                                             <div class="ui form">
                                                 <div class="field required">
-                                                    <label for="category">Category</label>
-                                                    <select name="income[category]" id="category"
-                                                        class="ui search dropdown">
-                                                        <option value="">Category</option>
-                                                        <option value="Fishery">Fishery</option>
-                                                        <option value="Poultry">Poultry</option>
-                                                        <option value="Pig">Pig</option>
-
-
-                                                    </select>
-                                                </div>
+                                                <label for="name">Animal</label>
+                                                <input type="text" id="name" name="income[name]" value="<%= animal.name %>" readonly
+                                                    placeholder="Income">
+                                            </div>
                                             </div>
                                             <div class="field  required">
                                                 <label for="note">Note</label>
                                                 <textarea name="income[note]" id="note" cols="30" rows="3"> </textarea>
                                             </div>
-                                            <button class="ui button fluid green">Add</button>
+                                            <button class="ui button fluid btn">Add</button>
                                         </div>
 
                                     </form>
@@ -996,7 +1144,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="title">
+                    <div class="title color-green-h">
                         <i class="dropdown icon"></i>
                         View Income record
                     </div>
@@ -1004,10 +1152,10 @@
                         <table class="ui celled selectable unstackable table">
                             <thead>
                                 <tr>
-                                    <th>Revenue</th>
-                                    <th>Date</th>
-                                    <th>Amount</th>
-                                    <th class="right aligned">Action</th>
+                                    <th class="color-green">Revenue</th>
+                                    <th class="color-green">Date</th>
+                                    <th class="color-green">Amount</th>
+                                    <th class="right aligned color-green">Action</th>
 
                                 </tr>
                             </thead>
@@ -1028,7 +1176,7 @@
                                         </td>
 
                                         <td class="right aligned">
-                                        <button class="ui  negativeincometBtns button">Delete</button>
+                                        <i class="ui trash red icon negativeincometBtns"></i>
                                         <div class="ui modal incomeBtn">
                                             <div class="header">Are you sure you want to delete? </div>
                                             <div class="content">
@@ -1056,7 +1204,7 @@
                                     <% income.amount !==undefined ? totalIncome +=income.amount : totalIncome +=0 %>
                                         <% } %>
                                             <tr>
-                                                <td>Total</td>
+                                                <td class="color-green">Total</td>
                                                 <td></td>
                                                 <td>
                                                     <%= totalIncome %>
@@ -1072,14 +1220,14 @@
         </div>
         <!--Start of Expense-->
         <div class="accordion transition hidden">
-            <div class="title">
+            <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Expense
             </div>
             <div class="content">
                 <p class="transition hidden">Add and view Income record</p>
                 <div class="accordion transition hidden">
-                    <div class="title">
+                    <div class="title color-green-h">
                         <i class="dropdown icon"></i>
                         Add Expense
                     </div>
@@ -1107,24 +1255,17 @@
                                                 <input type="date" id="date" name="expense[date]" placeholder="Date">
                                             </div>
                                             <div class="ui form">
-                                                <div class="field required">
-                                                    <label for="category">Category</label>
-                                                    <select name="expense[category]" id="category"
-                                                        class="ui search dropdown">
-                                                        <option value="">Category</option>
-                                                        <option value="Fishery">Fishery</option>
-                                                        <option value="Poultry">Poultry</option>
-                                                        <option value="Pig">Pig</option>
-
-
-                                                    </select>
-                                                </div>
+                                                 <div class="field required">
+                                                <label for="name">Animal</label>
+                                                <input type="text" id="name" name="expense[name]" value="<%= animal.name %>" readonly
+                                                    >
+                                            </div>
                                             </div>
                                             <div class="field  required">
                                                 <label for="note">Note</label>
                                                 <textarea name="expense[note]" id="note" cols="30" rows="3"> </textarea>
                                             </div>
-                                            <button class="ui button fluid green">Add</button>
+                                            <button class="ui button fluid btn">Add</button>
                                         </div>
 
                                     </form>
@@ -1133,18 +1274,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="title">
-                        <i class="dropdown icon"></i>
+                    <div class="title color-green-h">
+                        <i class="dropdown  icon"></i>
                         View Expense record
                     </div>
                     <div class="content">
                         <table class="ui celled selectable unstackable table">
                             <thead>
                                 <tr>
-                                    <th>Expense</th>
-                                    <th>Date</th>
-                                    <th>Amount</th>
-                                    <th class="right aligned">Action</th>
+                                    <th class="color-green">Expense</th>
+                                    <th class="color-green">Date</th>
+                                    <th class="color-green">Amount</th>
+                                    <th class="right aligned color-green">Action</th>
 
                                 </tr>
                             </thead>
@@ -1165,7 +1306,7 @@
                                         </td>
 
                                         <td class="right aligned">
-                                        <button class="ui  negative expenseBtns button">Delete</button>
+                                        <i class="ui  trash red icon expenseBtns "></i>
                                         <div class="ui modal expenseBtn">
                                             <div class="header">Are you sure you want to delete? </div>
                                             <div class="content">
@@ -1193,7 +1334,7 @@
                                     <% expense.amount !==undefined ? totalExpense +=expense.amount : totalExpense +=0 %>
                                         <% } %>
                                             <tr>
-                                                <td>Total</td>
+                                                <td class="color-green">Total</td>
                                                 <td></td>
                                                 <td>
                                                     <%= totalExpense %>
@@ -1208,8 +1349,8 @@
 
 
             <!-- start Finance summarry-->
-            <div class="title">
-                <i class="dropdown icon"></i>
+            <div class="title color-green-h">
+                <i class="dropdown icon "></i>
                 Finance Summary
             </div>
             <div class="content">
@@ -1239,7 +1380,7 @@
                             <p>Livestock Net profit</p>
                         </div>
                         <div class="ui yellow segment">
-                            <p>
+                            <p class="<%= livestockProfit >= 0 ? 'color-green' : 'red' %> ">
                                 <%= livestockProfit %>
                             </p>
                         </div>
@@ -1264,7 +1405,7 @@
     <div class="ui  accordion">
         <div class="title">
 
-            <a class="ui green button">Add a Livestock</a>
+            <a class="ui btn button">Register Livestock</a>
         </div>
         <div class=" content">
             <div class="ui   grid">
@@ -1276,21 +1417,9 @@
                             <div class="ui form">
                                 <div class="field required">
                                     <label for="name">Name</label>
-                                    <select name="farmstock[name]" id="name" class="ui tag dropdown search">
-                                        <option value="">Select Name</option>
-                                        <option value="Poultry">Chicken</option>
-                                        <option value="Fishery">CatFish</option>
-                                        <option value="Ruminant">Cattle</option>
-                                        <option value="Others">Sheep</option>
-                                        <option value="Poultry">Goat</option>
-                                        <option value="Fishery">Rabbit</option>
-                                        <option value="Ruminant">Snail</option>
-                                        <option value="Others">Grasscutter</option>
-                                        <option value="Fishery">Horse</option>
-                                        <option value="Ruminant">Donkey</option>
-                                        <option value="Others">Guinea Pig</option>
-                                
-                                    </select>
+                                    
+                                                <input type="text" id="name" name="farmstock[name]" value="<%= animal.name %>" readonly
+                                                    >
                                 </div>
 
                                 <div class="field required">
@@ -1324,17 +1453,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="field required">
-                                    <label for="category">Category</label>
-                                    <select name="farmstock[category]" id="status" class="ui dropdown search">
-                                        <option value="">Select Category</option>
-                                        <option value="Poultry">Poultry</option>
-                                        <option value="Fishery">Fishery</option>
-                                        <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
-                                        <option value="Others">Others(Pig, Rabbit, Snail...)</option>
-
-                                    </select>
-                                </div>
+                                 <div class="field required">
+                                                <label for="category">Category</label>
+                                                <input type="text" id="category" name="farmstock[category]" value="<%= animal.category %>" readonly
+                                                    >
+                                            </div>
                                 <div class="field required">
                                     <label for="dob">DOB</label>
                                     <input type="date" id="dob" name="farmstock[dob]" placeholder="DOB">
@@ -1350,7 +1473,7 @@
                                         placeholder="Health Status">
                                 </div>
 
-                                <div class="field required">
+                                <div class="field ">
                                     <label for="image">Image</label>
                                     <input type="file" id="image" name="image" placeholder="Image">
                                 </div>
@@ -1359,7 +1482,7 @@
                                     <textarea name="farmstock[description]" id="description" cols="30"
                                         rows="3"></textarea>
                                 </div>
-                                <button class="ui button fluid green">Add Animal</button>
+                                <button class="ui button fluid btn">Add Animal</button>
                             </div>
 
                         </form>
@@ -1370,17 +1493,19 @@
 
         </div>
     </div>
-     <div class="ui middle aligned divided list"> 
-            <% for(let farmstock of animal.farmstock){ %>
+     
+
+         <div class="ui middle aligned divided list"> 
+            <% for(let farmstocks of farmstock){ %>
        
   <div class="item">
     <div class="right floated content">
-      <div class="ui button">Add</div>
+     <a  href="/farmstock/<%= farmstocks._id %>"> <div class="ui btn button"> View</div></a>
     </div>
-    <img class="ui avatar image" src="<%= farmstock.image.url %> ">
-    <div class="content">
-       <a href="/animal/<%= animal._id %>/batchmember/<%= farmstock._id %>">
-            <%= farmstock.tag %>
+    <img class="ui avatar image" src="<%= farmstocks.image.url %> ">
+    <div class="content color-green-h">
+       <a class="color-green-h" href="/farmstock<%= farmstocks._id %>">
+            <%= farmstocks.tag %>
         </a>
     </div>
   </div>
@@ -1388,3 +1513,4 @@
 
         <% } %>
         </div>
+ <%- include('../partials/group') %>

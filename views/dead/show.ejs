@@ -1,0 +1,82 @@
+<% layout('layouts/boilerplate') %>
+<div class="ui segments">
+  <div class="ui green segment">
+  
+    <div class="ui segments">
+      <div class="ui horizontal segments">
+        <div class="ui huge header color-green segment">
+          <p><%= dead.tag %></p>
+        </div>
+        <div class="ui huge header color-green segment">
+          <p><%= dead.name%></p>
+        </div>
+      </div>
+
+      <div class="ui green segment">
+         <p>Cause: <%= dead.cause %></p>
+       
+      </div>
+      <div class="ui horizontal segments">
+        <div class="ui segment">
+          <p> <%= dead.sex %></p>
+        </div>
+        <div class="ui  segment">
+          <p>Batch: <%= dead.batch %></p>
+        </div>
+      </div>
+    </div>
+    <div class="ui yellow segment">
+      <p><%= dead.description%></p>
+    </div>
+    <div class="ui horizontal segments">
+      
+     <div class="ui segment">
+        <p><%= dead.breed %> </p>
+      </div>
+    </div>
+   
+
+    <div class="ui yellow segment">
+      <a class="ui btn button" href="/livestock/sales">Back</a>
+
+      
+        <button class="ui negative button" id="test">Delete</button>
+        <div class="ui modal test">
+          <div class="header">
+            Are you sure you want to delete <%= sales.tag %>?
+          </div>
+          <div class="content">
+            <p>
+              If you delete, all data associated with <%= sales.tag %> will
+              be deleted permanently.
+            </p>
+          </div>
+          <div class="actions">
+            <div class="ui buttons right floated">
+              <div class="segments horizontal ui">
+                <div class="ui segment">
+                  <a href="" class="ui cancel mini yellow button">No</a>
+                </div>
+                <div class="ui segment">
+                  <form
+                    action="/livestock/sales/<%= sales._id %>?_method=DELETE "
+                    method="POST"
+                  >
+                    <button class="ui negative button">Yes</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  
+
+ 

@@ -14,6 +14,7 @@ router.post('/', isLoggedin, validateFeed, catchAsync( async (req, res) => {
    const {id} = req.params
     const animal = await Animal.findById(id)
     const feedGiven= new Feed(req.body.feed)
+    feedGiven.creator = req.user._id
    animal.feed.push(feedGiven);
    
    await feedGiven.save()

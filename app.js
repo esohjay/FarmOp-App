@@ -13,11 +13,23 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const ExpressError = require("./utils/ExpressError");
+const mongoSanitize = require("express-mongo-sanitize")
+const helmet = require('helmet')
+const MongoStore = require('connect-mongo');
+
+
+
 
 const animalRoutes = require("./routes/animal");
 const allAnimalsRoutes = require("./routes/allAnimals");
 const breedingRoutes = require("./routes/breeding");
+
+//for creating and deleting sales and dead animals
 const actionRoutes = require("./routes/livestockActions");
+
+//for viewing and showing sales and dead animals
+const viewActionRoutes = require("./routes/livestockActions");
+
 const newBreederRoutes = require("./routes/newBreeder");
 const offspringRoutes = require("./routes/offspring");
 const batchMemberRoutes = require("./routes/batchmember");
@@ -82,7 +94,24 @@ const cropInflowRoutes = require("./routes/cropinflow");
 //for all crop tasks
 const cropTaskRoutes = require("./routes/cropTask");
 
-const dbUrl = "mongodb://localhost:27017/farmapp";
+//for all treatment
+const treatmentRoute = require("./routes/treatment");
+
+//individual treatment
+const animalTreatmentRoute = require("./routes/batchTreatment");
+const farmstockTreatmentRoute = require("./routes/farmstockTreatment");
+const breederTreatmentRoute = require("./routes/breederTreatment");
+
+// input route
+const inputRoute = require("./routes/input")
+const cropInputRoute = require("./routes/cropInput")
+
+const groupRoute = require("./routes/group")
+
+//for notification
+const notificationRoute = require("./routes/notificaion")
+
+const dbUrl =  process.env.DB_URL || "mongodb://localhost:27017/farmapp";
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -105,10 +134,17 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(mongoSanitize())
 const secret = "coded";
+const store =  MongoStore.create({
+    mongoUrl: dbUrl,
+    secret,
+    touchAfter: 24 *60 *60
 
+});
 const sessionConfig = {
+  store,
+  name: 'opCookie',
   secret,
   resave: false,
   saveUninitialized: true,
@@ -121,6 +157,45 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(helmet());
+const scriptSrcUrls = [
+    
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net/",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net/"
+];
+const connectSrcUrls = ["https://developers.google.com/oauthplayground",
+"https://cdnjs.cloudflare.com/",];
+const fontSrcUrls = ["https://fonts.googleapis.com/", 
+"https://cdnjs.cloudflare.com/",];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/djgprrm6h/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://cdn.pixabay.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -140,7 +215,12 @@ app.use("/animal", animalRoutes);
 app.use("/farmstock", allAnimalsRoutes);
 app.use("/breeder", newBreederRoutes);
 app.use("/animal/:id/batchmember", batchMemberRoutes);
+
+//for creating and deleting sales and dead animals
 app.use("/farmstock/:id", actionRoutes);
+
+//for viewing and showing sales and dead animals
+app.use("/livestock", viewActionRoutes)
 app.use("/breeder/:id/breeding", breedingRoutes);
 app.use("/breeder/:id/offspring", offspringRoutes);
 app.use("/crop", cropRoutes);
@@ -163,6 +243,12 @@ app.use("/task", taskRoutes);
 app.use("/animal/:id/mortality", mortalityRoutes);
 app.use("/animal/:id/egg", eggRoutes);
 
+//individual treatment
+app.use("/animal/:id/treatment", animalTreatmentRoute)
+app.use("/farmstock/:id/treatment", farmstockTreatmentRoute)
+app.use("/breeder/:id/treatment", breederTreatmentRoute)
+
+
 //for events associated with each animal
 app.use("/animal/:id/event", eventRoutes);
 
@@ -171,6 +257,11 @@ app.use("/animal/:id/task", animalTaskRoutes);
 
 //for events associated with each crop
 app.use("/crop/:id/event", cropEventRoutes);
+
+//for crop input
+app.use("/crop/:id/input", cropInputRoute);
+
+app.use("/input", inputRoute);
 
 //for events associated with each crop
 app.use("/crop/:id/task", indiviCropTaskRoutes);
@@ -191,7 +282,7 @@ app.use("/expense", expenseRoutes);
 
 app.use("/animal/:id/feed", feedRoutes);
 app.use("/animal/:id/weight", weightRoutes);
-app.use("/", userRoute);
+app.use("/user", userRoute);
 app.use("/report", reportRoute);
 
 //for all crop tasks
@@ -200,8 +291,16 @@ app.use("/croptask", cropTaskRoutes);
 //for all animal events
 app.use("/event", animalActivitiesRoute);
 
+//for all animal events
+app.use("/treatment", treatmentRoute);
+
 //for all crop events
 app.use("/cropevent", cropActivitiesRoute);
+
+//for notifications
+app.use("/notification", notificationRoute);
+
+app.use("/group", groupRoute);
 
 app.get("/", (req, res) => {
   res.render("home");

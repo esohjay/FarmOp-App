@@ -4,7 +4,7 @@ const router = express.Router({mergeParams: true});
 const Animal = require('../models/animal')
 
 
-const User = require('../models/user')
+
 
 const Event = require('../models/event')
 const Task = require('../models/task')
@@ -19,6 +19,7 @@ router.post('/', isLoggedin, validateEvent, catchAsync(async (req, res) => {
     const animal = await Animal.findById(id)
     
    const event = new Event(req.body.event)
+   event.creator = req.user._id
    animal.events.push(event);
    
    await event.save()

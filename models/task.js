@@ -9,14 +9,14 @@ const TaskSchema = new Schema({
   workers: { type: Array, trim: true },
   status: String,
   leader: String,
+  priority: String,
   createdAt: { type: Date, default: Date.now() },
   instructions: String,
-  staff: [
+   creator: 
     {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-  ],
   name: String,
 });
 TaskSchema.plugin(mongoosePaginate);

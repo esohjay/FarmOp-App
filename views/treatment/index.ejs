@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+<a class="button btn ui" href="/treatment/new">Add a Treatment</a>
+
+ 
+ <h1 class="ui center aligned header">Livestock Treatment</h1>
+<table class="ui celled selectable unstackable table">
+        <thead>
+            <tr>
+                <th class=" color-green">Treatment</th>
+                <th class=" color-green">Date</th>
+                <th class=" color-green">Drug</th>
+                <th class=" color-green">Dose</th>
+                <th class="right aligned color-green">Action</th>
+    
+            </tr>
+        </thead>
+        <% for(let treatment of treatments.docs){ %>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= treatment.treatmentName %>
+                    </td>
+                    <td>
+                        <%= treatment.date.toDateString()%>
+                    </td>
+                    <td>
+                        <%= treatment.drug %>
+                    </td>
+                    <td>
+                        <%= treatment.dose %>
+                    </td>
+                    <td>
+                        <a href="/treatment/<%= treatment._id %>"><i
+                                class=" green caret square right outline float right icon"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+    
+    </table>
+  
+ <% if (treatments.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (treatments.prevPage) {%>
+  <a class="ui btn page-num button" href="/treatment?page=<%= treatments.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
+   <%for (let i = 1; i <= treatments.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/treatment?page=<%= i %>"
+     <%= i === treatments.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
+      <% if (treatments.nextPage ) {%>
+  <a class="ui btn page-num button"  href="/treatment?page=<%= treatments.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
+</div>
+<% } %>

@@ -4,26 +4,80 @@
 
 
     <div class="ui eight wide column centered">
-        <a class="ui green button" href="/croptask/<%= task._id %> ">Back</a>
+        <a class="ui btn button" href="/croptask/<%= task._id %> ">Back</a>
         <div class="ui raised segment">
             <form class="myFormValidate" action="/croptask/<%= task._id %>?_method=PUT" method="POST">
                 <div class="ui  form">
-
+                  <div class="field required">
+                <label for="task">Task</label>
+                <input type="text" id="task" name="task[task]" value="<%= task.task %> ">
+            </div>
+            <div class="ui form">
+                <div class="field  required">
+                    <label for="name">Crop</label>
+                    <select name="task[name]" id="name" class="ui search dropdown">
+                        <option value="<%= task.name %>"><%= task.name %></option>
+                        <% for(let crops of crop) {%>
+                            <option value="<%= crops.crop %> ">
+                                <%= crops.crop %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="field required">
+                <label for="startDate"> Start Date </label>
+                <input type="date" id="startDate" name="task[startDate]" value="<%= startDate %>">
+            </div>
+            <div class="field required">
+                <label for="deadline">Deadline</label>
+                <input type="date" id="deadline" name="task[deadline]" value="<%= deadline %>">
+            </div>
+            <div class="ui form">
+                <div class="field  required">
+                    <label for="worker">Workers</label>
+                    <select multiple="" name="task[workers]" id="worker" class="ui search dropdown">
+                        <option value="<%= task.workers %>">Select Staff</option>
+                        <% for(let worker of staff) {%>
+                            <option value="<%= worker.fname %> ">
+                                <%= worker.fname %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="ui form">
+                <div class="field  required">
+                    <label for="leader">Lead by</label>
+                    <select  name="task[leader]" id="leader" class="ui search dropdown">
+                        <option value="<%= task.leader %>"><%= task.leader %></option>
+                        <% for(let leader of staff) {%>
+                            <option value="<%= leader.fname %>">
+                                <%= leader.fname %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+            </div>
                
                     <div class="field required">
                         <label for="status">Status</label>
                         <select name="task[status]" id="status" class="ui dropdown search">
-                            <option value="<%= task.status %> "><%= task.status %> </option>
+                            <option value="<%= task.status %>"><%= task.status %></option>
                             <option value="Pending">Pending</option>
                             <option value="Completed">Completed</option>
                             <option value="In progress">In progress</option>
                     
                         </select>
                     </div>
-                
-                    <button class="ui button fluid green">Update Task</button>
+                    <div class="field  required">
+                    <label for="note">Note</label>
+                    <textarea name="task[instructions]" id="note" cols="30" rows="3"><%= task.instructions %> </textarea>
                 </div>
-                <div class="ui error message"></div>
+                
+                    <button class="ui button fluid btn">Update Task</button>
+                </div>
+                
             </form>
 
         </div>

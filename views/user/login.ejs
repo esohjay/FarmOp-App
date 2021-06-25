@@ -5,7 +5,7 @@
         <div class="ui eleven wide column centered">
             <h1 class="ui huge header">Login</h1>
             <div class="ui raised segment">
-                <form class="regFormValidae" action="/login" method="POST">
+                <form class="regFormValidae" action="/user/login" method="POST">
                     <div class="ui  form">
 
                         <div class="field required">
@@ -17,11 +17,12 @@
                             <input type="password" id="passwordLogin" name="password" placeholder="Password">
                         </div>
                         
-                        <button class="ui button fluid green">Login</button>
+                        <button class="ui button fluid btn">Login</button>
                     </div>
 
                 </form>
-                <p>Don't have an account? <a href="/register">Sign up</a></p>
+                <p>Don't have an account? <a href="/user/register">Sign up</a></p>
+                 <p>Forgot your password? <a href="/user/forgot">Reset Password</a></p>
             </div>
         </div>
     </div>

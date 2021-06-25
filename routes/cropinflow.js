@@ -13,9 +13,10 @@ const {
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
+const changeDate = require("../utils/changeDate")
 
 router.get(
-  "/",
+  "/", isLoggedin,
   searchAndFilter,
   isLoggedin,
   sortDlisplay,
@@ -29,7 +30,7 @@ router.get(
       sort: { createdAt: -1 },
     };
     let names = [];
-    const inflow = await cropIncome.paginate(dbQuery, dbOption || options);
+    const inflow = await cropIncome.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of inflow.docs) {
       names.push(result.name);
     }
@@ -44,7 +45,7 @@ router.get(
   "/new",
   isLoggedin,
   catchAsync(async (req, res) => {
-    const crop = await Crop.find({});
+    const crop = await Crop.find({creator: req.user._id});
     res.render("cropinflow/new", { crop });
   })
 );
@@ -54,6 +55,7 @@ router.post(
   validateIncome,
   catchAsync(async (req, res) => {
     const income = new cropIncome(req.body.income);
+    income.creator = req.user._id
     await income.save();
     res.redirect(`/cropinflow/${income._id}`);
   })
@@ -64,6 +66,10 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const income = await cropIncome.findById(id);
+    if (!income) {
+      req.flash("error", "No record found");
+      return res.redirect("/income");
+    }
     res.render("cropinflow/show", { income });
   })
 );
@@ -73,8 +79,9 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const income = await cropIncome.findById(id);
-    const crop = await Crop.find({});
-    res.render("cropinflow/edit", { income, crop });
+    const crop = await Crop.find({creator: req.user._id});
+    const date = changeDate(income.date)
+    res.render("cropinflow/edit", { income, crop, date });
   })
 );
 router.put(

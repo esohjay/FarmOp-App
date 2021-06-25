@@ -1,0 +1,34 @@
+<% layout('layouts/boilerplate') %>
+<div class="ui grid">
+  <div class="ui eleven wide column centered">
+      <h3>Set Role for <%= user.fname %> <%= user.lname %> (<%= user.username %>) </h3>
+     <a class="ui btn button" href="/user">Back</a>
+    <div class="ui raised segment">
+      <form class="myFormValidate" action="/user/setrole/<%= user.id %>?_method=PUT" method="POST">
+        <div class="ui form">
+         
+        
+          <div class="field required">
+            <label for="role">Role</label>
+            <select name="user[role]" id="status" class="ui dropdown search">
+              <option value="">Select Role</option>
+              <option value="Manager">Manager</option>
+              <option value="Officer">Officer</option>
+              <option value="Staff">Staff</option>
+            </select>
+          </div>
+          <div class="field required">
+            <label for="note">Note</label>
+            <textarea
+              name="user[roleDescription]"
+              id="note"
+              cols="30"
+              rows="3"
+            ></textarea>
+          </div>
+          <button class="ui button fluid btn">Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

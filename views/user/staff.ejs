@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate')%>
+
+    
+
+    
+  
+
+        <div class="ui middle aligned divided list"> 
+             <% for(let user of users) {%>
+       
+  <div class="item">
+    
+    
+    <div class="content color-green-h">
+      <p><%= user.fname %> <%= user.lname %> (<%= user.username %> ) </p>
+      <div class="extra"><%= user.role %> </div>
+    </div>
+    <div class="blue ui mini buttons">
+  <button class="ui green basic mini button"><a class="color-green-h" href="/user/profile/<%= user._id %>/edit" >edit</a></button>
+  <button class="ui red basic button staffBtns">Remove</button>
+  <div class="ui modal staffBtn">
+                                    <div class="header">Are you sure you want to remove this staff? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated  will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/user/<%= user._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+  
+</div>
+      
+  </div>
+      
+
+        <% } %>
+        </div>

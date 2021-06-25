@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
     <div class="ui   grid">
         <div class="ui eleven wide column centered">
-            <a class="ui green button" href="/cropevent/<%= event._id %>">Back</a>
+            <a class="ui btn button" href="/cropevent/<%= event._id %>">Back</a>
             <div class="ui raised segment">
                 <form class="myFormValidate" action="/cropevent/<%= event._id %>?_method=PUT " method="POST">
                     <div class="ui  form">
@@ -36,11 +36,15 @@
                                 </select>
                             </div>
                         </div>
+                         <div class="field required">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="event[date]" value="<%= eventDate %>">
+                        </div>
                         <div class="field  required">
                             <label for="note">Remark</label>
                             <textarea name="event[note]" id="note" cols="30" rows="3"><%= event.note %> </textarea>
                         </div>
-                        <button class="ui button fluid green">Save</button>
+                        <button class="ui button fluid btn">Save</button>
                     </div>
 
                 </form>

@@ -3,7 +3,7 @@
 
 <div class="ui   grid">
     <div class="ui eleven wide column centered">
-        <a class="ui green button" href="/field/<%= field._id %>">Back</a>
+        <a class="ui btn button" href="/field/<%= field._id %>">Back</a>
         <div class="ui raised segment">
             <form class="myFormValidate" action="/field/<%= field._id %>?_method=PUT" method="POST">
                 <div class="ui  form">
@@ -28,9 +28,9 @@
                         <label for="soilType">Soil Type</label>
                         <input type="text" id="soilType" name="field[soilType]" value="<%= field.soilType %>">
                     </div>
-                    <button class="ui button fluid green">Updaterequired Field</button>
+                    <button class="ui button fluid btn">Update Field</button>
                 </div>
-                <div class="ui error message"></div>
+                
             </form>
 
         </div>
@@ -44,42 +44,4 @@
 
 
 
-    <div class="row">
-        <div class="text-center">
-            <div class="col-6 offset-3">
-                <form action="/field/<%= field._id %>?_method=PUT" method="POST" novalidate class="validated-form">
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Field Name</label>
-                        <input class="form-control" type="text" id="name" name="field[name]" value="<%= field.name %>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="location"> Location </label>
-                        <input class="form-control" type="text" id="location" name="field[location]" value="<%= field.location %>" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="ownership">Ownership Type</label>
-                        <input class="form-control" type="text" id="ownership" name="field[ownership]" value="<%= field.ownership %>" required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label" for="size">Size</label>
-                        <input class="form-control" type="text" id="size" name="field[size]" value="<%= field.size %>"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="soilType">Soil Type</label>
-                        <input class="form-control" type="text" id="soilType" name="field[soilType]" value="<%= field.soilType %>"
-                            required>
-                    </div>
-
-
-                    <div class="mb-3">
-                        <button class="btn btn-success">Update Field</button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div>
-    </div>
+   

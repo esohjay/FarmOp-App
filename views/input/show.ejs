@@ -1,0 +1,66 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="ui segments">
+  <div class="ui centered huge header green segment">
+    <p class="color-green"><%= input.inputType %></p>
+  </div>
+  <div class="ui segments">
+    <div class="ui yellow segment">
+      <p><%= input.inputName %></p>
+    </div>
+    <div class="ui segment">
+      <p><%= input.quantity %></p>
+    </div>
+  </div>
+  <div class="ui horizontal segments">
+    <div class="ui green segment">
+      <p><%= input.date.toDateString() %></p>
+    </div>
+    <div class="ui green segment">
+      <p><%= input.name %></p>
+    </div>
+    <div class="ui green segment">
+      <p><%= input.cost %></p>
+    </div>
+  </div>
+  
+
+  <div class="ui segment">
+    <p><%= input.note %></p>
+  </div>
+  <div class="ui green segment">
+    <a class="ui btn button" href="/input">Back</a>
+    <div class="ui buttons right floated">
+      <a href="/input/<%= input._id %>/edit" class="ui btn2 button">Edit</a>
+      <div class="or"></div>
+      <button class="ui negative button" id="test">Delete</button>
+      <div class="ui modal test">
+        <div class="header">
+          Are you sure you want to delete <%= input.inputName %> task?
+        </div>
+        <div class="content">
+          <p>
+            If you delete, <%= input.inputName %> task will be deleted permanently.
+          </p>
+        </div>
+        <div class="actions">
+          <div class="ui buttons right floated">
+            <div class="segments horizontal ui">
+              <div class="ui segment">
+                <a href="" class="ui cancel mini yellow button">No</a>
+              </div>
+              <div class="ui segment">
+                <form
+                  action="/treatment/<%= input._id %>?_method=DELETE "
+                  method="POST"
+                >
+                  <button class="ui negative button">Yes</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

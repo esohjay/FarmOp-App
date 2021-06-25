@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 <div class="ui grid">
   <div class="ui eleven wide column centered">
-    <a class="ui green button" href="/farmstock/<%= farmstock._id %>">Back</a>
+    <a class="ui btn button" href="/farmstock/<%= farmstock._id %>">Back</a>
     <div class="ui raised segment">
       <form
         class="myFormValidate"
@@ -17,7 +17,11 @@
                 <%= farmstock.name %>
               </option>
               <option value="Chicken">Chicken</option>
-              <option value="Catfish">CatFish</option>
+              <option value="Turkey">Turkey</option>
+              <option value="Ostrich">Ostrich</option>
+              <option value="Guinea Fowl">Guinea Fowl</option>
+              <option value="Catfish">Catfish</option>
+              <option value="Pig">Pig</option>
               <option value="Cattle">Cattle</option>
               <option value="Sheep">Sheep</option>
               <option value="Goat">Goat</option>
@@ -81,6 +85,16 @@
             </div>
           </div>
           <div class="field required">
+            <label for="dob">Date of Birth</label>
+            <input
+              type="date"
+              id="dob"
+              name="farmstock[dob]"
+             value="<%= dob %>"
+            />
+          </div>
+
+          <div class="field required">
             <label for="category">Category</label>
             <select
               name="farmstock[category]"
@@ -93,7 +107,7 @@
               <option value="Poultry">Poultry</option>
               <option value="Fishery">Fishery</option>
               <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
-              <option value="Others">Others(Pig, Rabbit, Snail...)</option>
+              <option value="Non-Ruminant">Non-Ruminant(Pig, Rabbit, Snail...)</option>
             </select>
           </div>
           <div class="field required">
@@ -135,7 +149,7 @@
 <%= farmstock.description %></textarea
             >
           </div>
-          <button class="ui button fluid green">Update Livestock</button>
+          <button class="ui button fluid btn">Update Livestock</button>
         </div>
       </form>
     </div>

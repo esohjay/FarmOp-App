@@ -88,6 +88,25 @@ $(function () {
   });
 });
 
+
+$(function () {
+  $(".staffBtns").click(function () {
+    $(".staffBtn").modal("show");
+  });
+  $(".staffBtn").modal({
+    closable: true,
+  });
+});
+
+$(function () {
+  $(".treatmentBtns").click(function () {
+    $(".treatmentBtn").modal("show");
+  });
+  $(".treatmentBtn").modal({
+    closable: true,
+  });
+});
+
 $(".regFormValidate").form({
   fields: {
     inline: true,
@@ -176,10 +195,10 @@ $(".myFormValidate").form({
     name: "empty",
     description: "empty",
     variety: "empty",
-    date: "empty",
+   date: "empty",
     //imageadd: "empty",
     event: "empty",
-    leader: "empty",
+    
     remark: "empty",
     income: "empty",
     expense: "empty",
@@ -189,7 +208,8 @@ $(".myFormValidate").form({
     task: "empty",
     startDate: "empty",
     deadline: "empty",
-    worker: "empty",
+   sire: "empty",
+   dam: "empty",
     status: "empty",
     location: "empty",
     ownership: "empty",
@@ -197,6 +217,10 @@ $(".myFormValidate").form({
     soilType: "empty",
     cause: "empty",
     egg: "empty",
+    drug: "empty",
+    dose: "empty",
+    treatmentName: "empty",
+    cost: "empty",
     eggDay: "empty",
     brand: "empty",
     quantity: "empty",
@@ -209,7 +233,7 @@ $(document).ready(function () {
 
 let newPasswordValue;
 let confirmationValue;
-const submitBtn = document.getElementById("update-profile");
+const submitBtn = document.getElementById("submit-btn");
 const newPassword = document.getElementById("new-password");
 const confirmation = document.getElementById("password-confirmation");
 const validationMessage = document.getElementById("validation-message");
@@ -230,3 +254,6 @@ confirmation.addEventListener("input", (e) => {
     submitBtn.removeAttribute("disabled");
   }
 });
+
+ 
+

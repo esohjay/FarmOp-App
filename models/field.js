@@ -9,6 +9,11 @@ const FieldSchema = new Schema({
   size: String,
   createdAt: { type: Date, default: Date.now() },
   soilType: String,
+  creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 FieldSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Field", FieldSchema);

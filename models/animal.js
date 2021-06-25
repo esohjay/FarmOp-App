@@ -4,6 +4,7 @@ const Income = require("../models/income");
 const Expense = require("../models/expense");
 const Mortality = require("../models/mortality");
 const Egg = require("../models/egg");
+const Treatment = require("../models/treatment");
 const Feed = require("../models/feed");
 const Weight = require("../models/weight");
 const Task = require("../models/task");
@@ -14,7 +15,7 @@ const Schema = mongoose.Schema;
 const AnimalSchema = new Schema({
   name: String,
   createdAt: { type: Date, default: Date.now() },
-  batch: { type: String, unique: true },
+  batch:  String,
   breed: String,
   mortality: [
     {
@@ -22,6 +23,11 @@ const AnimalSchema = new Schema({
       ref: "Mortality",
     },
   ],
+    creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   tasks: [
     {
       type: Schema.Types.ObjectId,
@@ -43,7 +49,7 @@ const AnimalSchema = new Schema({
 
   source: String,
   description: String,
-
+  image: String,
   dateOfArrival: Date,
   quantity: Number,
   category: String,
@@ -78,6 +84,12 @@ const AnimalSchema = new Schema({
       ref: "Weight",
     },
   ],
+  treatments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Treatment",
+    },
+  ],
 });
 
 AnimalSchema.post("findOneAndDelete", async function (doc) {
@@ -100,6 +112,11 @@ AnimalSchema.post("findOneAndDelete", async function (doc) {
     await Expense.deleteMany({
       _id: {
         $in: doc.expenses,
+      },
+    });
+     await Treatment.deleteMany({
+      _id: {
+        $in: doc.treatments,
       },
     });
     await Mortality.deleteMany({

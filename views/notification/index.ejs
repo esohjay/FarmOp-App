@@ -1,0 +1,71 @@
+<% layout('layouts/boilerplate') %>
+<div class="header">Upcoming Tasks</div>
+<% for (let info of notificationInfo) {%>
+  
+
+<% if(info.startDaysLeft < 5 && info.dateDiff > 0) {%> 
+    <div class="ui celled list">
+  <div class="item">
+    
+    <div class="content">
+      <div class="header"><%= info.name %> </div>
+      <%= info.startDaysLeft%> days left to begin 
+    </div>
+  </div>
+    </div>
+
+    <% }  %> 
+  
+   
+    <% } %>  
+    
+
+    <div class="header">Tasks that should have started</div>
+
+    <% for (let info of notificationInfo) {%>
+  
+
+<% if(info.dateDiff < 0 && info.deadlineDiff > 0 ) {%> 
+    <div class="ui celled list">
+  <div class="item">
+    
+    <div class="content">
+      <div class="header"><%= info.name %> </div>
+
+      Deadline is <%= info.deadline.toDateString()%>  
+    </div>
+  </div>
+    </div>
+
+    <% }  %> 
+  
+   
+    <% } %>  
+
+
+
+    <div class="header">Missed Tasks</div>
+
+    <% for (let info of notificationInfo) {%>
+  
+
+<% if(info.deadlineDiff < 0) {%> 
+    <div class="ui celled list">
+  <div class="item">
+    
+    <div class="content">
+      <div class="header"><%= info.name %> </div>
+      Deadline was <%= info.deadline.toDateString()%>  
+    </div>
+  </div>
+    </div>
+
+    <% }  %> 
+  
+   
+    <% } %>  
+    
+    
+    
+    
+    

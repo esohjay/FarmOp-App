@@ -1,0 +1,88 @@
+<% layout('layouts/boilerplate') %>
+<div class="ui grid">
+  <div class="ui eleven wide column centered">
+     <a class="ui btn button" href="/treatment/<%= treatment._id %>">Back</a>
+    <div class="ui raised segment">
+      <form class="myFormValidate" action="/treatment/<%= treatment._id %>?_method=PUT " method="POST">
+        <div class="ui form">
+          <div class="field required">
+            <label for="treatment">Treatment</label>
+            <input type="text" id="treatment" name="treatment[treatmentName]" value="<%= treatment.treatmentName %>"  />
+          </div>
+          <div class="field required">
+            <label for="name">Animal</label>
+            <select name="treatment[name]" id="name" class="ui tag dropdown search">
+              <option value="<%= treatment.name %> "><%= treatment.name %></option>
+               <option value="Chicken">Chicken</option>
+               <option value="Turkey">Turkey</option>
+              <option value="Ostrich">Ostrich</option>
+              <option value="Guinea Fowl">Guinea Fowl</option>
+               <option value="Pig">Pig</option>
+              <option value="Catfish">CatFish</option>
+              <option value="Cattle">Cattle</option>
+              <option value="Sheep">Sheep</option>
+              <option value="Goat">Goat</option>
+              <option value="Rabbit">Rabbit</option>
+              <option value="Snail">Snail</option>
+              <option value="Grasscutter">Grasscutter</option>
+              <option value="Horse">Horse</option>
+              <option value="Donkey">Donkey</option>
+              <option value="Guinea Pig">Guinea Pig</option>
+            </select>
+          </div>
+          <div class="field required">
+            <label for="drug"> Drug </label>
+            <input
+              type="text"
+              id="drug"
+              value="<%= treatment.drug %>"
+              name="treatment[drug]"
+               
+            />
+          </div>
+          <div class="field required">
+            <label for="dose"> Dose </label>
+            <input
+              type="text"
+              id="dose"
+              value="<%= treatment.dose %>"
+              name="treatment[dose]"
+               
+            />
+          </div>
+          <div class="field required">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              value="<%=date %>"
+              name="treatment[date]"
+              
+            />
+          </div>
+           <div class="field required">
+            <label for="cost">Cost</label>
+            <input
+              type="number"
+              id="cost"
+              value="<%= treatment.cost %>"
+              name="treatment[cost]"
+              
+            />
+          </div>
+          
+          <div class="field required">
+            <label for="note">Note</label>
+            <textarea
+              name="treatment[note]"
+              id="note"
+              cols="30"
+              rows="3"
+            ><%= treatment.note %></textarea>
+          </div>
+          <button class="ui button fluid btn">Update Treatment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

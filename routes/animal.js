@@ -7,13 +7,17 @@ const {
   validateLivestock,
   searchAndFilter,
   sortDlisplay,
-  validateLivestockEdit,
+  isAnAdmin,
+  
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
+const changeDate = require("../utils/changeDate")
+const {setImageAnimal} = require("../utils/logics")
 const ExpressError = require("../utils/ExpressError");
+const  Farmstock = require("../models/farmstock");
 
 router.get(
-  "/",
+  "/", isLoggedin,
   searchAndFilter,
   sortDlisplay,
   catchAsync(async (req, res) => {
@@ -32,7 +36,7 @@ router.get(
     let batch = [];
     let breed = [];
 
-    const animals = await Animal.paginate(dbQuery, dbOption || options);
+    const animals = await Animal.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of animals.docs) {
       names.push(result.name);
 
@@ -49,7 +53,7 @@ router.get(
   })
 );
 
-router.get("/new", isLoggedin, (req, res) => {
+router.get("/new", isLoggedin, isAnAdmin, (req, res) => {
   //let field = {name : '', batch : '', category: '', breed: '', quantity:'', source: '', description:''}
   res.render("animal/new", {
     name: "",
@@ -65,15 +69,16 @@ router.get("/new", isLoggedin, (req, res) => {
 
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateLivestock,
   catchAsync(async (req, res) => {
-    try {
+    
       const animal = new Animal(req.body.animal);
-      await animal.save();
-      res.redirect(`/animal/${animal._id}`);
-    } catch (err) {
-      const {
+     animal.creator = req.user._id;
+     const animalName = animal.name;
+      const animalImage = setImageAnimal(animal.image, animalName)
+      animal.image = animalImage
+     const {
         name,
         batch,
         category,
@@ -83,15 +88,13 @@ router.post(
         date,
         description,
       } = req.body.animal;
-      let error = err.message;
-      if (
-        error.includes("duplicate") &&
-        error.includes("index: batch_1 dup key")
-      ) {
-        req.flash("error", "Batch Number already exist");
-        error = "Batch Number already exist";
-        //res.redirect('/animal/new' , {name , batch, category, breed, quantity, source, description })
-        res.render("animal/new", {
+       const exist = await Animal.find({$and: [{creator: req.user._id}, {batch: animal.batch}]})
+
+       if(exist.length){
+        req.flash("error", "Batch ID already exist");
+        error = "Batch ID already exist";
+      
+         res.render("animal/new", {
           name,
           date,
           error,
@@ -102,13 +105,17 @@ router.post(
           source,
           description,
         });
+
+      }else{
+        await animal.save();
+      res.redirect(`/animal/${animal._id}`);
+    
       }
-    }
   })
 );
 
 router.get(
-  "/:id",
+  "/:id", isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const animal = await Animal.findById(id)
@@ -120,9 +127,19 @@ router.get(
       .populate("egg")
       .populate("inflow")
       .populate("expenses")
-      .populate("mortality");
-    const staff = await User.find({});
-    res.render("animal/show", { animal, staff });
+      .populate("mortality")
+      .populate("treatments");
+      const farmstock = await Farmstock.find({creator: req.user.farmId, batch: animal.batch} )
+        
+       const farmstocks = await Farmstock.find({creator: req.user._id})
+        
+        
+    const staff = await User.find({farmId: req.user._id});
+    if (!animal) {
+      req.flash("error", "No batch found");
+      return res.redirect("/animal");
+    }
+    res.render("animal/show", { animal, staff, farmstock, farmstocks });
   })
 );
 
@@ -132,7 +149,9 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const animal = await Animal.findById(id);
-    res.render("animal/edit", { animal });
+    
+const arrivaldate = changeDate(animal.dateOfArrival)
+    res.render("animal/edit", { animal, arrivaldate});
   })
 );
 
@@ -143,11 +162,21 @@ router.put(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const animal = await Animal.findByIdAndUpdate(id, { ...req.body.animal });
-
+    
     await animal.save();
     res.redirect(`/animal/${animal._id}`);
   })
 );
+
+router.put("/:id/group", catchAsync(async (req, res) => {
+    const {id} = req.params
+    const ids = req.body.farmstock;
+    const animal = await Animal.findById(id)
+   const farmstock = await Farmstock.updateMany({_id: {$in: ids}}, { $set: { batch: animal.batch }})
+   
+    req.flash('success', "Added to group")
+     res.redirect(`/animal/${animal._id}`);
+}))
 
 router.delete(
   "/:id",

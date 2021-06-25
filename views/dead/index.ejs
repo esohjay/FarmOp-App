@@ -1,0 +1,62 @@
+<% layout('layouts/boilerplate') %>
+
+    
+  
+<table class="ui celled selectable unstackable table">
+                <thead>
+                    <tr>
+                        <th class=" color-green">Tag</th>
+                        <th class=" color-green">Name</th>
+                        <th class=" color-green">Batch</th>
+                        <th class="right aligned color-green">Action</th>
+
+                    </tr>
+                </thead>
+                <% for(let death of dead.docs){ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= death.tag %>
+                            </td>
+
+                            <td>
+                                <%= death.name %>
+                            </td>
+
+
+                            <td>
+                                <%= death.batch%>
+                            </td>
+
+                            <td class="right aligned">
+                                <a href="/livestock/dead/<%= death._id %>"><i
+                                        class=" green caret square right outline float right icon"></i></a>
+                            </td>
+
+                        </tr>
+                       
+                            <% } %>
+                               
+            </table>
+
+
+
+
+<% if (dead.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (dead.prevPage) {%>
+  <a class="ui btn page-num button" href="/livestock/dead?page=<%= dead.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
+  <%for (let i = 1; i <= dead.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/livestock/dead?page=<%= i %>"
+     <%= i===dead.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
+      <% if (dead.nextPage ) {%>
+  <a class="ui btn page-num button"  href="/livestock/dead?page=<%= dead.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
+</div>
+<% } %>

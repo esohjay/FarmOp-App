@@ -3,16 +3,16 @@
 
  <%- include('../partials/cropEvent') %>
 
-<a class="button green ui" href="/cropevent/new">Add an Event</a>
+<a class="button btn ui" href="/cropevent/new">Add an Event</a>
 <h1 class="ui center aligned header">Crop Event</h1>
 <table class="ui celled selectable unstackable table">
         <thead>
             <tr>
-                <th>Event</th>
-                <th>Date</th>
-                <th>Leader</th>
-                <th>Remark</th>
-                <th class="right aligned">Action</th>
+                <th class=" color-green">Event</th>
+                <th class=" color-green">Date</th>
+                <th class=" color-green">Leader</th>
+                <th class=" color-green">Remark</th>
+                <th class="right aligned color-green">Action</th>
     
             </tr>
         </thead>
@@ -40,23 +40,23 @@
     
     </table>
 
-    <% if (events.totalPages > 1) {%>
-<div class="ui   grid">
-  <div class="ui eleven wide column centered">
-    <div class="ui raised segment">
-      <% if (events.prevPage) {%>
-        <a class="ui green button" href="/cropevent?page=<%= events.prevPage %> ">Prev</a>
-        <% } %> 
-  <%for (let i = 1; i <= events.totalPages; i++) {%>
     
-    <a href="/cropevent?page=<%= i %>"
-      <%= i === events.page ? "style = color:yellow;" : "style = color:green;" %> 
-      ><%= i %> </a>
-  <%  }  %> 
+
+<% if (events.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (events.prevPage) {%>
+  <a class="ui btn page-num button" href="/cropevent?page=<%= events.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
+  <%for (let i = 1; i <= events.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/cropevent?page=<%= i %>"
+     <%= i===events.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
       <% if (events.nextPage ) {%>
-        <a class="ui green button" href="/cropevent?page=<%= events.nextPage %> ">Next</a>
-        <% } %>
-    </div>
-  </div>
+  <a class="ui btn page-num button"  href="/cropevent?page=<%= events.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
 </div>
 <% } %>

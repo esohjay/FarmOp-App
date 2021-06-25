@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') %>
 <div class="ui   grid">
 <div class="ui eleven wide column centered">
+     <a class="ui btn button" href="/croptask">Back</a>
     <div class="ui raised segment">
 <form class="myFormValidate" action="/croptask" method="POST">
     <div class="ui  form">
@@ -15,7 +16,7 @@
                     <select name="task[name]" id="name" class="ui search dropdown">
                         <option value="">Select Crop</option>
                         <% for(let crops of crop) {%>
-                            <option value="<%= crops.crop %> ">
+                            <option value="<%= crops.crop %>">
                                 <%= crops.crop %>
                             </option>
                             <% } %>
@@ -36,7 +37,7 @@
                     <select multiple="" name="task[workers]" id="worker" class="ui search dropdown">
                         <option value="">Select Staff</option>
                         <% for(let worker of staff) {%>
-                            <option value="<%= worker.fname %> ">
+                            <option value="<%= worker.fname %>">
                                 <%= worker.fname %>
                             </option>
                             <% } %>
@@ -49,7 +50,7 @@
                     <select  name="task[leader]" id="leader" class="ui search dropdown">
                         <option value="">Select Leader</option>
                         <% for(let leader of staff) {%>
-                            <option value="<%= leader.fname %> ">
+                            <option value="<%= leader.fname %>">
                                 <%= leader.fname %>
                             </option>
                             <% } %>
@@ -70,7 +71,7 @@
                     <label for="note">Note</label>
                     <textarea name="task[instructions]" id="note" cols="30" rows="3"></textarea>
                 </div>
-                <button class="ui button fluid green">Create Task</button>
+                <button class="ui button fluid btn">Create Task</button>
     </div>
         
 </form>

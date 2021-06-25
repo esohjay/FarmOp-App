@@ -12,7 +12,7 @@ const {
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
-
+const changeDate = require("../utils/changeDate")
 router.get(
   "/",
   searchAndFilter,
@@ -24,11 +24,11 @@ router.get(
     delete res.locals.dbOption;
     const options = {
       page: req.query.page || 1,
-      limit: 100,
+      limit: 20,
       sort: { createdAt: -1 },
     };
     let names = [];
-    const inflow = await Income.paginate(dbQuery, dbOption || options);
+    const inflow = await Income.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of inflow.docs) {
       names.push(result.name);
     }
@@ -48,16 +48,21 @@ router.post(
   validateIncome,
   catchAsync(async (req, res) => {
     const income = new Income(req.body.income);
+    income.creator = req.user._id
     await income.save();
     res.redirect(`/income/${income._id}`);
   })
 );
 
 router.get(
-  "/:id",
+  "/:id", isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const income = await Income.findById(id);
+    if (!income) {
+      req.flash("error", "No record found");
+      return res.redirect("/income");
+    }
     res.render("income/show", { income });
   })
 );
@@ -67,7 +72,8 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const income = await Income.findById(id);
-    res.render("income/edit", { income });
+    const date = changeDate(income.date)
+    res.render("income/edit", { income, date });
   })
 );
 router.put(

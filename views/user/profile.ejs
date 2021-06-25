@@ -1,50 +1,52 @@
 <% layout('layouts/boilerplate') %>
 
-<div class="ui segments">
-  <div class="ui segments">
-    <h1 class="ui header centered"><%= currentUser.username %></h1>
-    <div class="ui horizontal segments">
-      <div class="ui segment">
-        <p><%= currentUser.fname %></p>
+<div class="ui green segments segment-target">
+  <div class="ui green segment">
+    <h1><%= currentUser.username %></h1>
+    <div class="ui segments">
+      <div class="ui horizontal segments">
+        <div class="ui segment">
+          <p><%= currentUser.fname %></p>
+        </div>
+        <div class="ui segment">
+          <p><%= currentUser.lname %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui stacked segments">
+      <div class="ui green segment">
+        <p><%= currentUser.sex %></p>
       </div>
       <div class="ui segment">
-        <p><%= currentUser.lname %></p>
+        <p><%= currentUser.phone %></p>
+      </div>
+      <div class="ui segment">
+        <p><%= currentUser.email %></p>
       </div>
     </div>
-  </div>
 
-  <div class="ui stacked segments">
-    <div class="ui segment">
-      <p><%= currentUser.sex %></p>
-    </div>
-    <div class="ui segment">
-      <p><%= currentUser.phone %></p>
-    </div>
-    <div class="ui segment">
-      <p><%= currentUser.email %></p>
-    </div>
-  </div>
-
-  <div class="ui raised segments">
-    <div class="ui segment">
-      <p>
-        Role: <%= currentUser.role === '' ? 'Role not assigned yet' :
-        currentUser.role %>
-      </p>
-    </div>
-    <div class="ui segment">
-      <p>
-        Role Description: <%= currentUser.roleDescription === undefined ? 'No '
-        : currentUser.roleDescription %>
-      </p>
+    <div class="ui raised segments">
+      <div class="ui yellow segment">
+        <p>
+          Role: <%= currentUser.role === '' ? 'Role not assigned yet' :
+          currentUser.role %>
+        </p>
+      </div>
+      <div class="ui segment">
+        <p>
+          Role Description: <%if (currentUser.roleDescription === undefined){%>
+          Role not assigned yet <% } %> <%= currentUser.roleDescription %>
+        </p>
+      </div>
     </div>
   </div>
 </div>
 <div class="ui three stackable cards">
   <% if(events && events.length) {%>
-  <div class="card green">
+  <div class="card">
     <div class="content">
-      <div class="header">Recent Livestock Events</div>
+      <h3 class="header">Recent Livestock Events</h3>
       <div class="description">
         <div class="ui celled list">
           <% for (let event of events) {%>
@@ -67,9 +69,9 @@
     >
   </div>
   <% } %> <% if(cEvents && cEvents.length) {%>
-  <div class="card green">
+  <div class="card">
     <div class="content">
-      <div class="header">Recent Crop Events</div>
+      <h3 class="header">Recent Crop Events</h3>
       <div class="description">
         <div class="ui celled list">
           <% for (let event of cEvents) {%>
@@ -92,9 +94,9 @@
     >
   </div>
   <% } %> <% if(tasks && tasks.length) {%>
-  <div class="card teal">
+  <div class="card">
     <div class="content">
-      <div class="header">Recent Livestock Tasks</div>
+      <h3 class="header">Recent Livestock Tasks</h3>
       <div class="description">
         <div class="ui celled list">
           <% for (let task of tasks) {%>
@@ -117,9 +119,9 @@
     >
   </div>
   <% } %> <% if(cTasks && cTasks.length) {%>
-  <div class="card teal">
+  <div class="card">
     <div class="content">
-      <div class="header">Recent Crop Tasks</div>
+      <h3 class="header">Recent Crop Tasks</h3>
       <div class="description">
         <div class="ui celled list">
           <% for (let task of cTasks) {%>
@@ -141,11 +143,12 @@
       </div></a
     >
   </div>
+  <%= console.log(currentUser) %> 
   <% } %> <% if(currentUser.isAdmin === true) {%> <% if(sales && sales.length)
   {%>
-  <div class="card teal">
+  <div class="card">
     <div class="content">
-      <div class="header">Recent Livestock Sales</div>
+      <h3 class="header">Recent Livestock Sales</h3>
       <div class="description">
         <div class="ui celled list">
           <% for (let sale of sales) {%>
@@ -168,9 +171,9 @@
     >
   </div>
   <% } %> <% if(cIncome && cIncome.length) {%>
-  <div class="card teal">
+  <div class="card">
     <div class="content">
-      <div class="header">Recent Crop Sales</div>
+      <h3 class="header">Recent Crop Sales</h3>
       <div class="description">
         <div class="ui celled list">
           <% for (let sale of cIncome) {%>

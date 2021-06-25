@@ -6,12 +6,12 @@ let breedFilter=[]; %>
    <form action="/animal" method="GET">
   <div class="ui action input">
   <input type="text" placeholder="Tag no" name="search">
-  <button class="ui icon button">
+  <button class="ui icon btn2 button">
     <i class="search icon"></i>
   </button>
 </div>
  </form> 
-    <a class="ui green button"  href="/animal/new">Add a Batch</a>   
+    <a class="ui button btn"  href="/animal/new">Add a Batch</a>   
 
  
 
@@ -19,7 +19,7 @@ let breedFilter=[]; %>
 
 
 
-<div class="ui labeled icon top right pointing dropdown right floated button">
+<div class="ui labeled icon top right pointing dropdown right floated btn button">
   <i class="sliders horizontal icon"></i>
   <span class="text">Sort</span>
   <div class="menu">
@@ -57,7 +57,7 @@ let breedFilter=[]; %>
 <div class="ui  accordion">
       <div class="title">
         <div class="title">
-        <div class="ui green button">Filter</div>
+        <div class="ui btn button">Filter</div>
       </div>
       </div>
       <div class="content">
@@ -74,7 +74,7 @@ let breedFilter=[]; %>
                     <div class="ui checkbox">
                       <input
                         type="checkbox"
-                        class="hidden"
+                        class="hidden chkbx"
                         name="name[]"
                         value="<%= name %>"
                       />
@@ -153,8 +153,8 @@ let breedFilter=[]; %>
              </div>
    
               </div>
-               <a class="ui red button" href="/animal">Reset</a>
-              <button class="ui button" type="submit">Submit</button>
+               <a class="ui btn2 button" href="/animal">Reset</a>
+              <button class="ui btn button" type="submit">Submit</button>
             </form>
           </div>
         </div>

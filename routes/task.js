@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
+const changeDate = require("../utils/changeDate")
 const Event = require("../models/event");
 const Task = require("../models/task");
 const User = require("../models/user");
@@ -15,7 +16,7 @@ const {
 } = require("../middleware");
 
 router.get(
-  "/",
+  "/", isLoggedin,
   searchAndFilter,
   sortDlisplay,
   isLoggedin,
@@ -31,7 +32,7 @@ router.get(
     let names = [];
     let animalTasks = [];
 
-    const tasks = await Task.paginate(dbQuery, dbOption || options);
+    const tasks = await Task.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of tasks.docs) {
       names.push(result.name);
       animalTasks.push(result.task);
@@ -49,7 +50,7 @@ router.get(
   "/new",
   isLoggedin,
   catchAsync(async (req, res) => {
-    const staff = await User.find({});
+    const staff = await User.find({farmId: req.user._id});
 
     res.render("task/new", { staff });
   })
@@ -60,6 +61,8 @@ router.post(
   validateTask,
   catchAsync(async (req, res) => {
     const task = new Task(req.body.task);
+    //task.workers = req.body.workers;
+    task.creator = req.user._id
     await task.save();
     res.redirect(`/task/${task._id}`);
   })
@@ -83,14 +86,16 @@ router.get(
   isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const staff = await User.find({});
+    const staff = await User.find({farmId: req.user._id});
     const task = await Task.findById(id);
-    res.render("task/edit", { task, staff });
+     const deadline = changeDate(task.deadline)
+    const startDate = changeDate(task.startDate)
+    res.render("task/edit", { task, staff, deadline, startDate });
   })
 );
 
 router.post(
-  "/:id/complete",
+  "/:id/complete", isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
 
@@ -112,7 +117,7 @@ router.post(
 router.put(
   "/:id",
   isLoggedin,
-  validateTaskEdit,
+  validateTask,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const task = await Task.findByIdAndUpdate(id, { ...req.body.task });

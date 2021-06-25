@@ -3,7 +3,7 @@
 
   <div class="ui raised segments">
     <div class="ui segment green">
-      <p class="ui huge header">
+      <p class="ui huge color-green header">
         <%= income.income %>
       </p>
     </div>
@@ -13,26 +13,26 @@
           <%= income.date.toDateString() %>
         </p>
       </div>
-      <div class="ui segment">
+      <div class="ui black segment">
         <p>
           <%= income.amount %>
         </p>
       </div>
-      <div class="ui segment">
+      <div class="ui green segment">
         <p>
-          <%= income.category %>
+          <%= income.name %>
         </p>
       </div>
     </div>
-    <div class="ui segment">
+    <div class="ui yellow segment">
       <p>
         <%= income.note %>
       </p>
     </div>
-    <div class="ui segment">
-      <a class="ui green button" href="/cropinflow">Back</a>
+    <div class="ui black segment">
+      <a class="ui btn button" href="/cropinflow">Back</a>
       <div class="ui buttons right floated">
-        <a href="/cropinflow/<%=income._id %>/edit" class="ui yellow button">Edit</a>
+        <a href="/cropinflow/<%=income._id %>/edit" class="ui btn2 button">Edit</a>
         <div class="or"></div>
         <button class="ui  negative button" id="test">Delete</button>
         <div class="ui modal test">

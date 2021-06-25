@@ -2,7 +2,7 @@
 
 <div class="ui grid">
   <div class="ui eleven wide column centered">
-    <a class="ui green button" href="/breeder">Back</a>
+    <a class="ui btn button" href="/breeder">Back</a>
     <div class="ui raised segment">
       <form
         class="myFormValidate"
@@ -25,6 +25,10 @@
             <label for="name">Animal Name</label>
             <select name="farmstock[name]" id="name" class="ui dropdown search">
               <option value="Chicken">Chicken</option>
+               <option value="Turkey">Turkey</option>
+              <option value="Ostrich">Ostrich</option>
+              <option value="Guinea Fowl">Guinea Fowl</option>
+               <option value="Pig">Pig</option>
               <option value="Catfish">CatFish</option>
               <option value="Cattle">Cattle</option>
               <option value="Sheep">Sheep</option>
@@ -48,24 +52,38 @@
             />
           </div>
           <div class="field required">
-            <label for="sire">Sire</label>
+            <label for="sire">Sire Tag no</label>
             <input
               type="text"
-              id="sire"
+              id="sires"
               name="breeder[sire]"
               value="<%=sire %>"
               placeholder="Sire"
             />
           </div>
           <div class="field required">
-            <label for="dam">Dam</label>
+            <label for="dam">Dam Tag No</label>
             <input
               type="text"
-              id="dam"
+              id="damm"
               name="breeder[dam]"
               value="<%=dam %>"
               placeholder="Dam"
             />
+          </div>
+           <div class="field required">
+            <label for="category">Category</label>
+            <select
+              name="breeder[category]"
+              id="category"
+              class="ui dropdown search"
+            >
+              <option value="<%= category %>">Select Category</option>
+              <option value="Poultry">Poultry</option>
+              <option value="Fishery">Fishery</option>
+              <option value="Ruminant">Ruminant(Cattle, Sheep, Goat...)</option>
+              <option value="Non-Ruminant">Non-Ruminant(Pig, Rabbit, Snail...)</option>
+            </select>
           </div>
           <div class="field required">
             <label for="dob">DOB</label>
@@ -107,7 +125,7 @@
 <%= description %> </textarea
             >
           </div>
-          <button class="ui button fluid green">Add Animal</button>
+          <button class="ui button fluid btn">Add Animal</button>
         </div>
       </form>
     </div>

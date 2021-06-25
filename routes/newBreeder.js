@@ -4,13 +4,15 @@ const Breeder = require("../models/breeder");
 const multer = require("multer");
 const { storage, cloudinary } = require("../cloudinary");
 const upload = multer({ storage });
-const { isLoggedin, searchAndFilter, sortDlisplay } = require("../middleware");
+const { isLoggedin, searchAndFilter, sortDlisplay, validateBreeder } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const farmstock = require("../models/farmstock");
+const changeDate = require("../utils/changeDate")
+const {setImage} = require("../utils/logics")
 
 router.get(
-  "/",
+  "/", isLoggedin,
   searchAndFilter,
   sortDlisplay,
   catchAsync(async (req, res) => {
@@ -26,7 +28,7 @@ router.get(
     let categories = [];
     let breed = [];
 
-    const breeder = await Breeder.paginate(dbQuery, dbOption || options);
+    const breeder = await Breeder.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of breeder.docs) {
       names.push(result.name);
 
@@ -59,25 +61,25 @@ router.post(
   "/",
   isLoggedin,
   upload.single("image"),
+  validateBreeder,
   catchAsync(async (req, res) => {
-    try {
-      const { id } = req.params;
       const breeder = new Breeder(req.body.breeder);
+      breeder.creator = req.user._id
+      const animalName = breeder.name
+       if (req.file) {
       const { path, filename } = req.file;
       breeder.image = { url: path, filename: filename };
-      await breeder.save();
-      res.redirect(`/breeder/${breeder._id}`);
-    } catch (err) {
+       } else if(req.file === undefined){
+         breeder.image = setImage(breeder.image, animalName) 
+      }
       const { tag, category, sire, name, dam, breed, sex, description } =
         req.body.breeder;
-      let error = err.message;
-      if (
-        error.includes("duplicate") &&
-        error.includes("index: tag_1 dup key")
-      ) {
+
+        const exist = await Breeder.find({$and: [{creator: req.user._id}, {tag: breeder.tag}]})
+      if(exist.length){
         req.flash("error", "Tag Number already exist");
         error = "Tag Number already exist";
-        //res.redirect('/animal/new' , {name , batch, category, breed, quantity, source, description })
+       
         res.render("breeder/new", {
           tag,
           category,
@@ -89,19 +91,27 @@ router.post(
           sex,
           description,
         });
+
+      }else{
+       await breeder.save();
+      res.redirect(`/breeder/${breeder._id}`);
+    
       }
-    }
   })
 );
 
 router.get(
-  "/:id",
+  "/:id", isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
 
     const breeder = await Breeder.findById(id)
       .populate("breeding")
-      .populate("farmstock");
+      .populate("farmstock").populate("treatments");;
+      if (!breeder) {
+      req.flash("error", "No breeder found");
+      return res.redirect("/breeder");
+    }
     res.render("breeder/show", { breeder });
   })
 );
@@ -112,7 +122,8 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const breeder = await Breeder.findById(id);
-    res.render("breeder/edit", { breeder });
+    const dob = changeDate(breeder.dob)
+    res.render("breeder/edit", { breeder, dob });
   })
 );
 
@@ -120,6 +131,7 @@ router.put(
   "/:id",
   isLoggedin,
   upload.single("image"),
+  validateBreeder,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const breeder = await Breeder.findByIdAndUpdate(id, {

@@ -16,6 +16,7 @@ router.post(
     const { id } = req.params;
     const crop = await Crop.findById(id);
     const income = new cropIncome(req.body.income);
+    income.creator = req.user._id
     crop.inflow.push(income);
     await income.save();
     await crop.save();

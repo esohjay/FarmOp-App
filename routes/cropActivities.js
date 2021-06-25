@@ -14,9 +14,10 @@ const {
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
+const changeDate = require("../utils/changeDate")
 
 router.get(
-  "/",
+  "/", isLoggedin,
   searchAndFilter,
   sortDlisplay,
   catchAsync(async (req, res) => {
@@ -31,7 +32,7 @@ router.get(
     let names = [];
     let cropEvents = [];
 
-    const events = await cropEvent.paginate(dbQuery, dbOption || options);
+    const events = await cropEvent.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of events.docs) {
       names.push(result.name);
       cropEvents.push(result.event);
@@ -48,8 +49,8 @@ router.get(
   "/new",
   isLoggedin,
   catchAsync(async (req, res) => {
-    const user = await User.find({});
-    const crop = await Crop.find({});
+    const user = await User.find({farmId: req.user._id});
+    const crop = await Crop.find({creator: req.user._id});
     res.render("cropevent/new", { user, crop });
   })
 );
@@ -60,17 +61,21 @@ router.post(
   validateEvent,
   catchAsync(async (req, res) => {
     const event = new cropEvent(req.body.event);
+    event.creator = req.user._id
     await event.save();
     res.redirect(`/cropevent/${event._id}`);
   })
 );
 
 router.get(
-  "/:id",
+  "/:id", isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const event = await cropEvent.findById(id);
-
+    if (!event) {
+      req.flash("error", "No record found");
+      return res.redirect("/event");
+    }
     res.render("cropevent/show", { event });
   })
 );
@@ -80,9 +85,10 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const event = await cropEvent.findById(id);
-    const user = await User.find({});
-    const crop = await Crop.find({});
-    res.render("cropevent/edit", { event, user, crop });
+    const user = await User.find({farmId: req.user._id});
+    const crop = await Crop.find({creator: req.user._id});
+    const eventDate = changeDate(event.date)
+    res.render("cropevent/edit", { event, user, crop, eventDate });
   })
 );
 router.put(

@@ -9,6 +9,11 @@ const cropEventSchema = new Schema({
   note: String,
   createdAt: { type: Date, default: Date.now() },
   name: String,
+  creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 cropEventSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("cropEvent", cropEventSchema);

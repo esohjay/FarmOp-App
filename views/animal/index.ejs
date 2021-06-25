@@ -11,14 +11,14 @@
         <div class="item">
 
         <a href="/animal/<%= animal._id %>" class="ui tiny image">
-  
+           <img src="<%= animal.image%>" />
         </a>
 
 
           <div class="middle aligned content">
             <div class="header">
-              <%= animal.name %>
-                <a href="/animal/<%= animal._id %>"><i class=" green caret square right outline float right icon"></i></a>
+             <a class="color-green-h" href="/animal/<%= animal._id %>"> <%= animal.name %>
+                <i class=" green caret square right outline float right icon"></i></a>
 
             </div>
             <div class="extra">
@@ -37,6 +37,29 @@
               </p>
             
             </div>
+             <div class="extra">
+            
+<div class="ui icon bottom right pointing dropdown right floated">
+  <i class="trash  icon"></i>
+  <div class="menu">
+    
+    <div class="item">Are you sure?</div>
+    <div class="item"><form action="/animal/<%= animal._id %>?_method=DELETE " method="POST">
+                 <button class="ui active button red right floated">
+            Delete
+              </button>
+              </form>
+            </div>
+             <div class="item">  </div>
+  </div>
+</div>
+          <div class="ui icon bottom left pointing ">
+ <a href="/animal/<%=animal._id %>/edit" ><i class="edit yellow icon"></i></a>
+ 
+            </div>      
+            
+           
+          </div>
           </div>
         </div>
 
@@ -48,26 +71,24 @@
     <%} %>
 </div>
 
-<% if (animals.totalPages> 1) {%>
+
+
+
+<% if (animals.totalPages > 1) {%>
   <div class="ui   grid">
-    <div class="ui eleven wide column centered">
-      <div class="ui raised segment">
-        <% if (animals.prevPage) {%>
-          <a class="ui green button" href="/animal?page=<%= animals.prevPage %> ">Prev</a>
-          <% } %>
-            <%for (let i=1; i <=animals.totalPages; i++) {%>
-
-              <a href="/animal?page=<%= i %>" <%=i===animals.page ? "style = color:yellow;"
-                : "style = color:green;" %>
-                ><%= i %> </a>
-              <% } %>
-                <% if (animals.nextPage ) {%>
-                  <a class="ui green button" href="/animal?page=<%= animals.nextPage %> ">Next</a>
-                  <% } %>
-      </div>
-    </div>
-  </div>
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (animals.prevPage) {%>
+  <a class="ui btn page-num button" href="/animal?page=<%= animals.prevPage %> "><i class="left  chevron icon"></i></a>
   <% } %>
-
-
-
+  <%for (let i = 1; i <= animals.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/animal?page=<%= i %>"
+     <%= i===animals.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
+      <% if (animals.nextPage ) {%>
+  <a class="ui btn page-num button"  href="/animal?page=<%= animals.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
+</div>
+<% } %>

@@ -1,0 +1,58 @@
+<% layout('layouts/boilerplate') %>
+<a class="button btn ui" href="/input/new">Add Input</a>
+
+ 
+ <h1 class="ui center aligned header">Crop Input</h1>
+<table class="ui celled selectable unstackable table">
+        <thead>
+            <tr>
+                <th class=" color-green">Input</th>
+                <th class=" color-green">Date</th>
+                <th class=" color-green">Input Name</th>
+                <th class=" color-green">Quantity</th>
+                <th class="right aligned color-green">Action</th>
+    
+            </tr>
+        </thead>
+        <% for(let input of inputs.docs){ %>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= input.inputType %>
+                    </td>
+                    <td>
+                        <%= input.date.toDateString()%>
+                    </td>
+                    <td>
+                        <%= input.inputName %>
+                    </td>
+                    <td>
+                        <%= input.quantity %>
+                    </td>
+                    <td>
+                        <a href="/input/<%= input._id %>"><i
+                                class=" green caret square right outline float right icon"></i></a>
+                    </td>
+                </tr>
+                <% } %>
+    
+    </table>
+  
+ <% if (inputs.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (inputs.prevPage) {%>
+  <a class="ui btn page-num button" href="/input?page=<%= inputs.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
+   <%for (let i = 1; i <= inputs.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/input?page=<%= i %>"
+     <%= i === inputs.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
+      <% if (inputs.nextPage ) {%>
+  <a class="ui btn page-num button"  href="/input?page=<%= inputs.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
+</div>
+<% } %>

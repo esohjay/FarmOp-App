@@ -6,6 +6,11 @@ const MortalitySchema = new Schema({
   cause: String,
   createdAt: { type: Date, default: Date.now() },
   date: Date,
+  creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 
 module.exports = mongoose.model("Mortality", MortalitySchema);

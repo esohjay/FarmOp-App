@@ -2,7 +2,7 @@
 
 <div class="ui   grid">
     <div class="ui eleven wide column centered">
-        <a class="ui green button" href="/crop/<%= crop._id %>">Back</a>
+        <a class="ui btn button" href="/crop/<%= crop._id %>">Back</a>
         <div class="ui raised segment">
             <form class="myFormValidate" action="/crop/<%= crop._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="ui  form">
@@ -19,16 +19,22 @@
                         <div class="field  required">
                             <label for="field">Field</label>
                             <select id="field" name="crop[field]" class="ui search dropdown">
-                                
+                                  <% if(field.length) {%>
                                 <% for(let location of field) {%>
-                                    <option value="<%= location.name %>. <%= location.location %>  " <%= crop.field === location.name ? 'selected' : '' %> >
+                                    <option value="<%= location.name %>" <%= crop.field === location.name ? 'selected' : '' %> >
                                         <%= location.name %>. <%= location.location %>
                                     </option>
                                     <% } %>
+                                     <% } else{%>
+                                            <option value="">You need to register a  <a class="color-green-h" href="/field/new">field</a></option>
+                                            <% } %>
                             </select>
                         </div>
                     </div>
-                   
+                    <div class="field required">
+                        <label for="date">Plant Date</label>
+                        <input type="date"  id="date" name="crop[date]" value=<%= plantDate%>>
+                    </div>
                     <div class="field required">
                         <label for="coverage">SIze of Land Covered</label>
                         <input type="text" id="coverage" name="crop[coverage]"  value="<%= crop.coverage %>">
@@ -41,7 +47,7 @@
                         <label for="description">Brief Description</label>
                         <textarea name="crop[description]" id="description" cols="30" rows="3"><%= crop.description %></textarea>
                     </div>
-                    <button class="ui button fluid green">Update Crop</button>
+                    <button class="ui button fluid btn">Update Crop</button>
                 </div>
                 <div class="ui error message"></div>
             </form>

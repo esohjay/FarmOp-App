@@ -5,21 +5,6 @@
   <%- include('../partials/farmstock') %>
 
 
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
 <div class="ui grid stackable padded">
 
 <% for(let animal of farmstock.docs){ %> 
@@ -27,17 +12,16 @@
   <div class="ui green raised segment">
 <div class="ui  very relaxed styled unstackable items">
     <div class="item">
-       <a href="/farmstock/<%= animal._id %>" class="ui small circular image">
+       <a href="/farmstock/<%= animal._id %>" class="ui tiny circular image">
                  <img src="<%= animal.image.url %> ">
        </a>
        <div class="middle aligned content">
-          <div class="header">
-              <%= animal.tag %>
-                 <a href="/farmstock/<%= animal._id %>"><i
-                      class=" green caret square right outline float right icon"></i></a>
+          <div class="header ">
+              <a class="color-green-h" href="/farmstock/<%= animal._id %>"><%= animal.tag %>
+                <i class="  caret square right outline float right icon"></i></a>
            </div>
           <div class="description">
-                <p><%= animal.name %></p> 
+                 <p><%= animal.name %></p> 
           </div>
             <div class="extra">
                <%= animal.dob.toDateString() %>
@@ -46,16 +30,27 @@
                <p><%= animal.sex %></p> 
             </div>
             <div class="extra">
-              
-            <form action="/farmstock/<%= farmstock._id %>?_method=DELETE " method="POST">
-                 <button class="ui active button  right floated">
-            <i class="edit icon"></i>Delete
+            
+<div class="ui icon bottom right pointing dropdown right floated">
+  <i class="trash  icon"></i>
+  <div class="menu">
+    
+    <div class="item">Are you sure?</div>
+    <div class="item"><form action="/farmstock/<%= animal._id %>?_method=DELETE " method="POST">
+                 <button class="ui active button red right floated">
+            Delete
               </button>
               </form>
-              <a href="/farmstock/<%=animal._id %>/edit" >   <button class="ui active button">
-              <i class="edit icon"></i>Edit
-              </button></a>
-       
+            </div>
+             <div class="item">  </div>
+  </div>
+</div>
+          <div class="ui icon bottom left pointing ">
+ <a href="/farmstock/<%=animal._id %>/edit" ><i class="edit yellow icon"></i></a>
+ 
+            </div>      
+            
+           
           </div>
                     
                      </div>
@@ -70,23 +65,25 @@
 <%} %>
 
 </div>
-<% if (farmstock.totalPages > 1) {%>
-<div class="ui   grid">
+
+
+
+ <% if (farmstock.totalPages > 1) {%>
+  <div class="ui   grid">
   <div class="ui eleven wide column centered">
-    <div class="ui raised segment">
-      <% if (farmstock.prevPage) {%>
-        <a class="ui green button" href="/farmstock?page=<%= farmstock.prevPage %> ">Prev</a>
-        <% } %> 
+<div class="ui small basic icon buttons">
+   <% if (farmstock.prevPage) {%>
+  <a class="ui btn page-num button" href="/farmstock?page=<%= farmstock.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
   <%for (let i = 1; i <= farmstock.totalPages; i++) {%>
-    
-    <a href="/farmstock?page=<%= i %>"
-      <%= i === farmstock.page ? "style = color:yellow;" : "style = color:green;" %> 
-      ><%= i %> </a>
-  <%  }  %> 
+  <a class="ui btn button page-num   " href="/farmstock?page=<%= i %>"
+     <%= i === farmstock.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
       <% if (farmstock.nextPage ) {%>
-        <a class="ui green button" href="/farmstock?page=<%= farmstock.nextPage %> ">Next</a>
-        <% } %>
-    </div>
-  </div>
+  <a class="ui btn page-num button"  href="/farmstock?page=<%= farmstock.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
 </div>
 <% } %>
+

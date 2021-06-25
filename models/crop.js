@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const cropEvent = require("../models/cropEvent");
 const cropIncome = require("../models/cropIncome");
 const cropExpense = require("../models/cropExpense");
+const Input = require("../models/input");
 const CTask = require("../models/cropTask");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const Schema = mongoose.Schema;
@@ -23,6 +24,17 @@ const CropSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "cropEvent",
+    },
+  ],
+   creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  inputs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Input",
     },
   ],
   expenses: [
@@ -50,6 +62,11 @@ CropSchema.post("findOneAndDelete", async function (doc) {
     await cropEvent.deleteMany({
       _id: {
         $in: doc.events,
+      },
+    });
+    await Input.deleteMany({
+      _id: {
+        $in: doc.inputs,
       },
     });
     await cropIncome.deleteMany({

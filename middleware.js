@@ -15,6 +15,11 @@ const {
   incomeSchema,
   weightSchema,
   feedSchema,
+  matingSchema,
+  parturitionSchema,
+  breederSchema,
+  inputSchema,
+  treatmentSchema
 } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError");
 const User = require("./models/user");
@@ -26,7 +31,7 @@ module.exports.isLoggedin = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.returnTo = req.originalUrl;
     req.flash("error", "You must be logged in");
-    return res.redirect("/login");
+    return res.redirect("/user/login");
   }
   next();
 };
@@ -42,6 +47,56 @@ module.exports.validateLivestock = (req, res, next) => {
 };
 module.exports.validateFarmstock = (req, res, next) => {
   const { error } = FarmStockSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateBreeder = (req, res, next) => {
+  const { error } = breederSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateInput = (req, res, next) => {
+  const { error } = inputSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateTreatment = (req, res, next) => {
+  const { error } = treatmentSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateMating = (req, res, next) => {
+  const { error } = matingSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateParturition = (req, res, next) => {
+  const { error } = parturitionSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(msg, 400);
@@ -188,7 +243,7 @@ module.exports.isAnAdmin = async (req, res, next) => {
       "error",
       "You don't have permision to do this, login as an admin"
     );
-    return res.redirect("/login");
+    return res.redirect("/user/login");
   }
 
   next();
@@ -223,6 +278,7 @@ module.exports.sortDlisplay = async (req, res, next) => {
         page: req.query.page || 1,
         limit: 100,
         sort: { date: -1 },
+        
       };
     }
     if (des) {
@@ -293,9 +349,11 @@ module.exports.sortDlisplay = async (req, res, next) => {
         page: req.query.page || 1,
         limit: 100,
         sort: { createdAt: 1 },
+        
       };
     }
-    res.locals.dbOption = dbOptions;
+    res.locals.dbOption = dbOptions
+    
 
     //queryKeys.splice(queryKeys.indexOf("page"), 1);
     //const delimiter = queryKeys.length ? "&" : "?";
@@ -344,8 +402,9 @@ module.exports.searchAndFilter = async (req, res, next) => {
       // create a db query object and push it into the dbQueries array
       // now the database will know to search the title, description, and location
       // fields, using the search regular expression
+      //dbQueries is an array which consist of 2 objects, 1st object consist of another object with $or operator that consist of an array, d 2nd {} of dbQueries consist of 1 {} i.e {creator: req.user._id}
       dbQueries.push({
-        $or: [
+        $and: [{ $or: [
           { name: search },
           { crop: search },
           { source: search },
@@ -353,46 +412,48 @@ module.exports.searchAndFilter = async (req, res, next) => {
           { field: search },
           { tag: search },
           { batch: search },
-        ],
+        ]},
+        {creator: req.user.farmId}]
+       
       });
     }
 
     if (name) {
       //filter(name);
-      dbQueries.push({ name: { $in: name } });
+      dbQueries.push({$and: [{name: { $in: name }}, {creator: req.user.farmId} ]  });
     }
     if (sex) {
-      dbQueries.push({ sex: { $in: sex } });
+      dbQueries.push({$and: [{sex: { $in: sex }}, {creator: req.user.farmId} ]  });
     }
     if (batch) {
-      dbQueries.push({ batch: { $in: batch } });
+      dbQueries.push({$and: [{batch: { $in: batch }}, {creator: req.user.farmId} ]  });
     }
-    if (event) {
-      dbQueries.push({ event: { $in: event } });
+   if (event) {
+      dbQueries.push({$and: [{event: { $in: event }}, {creator: req.user.farmId} ]  });
     }
-    if (task) {
-      dbQueries.push({ task: { $in: task } });
+     if (task) {
+      dbQueries.push({$and: [{task: { $in: task }}, {creator: req.user.farmId} ]  });
     }
     if (status) {
-      dbQueries.push({ status: { $in: status } });
+      dbQueries.push({$and: [{status: { $in: status }}, {creator: req.user.farmId} ]  });
     }
-    if (sire) {
-      dbQueries.push({ sire: { $in: sire } });
+     if (sire) {
+      dbQueries.push({$and: [{sire: { $in: sire }}, {creator: req.user.farmId} ]  });
     }
-    if (dam) {
-      dbQueries.push({ dam: { $in: dam } });
+     if (dam) {
+      dbQueries.push({$and: [{dam: { $in: dam }}, {creator: req.user.farmId} ]  });
     }
-    if (breed) {
-      dbQueries.push({ breed: { $in: breed } });
+     if (breed) {
+      dbQueries.push({$and: [{breed: { $in: breed }}, {creator: req.user.farmId} ]  });
     }
-    if (category) {
-      dbQueries.push({ category: { $in: category } });
+     if (category) {
+      dbQueries.push({$and: [{category: { $in: category }}, {creator: req.user.farmId} ]  });
     }
-    if (productionStage) {
-      dbQueries.push({ productionStage: { $in: productionStage } });
+     if (productionStage) {
+      dbQueries.push({$and: [{productionStage: { $in: productionStage }}, {creator: req.user.farmId} ]  });
     }
     if (healthStatus) {
-      dbQueries.push({ healthStatus: { $in: healthStatus } });
+      dbQueries.push({$and: [{healthStatus: { $in: healthStatus }}, {creator: req.user.farmId} ]  });
     }
 
     if (amount) {
@@ -404,8 +465,8 @@ module.exports.searchAndFilter = async (req, res, next) => {
 				max will search for all post documents with price
 				less than or equal to ($lte) the min value
 			*/
-      if (amount.min) dbQueries.push({ amount: { $gte: amount.min } });
-      if (amount.max) dbQueries.push({ amount: { $lte: amount.max } });
+      if (amount.min) dbQueries.push({$and:  [{amount: { $gte: amount.min }}, {creator: req.user.farmId}]});
+      if (amount.max) dbQueries.push({$and:  [{amount: { $gte: amount.max }}, {creator: req.user.farmId}]});
     }
     if (date) {
       /*
@@ -416,19 +477,19 @@ module.exports.searchAndFilter = async (req, res, next) => {
 				max will search for all post documents with price
 				less than or equal to ($lte) the min value
 			*/
-      if (date.from) dbQueries.push({ date: { $gte: new Date(date.from) } });
-      if (date.to) dbQueries.push({ date: { $lte: new Date(date.to) } });
+      if (date.from) dbQueries.push({$and:  [{date: { $gte: new Date(date.from) }}, {creator: req.user.farmId}]});
+      if (date.to) dbQueries.push({$and:  [{date: { $gte: new Date(date.to) }}, {creator: req.user.farmId}]});
     }
 
     if (dateFilter) {
-      dbQueries.push({ date: new Date(dateFilter) });
+      dbQueries.push({$and:  [{date: { $gte: new Date(dateFilter) }}, {creator: req.user.farmId}]});
     }
     if (age) {
-      dbQueries.push({ age: age });
+      dbQueries.push({$and: [{age: { $in: age }}, {creator: req.user.farmId} ]  });
     }
     // pass database query to next middleware in route's middleware chain
     // which is the postIndex method from /controllers/postsController.js
-    res.locals.dbQuery = dbQueries.length ? { $and: dbQueries } : {};
+    res.locals.dbQuery ={ $and:  dbQueries} 
   }
   // pass req.query to the view as a local variable to be used in the searchAndFilter.ejs partial
   // this allows us to maintain the state of the searchAndFilter form
@@ -474,7 +535,7 @@ module.exports.isValidPassword = async (req, res, next) => {
     // flash an error
     req.flash("error", "Password is incorrect");
     // short circuit the route middleware and redirect to /profile
-    return res.redirect("/profile");
+    return res.redirect("/user/profile");
   }
 };
 
@@ -496,10 +557,11 @@ module.exports.changePassword = async (req, res, next) => {
       // flash error
       req.flash("error", "Password do not match");
       // short circuit the route middleware and redirect to /profile
-      return res.redirect("/profile");
+      return res.redirect("/user/profile");
     }
   } else {
     // go to next middleware
     next();
   }
 };
+

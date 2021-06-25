@@ -1,16 +1,16 @@
 <% layout('layouts/boilerplate') %>
-<a class="button green ui" href="/task/new">Add a Task</a>
+<a class="button btn ui" href="/task/new">Add a Task</a>
 
  <%- include('../partials/animalTask') %>
  <h1 class="ui center aligned header">Livestock Tasks</h1>
 <table class="ui celled selectable unstackable table">
         <thead>
             <tr>
-                <th>Task</th>
-                <th>Deadline</th>
-                <th>Members</th>
-                <th>Status</th>
-                <th class="right aligned">Action</th>
+                <th class=" color-green">Task</th>
+                <th class=" color-green">Deadline</th>
+                <th class=" color-green">Members</th>
+                <th class=" color-green">Status</th>
+                <th class="right aligned color-green">Action</th>
     
             </tr>
         </thead>
@@ -43,14 +43,14 @@
   <div class="ui eleven wide column centered">
 <div class="ui small basic icon buttons">
    <% if (tasks.prevPage) {%>
-  <a class="ui button" href="/task?page=<%= tasks.prevPage %> "><i class="left chevron icon"></i></a>
+  <a class="ui btn page-num button" href="/task?page=<%= tasks.prevPage %> "><i class="left  chevron icon"></i></a>
   <% } %>
    <%for (let i = 1; i <= tasks.totalPages; i++) {%>
-  <a class="ui button" href="/task?page=<%= i %>"
-      <%= i === tasks.page ? "style = color:pink!important;" : "style = color:green!important;" %>><%= i %></a>
+  <a class="ui btn button page-num   " href="/task?page=<%= i %>"
+     <%= i === tasks.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
       <% } %>
       <% if (tasks.nextPage ) {%>
-  <a class="ui button" href="/task?page=<%= tasks.nextPage %> "><i class="right chevron icon"></i></a>
+  <a class="ui btn page-num button"  href="/task?page=<%= tasks.nextPage %> "><i class="right chevron icon"></i></a>
   <% } %>
 </div>
 </div>

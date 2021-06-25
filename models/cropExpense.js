@@ -4,11 +4,16 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 const cropExpenseSchema = new Schema({
   expense: String,
   date: Date,
-  image: String,
+ 
   amount: Number,
   name: String,
   createdAt: { type: Date, default: Date.now() },
   note: String,
+  creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 cropExpenseSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("cropExpense", cropExpenseSchema);

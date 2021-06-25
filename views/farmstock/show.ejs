@@ -1,43 +1,59 @@
 <% layout('layouts/boilerplate') %>
+<% const ageInWeeks = Math.round(age / 7 )%> 
+<% const ageInMonths = Math.round(age / 30.417 )%> 
+
 <div class="ui segments">
-  <div class="ui segment">
+  <div class="ui green segment">
     <div class="ui three column centered grid">
       <div class="column">
-        <div class="ui medium rounded image owl-carousel owl-theme">
-          <img src="<%= farmstock.image.url %> " />
+        <div class="ui medium circular image ">
+          <img src="<%= farmstock.image.url %>" />
         </div>
       </div>
     </div>
     <div class="ui segments">
       <div class="ui horizontal segments">
-        <div class="ui huge header segment">
-          <p><%= farmstock.tag %></p>
+        <div class="ui huge header color-green segment">
+          <p><%= farmstock.tag %></p> <form action="/farmstock/<%= farmstock._id %>/clone" method="POST">
+          <button class="btn button ui tiny right floated">clone</button></form>
         </div>
-        <div class="ui huge header segment">
-          <p>DOB: <%= farmstock.dob.toDateString() %></p>
+        <div class="ui huge header color-green segment">
+          <p><%= farmstock.name%></p>
         </div>
       </div>
 
-      <div class="ui segment">
-        <p><%= farmstock.breed%></p>
+      <div class="ui green segment">
+         <p>DOB: <%= farmstock.dob.toDateString() %></p>
+       
+      </div>
+      <div class="ui green segment">
+         <p>Age: <% if(age < 7) {%>
+              <%= age %> days
+          <% } %>     <%if(ageInWeeks >= 1 && ageInMonths >= 1  ) {%>
+          <%= `${ageInMonths} months (${ageInWeeks} weeks)` %> 
+        <% }%> <%if(ageInWeeks >= 1 && ageInMonths <= 1 ){%> 
+                <%=`${ageInWeeks} weeks`  %> 
+          <% } %>
+        </p>
+       
       </div>
       <div class="ui horizontal segments">
         <div class="ui segment">
           <p>Sire: <%= farmstock.sire %></p>
         </div>
-        <div class="ui huge header segment">
+        <div class="ui  segment">
           <p>Dam: <%= farmstock.dam %></p>
         </div>
       </div>
     </div>
-    <div class="ui segment">
+    <div class="ui yellow segment">
       <p><%= farmstock.description%></p>
     </div>
     <div class="ui horizontal segments">
-      <div class="ui segment">
+      <div class="ui green segment">
         <p>Sex: <%= farmstock.sex %></p>
       </div>
-      <div class="ui segment">
+      <div class="ui green segment">
         <p><%= farmstock.productionStage %></p>
       </div>
     </div>
@@ -47,15 +63,15 @@
       </div>
 
       <div class="ui segment">
-        <p><%= farmstock.name %> </p>
+        <p><%= farmstock.breed %> </p>
       </div>
     </div>
 
-    <div class="ui segment">
-      <a class="ui green button" href="/farmstock">Back</a>
+    <div class="ui yellow segment">
+      <a class="ui btn button" href="/farmstock">Back</a>
 
       <div class="ui buttons right floated">
-        <a href="/farmstock/<%=farmstock._id %>/edit" class="ui yellow button"
+        <a href="/farmstock/<%=farmstock._id %>/edit" class="ui btn2 button"
           >Edit</a
         >
         <div class="or"></div>
@@ -94,34 +110,34 @@
 </div>
 
 <div class="ui horizontal segments">
-  <div class="ui segment">
+  <div class="ui green segment">
       <p>Add to Sold Livestock</p>
    <form action="/farmstock/<%= farmstock._id %>/sold" method="POST">
             <div class="ui right labeled input">
-                 <label for="amount" class="ui label">₦</label>
+                 <label for="amount" class="ui label btn2">₦</label>
                     <input type="number" placeholder="Enter Price" name="amount" id="amount">
-                    <button class="ui icon button">
+                    <button class="ui icon btn button">
                         <i class="cart icon"></i>
                     </button>
                     </div>
             </form>
   </div>
-  <div class="ui segment">
+  <div class="ui green segment">
       <p>Add to Breeders</p>
     <form action="/farmstock/<%= farmstock._id %>/breeds" method="POST">
-          <button class="ui active button">
+          <button class="ui active btn button">
   <i class="paw icon"></i>
   Breeder
 </button>
         </form>
   </div>
-  <div class="ui segment">
+  <div class="ui green segment">
       <p>Mortality</p>
      <form action="/farmstock/<%= farmstock._id %>/dead" method="POST">
         <div class="ui action input">
   <input type="text" type="text" id="cause" name="cause" placeholder="Cause of Death"  required>
-  <button class="ui icon button">
-    <i class="heartbeat icon"></i>
+  <button class="ui icon btn button">
+    <i class="heartbeat red icon"></i>
   </button>
   </form>
 </div>
@@ -129,4 +145,147 @@
 
 
   
+</div>
+ <div class="ui styled accordion horizontal content">
+    <div class="title color-green-h">
+      <i class="dropdown icon"></i>
+      Treatment Record
+    </div>
+   <div class="content">
+        Add and View Treatment
+        <div class="accordion transition hidden">
+            <div class="title color-green-h">
+                <i class="dropdown icon"></i>
+                Add New Treatment
+            </div>
+            <div class="content">
+                <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+
+                        <div class="ui raised segment">
+                            <form class="myFormValidate" action="/farmstock/<%= farmstock._id %>/treatment" method="POST">
+                                <div class="ui form">
+          <div class="field required">
+            <label for="treatment">Treatment</label>
+            <input type="text" id="treatment" name="treatment[treatmentName]"  placeholder="e.g vaccination" />
+          </div>
+          <div class="field required">
+            <label for="treatment">Animal</label>
+            <input type="text" id="treatment" name="treatment[name]"  value="<%= farmstock.name %>" readonly />
+          </div>
+         
+          <div class="field required">
+            <label for="drug"> Drug </label>
+            <input
+              type="text"
+              id="drug"
+              name="treatment[drug]"
+              placeholder="name of drug"
+            />
+          </div>
+          <div class="field required">
+            <label for="dose"> Dose </label>
+            <input
+              type="text"
+              id="dose"
+              name="treatment[dose]"
+              placeholder="dose given"
+            />
+          </div>
+          <div class="field required">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              name="treatment[date]"
+              placeholder="Date"
+            />
+          </div>
+           <div class="field required">
+            <label for="cost">Cost</label>
+            <input
+              type="number"
+              id="cost"
+              name="treatment[cost]"
+              placeholder="Cost"
+            />
+          </div>
+          
+          <div class="field required">
+            <label for="note">Note</label>
+            <textarea
+              name="treatment[note]"
+              id="note"
+              cols="30"
+              rows="3"
+            ></textarea>
+          </div>
+          <button class="ui button fluid btn">Create Treatment</button>
+        </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title color-green-h">
+                <i class="dropdown icon"></i>
+                View Treatments
+            </div>
+            <div class="content">
+                <table class="ui celled selectable unstackable table">
+                    <thead>
+                        <tr>
+                            <th class="color-green">Treatments</th>
+                            <th class="color-green">Date</th>
+                            <th class="color-green">Drug</th>
+
+                            <th class="right aligned color-green">Action</th>
+
+                        </tr>
+                    </thead>
+                    <% for(let treatment of farmstock.treatments){ %>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <%= treatment.name %>
+                                </td>
+                                <td>
+                                    <%= treatment.date.toDateString()%>
+                                </td>
+                                <td>
+                                    <%= treatment.drug %>
+                                </td>
+
+                                <td class="right aligned">
+                                <i class="ui  trash icon red treatmentBtns"></i>
+                                <div class="ui modal treatmentBtn">
+                                    <div class="header">Are you sure you want to delete? </div>
+                                    <div class="content">
+                                        <p>If you delete, all data associated will be deleted permanently.
+                                        </p>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui buttons right floated ">
+                                            <div class="segments horizontal ui">
+                                                <div class="ui segment">
+                                                    <a href="" class="ui cancel mini yellow button">No</a>
+                                                </div>
+                                                <div class="ui segment">
+                                                    <form action="/farfarmstock/<%=farmstock._id %>/treatment<%= treatment._id %>?_method=DELETE " method="POST">
+                                                        <button class="ui negative button ">Yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </td>
+                            </tr>
+                            <% } %>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
 </div>

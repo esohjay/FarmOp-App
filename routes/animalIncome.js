@@ -14,6 +14,7 @@ router.post('/', isLoggedin, validateIncome, catchAsync( async (req, res) => {
     const {id} = req.params
      const animal = await Animal.findById(id)
    const income = new Income(req.body.income)
+   income.creator = req.user._id
    animal.inflow.push(income);
    await income.save()
    await animal.save()

@@ -12,9 +12,10 @@ const {
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
+const changeDate = require("../utils/changeDate")
 
 router.get(
-  "/",
+  "/", isLoggedin,
   searchAndFilter,
   sortDlisplay,
   catchAsync(async (req, res) => {
@@ -29,7 +30,7 @@ router.get(
     let names = [];
     let animalEvents = [];
 
-    const events = await Event.paginate(dbQuery, dbOption || options);
+    const events = await Event.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
     for (let result of events.docs) {
       names.push(result.name);
       animalEvents.push(result.event);
@@ -46,7 +47,7 @@ router.get(
   "/new",
   isLoggedin,
   catchAsync(async (req, res) => {
-    const user = await User.find({});
+    const user = await User.find({farmId: req.user._id});
     res.render("event/new", { user });
   })
 );
@@ -57,17 +58,21 @@ router.post(
   validateEvent,
   catchAsync(async (req, res) => {
     const event = new Event(req.body.event);
+    event.creator = req.user._id
     await event.save();
     res.redirect(`/event/${event._id}`);
   })
 );
 
 router.get(
-  "/:id",
+  "/:id", isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const event = await Event.findById(id);
-
+    if (!event) {
+      req.flash("error", "No event found");
+      return res.redirect("/event");
+    }
     res.render("event/show", { event });
   })
 );
@@ -76,14 +81,16 @@ router.get(
   isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const staff = await User.find({});
+    const staff = await User.find({farmId: req.user._id})
     const event = await Event.findById(id);
-    res.render("event/edit", { event, staff });
+    const eventDate = changeDate(event.date)
+    res.render("event/edit", { event, staff, eventDate });
   })
 );
 router.put(
   "/:id",
   isLoggedin,
+  validateEvent,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const event = await Event.findByIdAndUpdate(id, { ...req.body.event });

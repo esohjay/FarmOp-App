@@ -2,17 +2,17 @@
 
 
     <% let totalExpense=0; %>
-    <a class="button green ui" href="/expense/new">Add an Expense</a>
+    <a class="button btn ui" href="/expense/new">Add an Expense</a>
             
     <%- include('../partials/animalexpense') %>
     <h1 class=" ui header center aligned"> Livestock Expense</h1>
             <table class="ui celled selectable unstackable table">
                 <thead>
                     <tr>
-                        <th>Expense</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th class="right aligned">Action</th>
+                        <th class="color-green">Expense</th>
+                        <th class="color-green">Date</th>
+                        <th class="color-green">Amount</th>
+                        <th class="right aligned color-green">Action</th>
 
                     </tr>
                 </thead>
@@ -41,7 +41,7 @@
                         <% expense.amount !==undefined ?  totalExpense  +=expense.amount : totalExpense +=0 %>
                             <% } %>
                                 <tr>
-                                    <td>Total</td>
+                                    <td class="color-green">Total</td>
                                     <td></td>
                                     <td>
                                         <%= totalExpense %>
@@ -50,23 +50,23 @@
                                 </tr>
             </table>
 
-             <% if (expenses.totalPages > 1) {%>
-<div class="ui   grid">
+     
+
+<% if (expenses.totalPages > 1) {%>
+  <div class="ui   grid">
   <div class="ui eleven wide column centered">
-    <div class="ui raised segment">
-      <% if (expenses.prevPage) {%>
-        <a class="ui green button" href="/expense?page=<%= expenses.prevPage %> ">Prev</a>
-        <% } %> 
+<div class="ui small basic icon buttons">
+   <% if (expenses.prevPage) {%>
+  <a class="ui btn page-num button" href="/expense?page=<%= expenses.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
   <%for (let i = 1; i <= expenses.totalPages; i++) {%>
-    
-    <a href="/expense?page=<%= i %>"
-      <%= i === expenses.page ? "style = color:yellow;" : "style = color:green;" %> 
-      ><%= i %> </a>
-  <%  }  %> 
+  <a class="ui btn button page-num   " href="/expense?page=<%= i %>"
+     <%= i===expenses.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
       <% if (expenses.nextPage ) {%>
-        <a class="ui green button" href="/expense?page=<%= expenses.nextPage %> ">Next</a>
-        <% } %>
-    </div>
-  </div>
+  <a class="ui btn page-num button"  href="/expense?page=<%= expenses.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
 </div>
 <% } %>

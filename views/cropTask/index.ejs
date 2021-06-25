@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate') %>
-<a class="button green ui" href="/croptask/new">Add a Task</a>
+<a class="button btn ui" href="/croptask/new">Add a Task</a>
 <%- include('../partials/cropTask') %>
 
 
@@ -7,11 +7,11 @@
 <table class="ui celled selectable unstackable table">
         <thead>
             <tr>
-                <th>Task</th>
-                <th>Deadline</th>
-                <th>Members</th>
-                <th>Status</th>
-                <th class="right aligned">Action</th>
+                <th class=" color-green">Task</th>
+                <th class=" color-green">Deadline</th>
+                <th class=" color-green">Members</th>
+                <th class=" color-green">Status</th>
+                <th class="right aligned color-green">Action</th>
     
             </tr>
         </thead>
@@ -41,29 +41,21 @@
 
 
 
-
-
-
-
-
-
-  <% if (tasks.totalPages > 1) {%>
-<div class="ui   grid">
+<% if (tasks.totalPages > 1) {%>
+  <div class="ui   grid">
   <div class="ui eleven wide column centered">
-    <div class="ui raised segment">
-      <% if (tasks.prevPage) {%>
-        <a class="ui green button" href="/croptask?page=<%= tasks.prevPage %> ">Prev</a>
-        <% } %> 
+<div class="ui small basic icon buttons">
+   <% if (tasks.prevPage) {%>
+  <a class="ui btn page-num button" href="/croptask?page=<%= tasks.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
   <%for (let i = 1; i <= tasks.totalPages; i++) {%>
-    
-    <a href="/croptask?page=<%= i %>"
-      <%= i === tasks.page ? "style = color:yellow;" : "style = color:green;" %> 
-      ><%= i %> </a>
-  <%  }  %> 
+  <a class="ui btn button page-num   " href="/croptask?page=<%= i %>"
+     <%= i===tasks.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
       <% if (tasks.nextPage ) {%>
-        <a class="ui green button" href="/croptask?page=<%= tasks.nextPage %> ">Next</a>
-        <% } %>
-    </div>
-  </div>
+  <a class="ui btn page-num button"  href="/croptask?page=<%= tasks.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
 </div>
 <% } %>

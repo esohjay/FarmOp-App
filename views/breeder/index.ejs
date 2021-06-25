@@ -14,12 +14,33 @@
 
       <div class="middle aligned content">
         <div class="header">
-          <%= breed.tag %>
-          <a href="/breeder/<%= breed._id %>"
-            ><i class="green caret square right outline float right icon"></i
+         <a class="color-green-h" href="/breeder/<%= breed._id %>"> <%= breed.tag %><i class="green caret square right outline float right icon"></i
           ></a>
         </div>
         <div class="extra"><%= breed.dob.toDateString() %></div>
+           <div class="extra">
+            
+<div class="ui icon bottom right pointing dropdown right floated">
+  <i class="trash  icon"></i>
+  <div class="menu">
+    
+    <div class="item">Are you sure?</div>
+    <div class="item"><form action="/breeder/<%= breed._id %>?_method=DELETE " method="POST">
+                 <button class="ui active button red right floated">
+            Delete
+              </button>
+              </form>
+            </div>
+             <div class="item">  </div>
+  </div>
+</div>
+          <div class="ui icon bottom left pointing ">
+ <a href="/breeder/<%=breed._id %>/edit" ><i class="edit yellow icon"></i></a>
+ 
+            </div>      
+            
+           
+          </div>
       </div>
     </div>
   </div>
@@ -28,23 +49,23 @@
 
 <%} %>
 </div>
+
+
 <% if (breeder.totalPages > 1) {%>
-<div class="ui   grid">
+  <div class="ui   grid">
   <div class="ui eleven wide column centered">
-    <div class="ui raised segment">
-      <% if (breeder.prevPage) {%>
-        <a class="ui green button" href="/breeder?page=<%= breeder.prevPage %> ">Prev</a>
-        <% } %> 
+<div class="ui small basic icon buttons">
+   <% if (breeder.prevPage) {%>
+  <a class="ui btn page-num button" href="/breeder?page=<%= breeder.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
   <%for (let i = 1; i <= breeder.totalPages; i++) {%>
-    
-    <a href="/breeder?page=<%= i %>"
-      <%= i === breeder.page ? "style = color:yellow;" : "style = color:green;" %> 
-      ><%= i %> </a>
-  <%  }  %> 
+  <a class="ui btn button page-num   " href="/breeder?page=<%= i %>"
+     <%= i===breeder.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
       <% if (breeder.nextPage ) {%>
-        <a class="ui green button" href="/breeder?page=<%= breeder.nextPage %> ">Next</a>
-        <% } %>
-    </div>
-  </div>
+  <a class="ui btn page-num button"  href="/breeder?page=<%= breeder.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
 </div>
 <% } %>

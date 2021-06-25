@@ -1,7 +1,14 @@
 <% layout('layouts/boilerplate') %>
+<form action="/field" method="GET">
+  <div class="ui action input">
+  <input type="text" placeholder="Tag no" name="search">
+  <button class="ui icon btn2 button">
+    <i class="search icon"></i>
+  </button>
+</div>
+ </form> 
 
-
-<a class="button green ui" href="/field/new">Add a Task</a>
+<a class="button btn ui" href="/field/new">Add a Task</a>
 <div class="ui grid stackable padded">
 <% for(let field of fields.docs){ %>
    <div class="eight wide computer eight wide tablet sixteen wide mobile column">
@@ -10,13 +17,36 @@
             <div class="item">
                 <div class="middle aligned content">
                     <div class="header">
-                    <%= field.name %>
+                  <a class="color-green-h" href="/field/<%= field._id %>">  <%= field.name %>
                             <a href="/field/<%= field._id %>"><i
                                     class=" green caret square right outline float right icon"></i></a>
                     </div>
                     <div class="extra">
                         <%= field.size %>
                     </div>
+                      <div class="extra">
+            
+<div class="ui icon bottom right pointing dropdown right floated">
+  <i class="trash  icon"></i>
+  <div class="menu">
+    
+    <div class="item">Are you sure?</div>
+    <div class="item"><form action="/field/<%= field._id %>?_method=DELETE " method="POST">
+                 <button class="ui active button red right floated">
+            Delete
+              </button>
+              </form>
+            </div>
+             <div class="item">  </div>
+  </div>
+</div>
+          <div class="ui icon bottom left pointing ">
+            <a href="/field/<%=field._id %>/edit" ><i class="edit yellow icon"></i></a>
+ 
+            </div>      
+            
+           
+          </div>
                 </div>
             </div>
         </div>
@@ -24,23 +54,24 @@
     </div>
     <%} %>
     </div>
-    <% if (fields.totalPages > 1) {%>
-<div class="ui   grid">
-  <div class="ui eleven wide column centered">
-    <div class="ui raised segment">
-      <% if (fields.prevPage) {%>
-        <a class="ui green button" href="/field?page=<%= fields.prevPage %> ">Prev</a>
-        <% } %> 
-  <%for (let i = 1; i <= fields.totalPages; i++) {%>
     
-    <a href="/field?page=<%= i %>"
-      <%= i === fields.page ? "style = color:yellow;" : "style = color:green;" %> 
-      ><%= i %> </a>
-  <%  }  %> 
+
+ <% if (fields.totalPages > 1) {%>
+  <div class="ui   grid">
+  <div class="ui eleven wide column centered">
+<div class="ui small basic icon buttons">
+   <% if (fields.prevPage) {%>
+  <a class="ui btn page-num button" href="/field?page=<%= fields.prevPage %> "><i class="left  chevron icon"></i></a>
+  <% } %>
+  <%for (let i = 1; i <= fields.totalPages; i++) {%>
+  <a class="ui btn button page-num   " href="/field?page=<%= i %>"
+     <%= i===fields.page ? "style = color:yellow!important;" : "style = color:white!important;"%> ><%= i %></a>
+      <% } %>
       <% if (fields.nextPage ) {%>
-        <a class="ui green button" href="/field?page=<%= fields.nextPage %> ">Next</a>
-        <% } %>
-    </div>
-  </div>
+  <a class="ui btn page-num button"  href="/field?page=<%= fields.nextPage %> "><i class="right chevron icon"></i></a>
+  <% } %>
+</div>
+</div>
 </div>
 <% } %>
+

@@ -2,7 +2,7 @@
 
 <div class="ui   grid">
     <div class="ui eleven wide column centered">
-        <a class="ui green button" href="/crop">Back</a>
+        <a class="ui btn button" href="/crop">Back</a>
         <div class="ui raised segment">
             <form action="/crop" class="myFormValidate" method="POST" enctype="multipart/form-data">
                 <div class="ui  form">
@@ -19,12 +19,18 @@
                         <div class="field  required">
                             <label for="field">Field</label>
                             <select id="field" name="crop[field]" class="ui search dropdown">
+                                 <% if(field.length) {%>
                                 <option value="">Select Field</option>
                                 <% for(let location of field) {%>
-                                    <option value="<%= location.name %>. <%= location.location %>  ">
+                                    
+                                    <option value="<%= location.name %>">
                                         <%= location.name %>. <%= location.location %>
                                     </option>
+                                       
                                     <% } %>
+                                     <% } else{%>
+                                            <option value="">You need to register a  <a class="color-green-h" href="/field/new">field</a></option>
+                                            <% } %>
                             </select>
                         </div>
                     </div>
@@ -32,7 +38,7 @@
                    
                     <div class="field required">
                         <label for="date">Plant Date</label>
-                        <input type="date" id="date" name="crop[date]" placeholder="Plant Date">
+                        <input type="date" id="date"  name="crop[date]" placeholder="Plant Date">
                     </div>
                     <div class="field required">
                         <label for="coverage">Size of Land Covered</label>
@@ -46,9 +52,9 @@
                     <label for="description">Brief Description</label>
                     <textarea name="crop[description]" id="description" cols="30" rows="3"></textarea>
                     </div>
-                    <button class="ui button fluid green">Add Crop</button>
+                    <button class="ui button fluid btn">Add Crop</button>
                 </div>
-                <div class="ui error  message"></div>
+               
             </form>
 
         </div>

@@ -13,6 +13,7 @@ router.post('/', isLoggedin, validateWeight, catchAsync( async (req, res) => {
    const {id} = req.params
     const animal = await Animal.findById(id)
     const avWeight= new Weight(req.body.weight)
+    avWeight.creator = req.user._id
    animal.weight.push(avWeight);
    
    await avWeight.save()

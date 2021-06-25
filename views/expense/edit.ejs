@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 <div class="ui grid">
   <div class="ui eleven wide column centered">
-    <a class="ui green button" href="/expense/<%= expense._id %> ">Back</a>
+    <a class="ui btn button" href="/expense/<%= expense._id %> ">Back</a>
     <div class="ui raised segment">
       <form
         class="myFormValidate"
@@ -26,17 +26,21 @@
               class="ui tag dropdown search"
             >
               <option value="<%= expense.name %> "><%= expense.name %></option>
-              <option value="Poultry">Chicken</option>
-              <option value="Fishery">CatFish</option>
-              <option value="Ruminant">Cattle</option>
-              <option value="Others">Sheep</option>
-              <option value="Poultry">Goat</option>
-              <option value="Fishery">Rabbit</option>
-              <option value="Ruminant">Snail</option>
-              <option value="Others">Grasscutter</option>
-              <option value="Fishery">Horse</option>
-              <option value="Ruminant">Donkey</option>
-              <option value="Others">Guinea Pig</option>
+              <option value="Chicken">Chicken</option>
+              <option value="Turkey">Turkey</option>
+              <option value="Ostrich">Ostrich</option>
+              <option value="Guinea Fowl">Guinea Fowl</option>
+               <option value="Pig">Pig</option>
+              <option value="Catfish">CatFish</option>
+              <option value="Cattle">Cattle</option>
+              <option value="Sheep">Sheep</option>
+              <option value="Goat">Goat</option>
+              <option value="Rabbit">Rabbit</option>
+              <option value="Snail">Snail</option>
+              <option value="Grasscutter">Grasscutter</option>
+              <option value="Horse">Horse</option>
+              <option value="Donkey">Donkey</option>
+              <option value="Guinea Pig">Guinea Pig</option>
             </select>
           </div>
           <div class="field required">
@@ -49,13 +53,24 @@
             />
           </div>
 
+           <div class="field required">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              name="expense[date]"
+             value="<%= date %>"
+            />
+          </div>
+
+
           <div class="field required">
             <label for="note">Note</label>
             <textarea name="expense[note]" id="note" cols="30" rows="3">
 <%= expense.note %> </textarea
             >
           </div>
-          <button class="ui button fluid green">Save</button>
+          <button class="ui button fluid btn">Save</button>
         </div>
       </form>
     </div>

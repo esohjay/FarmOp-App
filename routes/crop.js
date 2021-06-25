@@ -12,14 +12,16 @@ const Field = require("../models/field");
 const {
   isLoggedin,
   validateCrop,
-  validateCropEdit,
+  
   searchAndFilter,
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
+const changeDate = require("../utils/changeDate");
+const createTask = require("../utils/createTask");
 const ExpressError = require("../utils/ExpressError");
 
 router.get(
-  "/",
+  "/",isLoggedin,
   searchAndFilter,
   catchAsync(async (req, res) => {
     const { dbQuery } = res.locals;
@@ -29,7 +31,7 @@ router.get(
       limit: 15,
       sort: { createdAt: -1 },
     };
-    const crops = await Crop.paginate(dbQuery, options);
+    const crops = await Crop.paginate(dbQuery || {creator: req.user.farmId}, options);
     if (!crops.docs.length && dbQuery) {
       req.flash("error", "No result found");
       res.locals.error = "No result found";
@@ -41,7 +43,7 @@ router.get(
   "/new",
   isLoggedin,
   catchAsync(async (req, res) => {
-    const field = await Field.find({});
+    const field = await Field.find({creator: req.user._id});
     res.render("crop/new", { field });
   })
 );
@@ -52,11 +54,17 @@ router.post(
   validateCrop,
   catchAsync(async (req, res) => {
     const crop = new Crop(req.body.crop);
-    //console.log(req.file)
+    crop.creator = req.user._id
+    if (req.file) {
     const { path, filename } = req.file;
     crop.image = { url: path, filename: filename };
-
-    await crop.save();
+ } else {
+    crop.image = {
+          url: "",
+          filename: "Unnamed",
+        };
+      }
+    //await crop.save();
 
     const newTask = [
       "Planting",
@@ -64,38 +72,30 @@ router.post(
       "Fertilizer Application",
       "Harvesting",
     ];
-    for (let nTask of newTask) {
-      const task = new CTask({
-        task: nTask,
-        deadline: Date.now(),
-        startDate: Date.now(),
-        leader: "Not Yet Assigned",
-        workers: ["Not Yet Assigned"],
-        status: "Pending",
-        instructions: "Not yet Started",
-        name: crop.crop,
-      });
-      crop.tasks.push(task);
-
-      await task.save();
-
+    const task = createTask(newTask, crop.tasks, crop.date, crop.crop, 2, 4, req.user._id)
+    
+      
       await crop.save();
-    }
+    
 
     res.redirect(`/crop/${crop._id}`);
   })
 );
 router.get(
-  "/:id",
+  "/:id", isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const crop = await Crop.findById(id)
       .populate("events")
       .populate("inflow")
       .populate("expenses")
-      .populate("tasks");
-    const staff = await User.find({});
-
+      .populate("tasks")
+      .populate("inputs");
+    const staff = await User.find({farmId: req.user._id})
+    if (!crop) {
+      req.flash("error", "No crop found");
+      return res.redirect("/crop");
+    }
     res.render("crop/show", { crop, staff });
   })
 );
@@ -105,18 +105,21 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const crop = await Crop.findById(id);
-    const field = await Field.find({});
-    res.render("crop/edit", { crop, field });
+    const plantDate = changeDate(crop.date)
+    const field = await Field.find({creator: req.user._id});
+    res.render("crop/edit", { crop, field, plantDate });
   })
 );
 router.put(
   "/:id",
   isLoggedin,
   upload.single("image"),
-  validateCropEdit,
+  validateCrop,
   catchAsync(async (req, res) => {
     const { id } = req.params;
+    
     const crop = await Crop.findByIdAndUpdate(id, { ...req.body.crop });
+    
     if (crop.image && req.file) {
       try {
         await cloudinary.uploader.destroy(crop.image.filename);

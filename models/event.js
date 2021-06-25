@@ -8,6 +8,11 @@ const EventSchema = new Schema({
   note: String,
   createdAt: { type: Date, default: Date.now() },
   name: String,
+   creator: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
 });
 EventSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Event", EventSchema);
