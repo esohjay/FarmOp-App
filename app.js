@@ -135,13 +135,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize())
-const secret = "coded";
+const secret = process.env.SECRET || 'coded'
 const store =  MongoStore.create({
     mongoUrl: dbUrl,
     secret,
     touchAfter: 24 *60 *60
 
 });
+store.on('error', function (e) {
+    console.log("session error", e)
+})
 const sessionConfig = {
   store,
   name: 'opCookie',
