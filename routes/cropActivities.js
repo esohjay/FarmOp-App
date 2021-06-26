@@ -9,7 +9,7 @@ const cropEvent = require("../models/cropEvent");
 const {
   isLoggedin,
   validateEvent,
-  searchAndFilter,
+  searchAndFilter, isAnAdmin,
   sortDlisplay,
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
@@ -46,8 +46,8 @@ router.get(
   })
 );
 router.get(
-  "/new",
-  isLoggedin,
+  "/new", 
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const user = await User.find({farmId: req.user._id});
     const crop = await Crop.find({creator: req.user._id});
@@ -57,7 +57,7 @@ router.get(
 
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateEvent,
   catchAsync(async (req, res) => {
     const event = new cropEvent(req.body.event);
@@ -80,7 +80,7 @@ router.get(
   })
 );
 router.get(
-  "/:id/edit",
+  "/:id/edit", isAnAdmin,
   isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -93,7 +93,7 @@ router.get(
 );
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateEvent,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -105,7 +105,7 @@ router.put(
 
 router.delete(
   "/:eventId",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { eventId } = req.params;
 

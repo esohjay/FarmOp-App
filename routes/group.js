@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Farmstock = require("../models/farmstock");
 const Animal = require("../models/animal");
-const { isLoggedin, validateField, searchAndFilter, sortDlisplay } = require("../middleware");
+const { isLoggedin, validateField, isAnAdmin, searchAndFilter, sortDlisplay } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 
@@ -30,12 +30,12 @@ router.get(
     res.render("field/index", { farmstockIds });
   })
 );
-router.get("/new", isLoggedin, (req, res) => {
+router.get("/new", isLoggedin, isAnAdmin, (req, res) => {
   res.render("field/new");
 });
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateField,
   catchAsync(async (req, res) => {
     const field = new Field(req.body.field);
@@ -64,7 +64,7 @@ router.get(
 
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const field = await Field.findById(id);
@@ -73,7 +73,7 @@ router.get(
 );
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateField,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -84,7 +84,7 @@ router.put(
 );
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const field = await Field.findByIdAndDelete(id);

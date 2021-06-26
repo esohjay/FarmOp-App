@@ -5,13 +5,13 @@ const Breeder = require('../models/breeder')
 const multer = require('multer')
 const {storage, cloudinary} = require('../cloudinary')
 const upload = multer({storage})
-const {isLoggedin, validateFarmstock} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateFarmstock} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const FarmStock = require('../models/farmstock');
 const {setImage} = require("../utils/logics")
 
-router.post('/', isLoggedin, upload.single('image'), validateFarmstock, catchAsync( async (req, res) => {
+router.post('/', isLoggedin, isAnAdmin, upload.single('image'), validateFarmstock, catchAsync( async (req, res) => {
   const {id} = req.params
    
     const breeder = await Breeder.findById(id)

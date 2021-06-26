@@ -1,9 +1,7 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="ui   grid">
-
-
-    <div class="ui eight wide column centered">
+<div class="ui eleven wide column centered">
         <a class="ui btn button" href="/croptask/<%= task._id %> ">Back</a>
         <div class="ui raised segment">
             <form class="myFormValidate" action="/croptask/<%= task._id %>?_method=PUT" method="POST">

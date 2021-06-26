@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 const Animal = require('../models/animal')
-const {isLoggedin, validateFeed} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateFeed} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const Feed = require('../models/feed');
@@ -10,7 +10,7 @@ const Feed = require('../models/feed');
 
 
 
-router.post('/', isLoggedin, validateFeed, catchAsync( async (req, res) => {
+router.post('/', isLoggedin, isAnAdmin, validateFeed, catchAsync( async (req, res) => {
    const {id} = req.params
     const animal = await Animal.findById(id)
     const feedGiven= new Feed(req.body.feed)
@@ -24,7 +24,7 @@ router.post('/', isLoggedin, validateFeed, catchAsync( async (req, res) => {
 }));
 
 
-router.delete('/:fId', isLoggedin, catchAsync( async(req, res) => {
+router.delete('/:fId', isLoggedin, isAnAdmin, catchAsync( async(req, res) => {
      const {id, fId} = req.params;
        await Animal.findByIdAndUpdate(id, { $pull: { feed: fId } });
     await Feed.findByIdAndDelete(fId);

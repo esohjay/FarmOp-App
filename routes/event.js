@@ -8,13 +8,13 @@ const Animal = require('../models/animal')
 
 const Event = require('../models/event')
 const Task = require('../models/task')
-const {isLoggedin, validateEvent} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateEvent} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 
 
 
-router.post('/', isLoggedin, validateEvent, catchAsync(async (req, res) => {
+router.post('/', isLoggedin, isAnAdmin, validateEvent, catchAsync(async (req, res) => {
      const {id} = req.params
     const animal = await Animal.findById(id)
     
@@ -28,16 +28,17 @@ router.post('/', isLoggedin, validateEvent, catchAsync(async (req, res) => {
    res.redirect(`/animal/${animal._id}`)
 }));
 
-router.post('/:taskId/complete',    catchAsync( async (req, res) => {
+router.post('/:taskId/complete', isLoggedin, isAnAdmin,    catchAsync( async (req, res) => {
   const {id, taskId} = req.params
   const animal = await Animal.findById(id)
   const foundTask = await Task.findById(taskId)
-  const {name, leader, workers, task} = foundTask;
+  const {name, leader, workers, creator, task} = foundTask;
   const event = new Event({
             event: task,
             name: name,
             date: Date.now(),
             leader: leader,
+            creator: creator,
             note: `This event was completed by ${workers}`
   })
     
@@ -51,7 +52,7 @@ router.post('/:taskId/complete',    catchAsync( async (req, res) => {
 }));
 
 
-router.delete('/:eventId', isLoggedin,  catchAsync(async(req, res) => {
+router.delete('/:eventId', isLoggedin, isAnAdmin, catchAsync(async(req, res) => {
      const {id, eventId} = req.params;
        await Animal.findByIdAndUpdate(id, { $pull: { events: eventId } });
     await Event.findByIdAndDelete(eventId);

@@ -1,8 +1,18 @@
 <% layout('layouts/boilerplate')%>
-    <div class="row">
-        <div class="col-6 offset-3">
-            <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading">
+   
+
+    <div class="ui   grid">
+                    <div class="ui eleven wide column centered">
+   <div class="ui card">
+  <div class="content">
+    
+    
+  </div>
+  <div class="image">
+    <img class="ui image" src="https://cdn.pixabay.com/photo/2016/07/22/01/22/sad-1533965_960_720.jpg">
+  </div>
+  <div class="content">
+     <h4 class="alert-heading">
                     <%=err.message%>
                 </h4>
                 <% if (process.env.NODE_ENV !=="production" ) { %>
@@ -10,6 +20,8 @@
                         <%= err.stack %>
                     </p>
                     <% } %>
-            </div>
-        </div>
-    </div>
+  </div>
+  
+</div>
+</div>
+</div>

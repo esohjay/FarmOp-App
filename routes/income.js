@@ -9,6 +9,7 @@ const {
   validateIncome,
   searchAndFilter,
   sortDlisplay,
+  isAnAdmin,
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
@@ -39,12 +40,12 @@ router.get(
     res.render("income/index", { inflow, names });
   })
 );
-router.get("/new", isLoggedin, (req, res) => {
+router.get("/new", isLoggedin, isAnAdmin, (req, res) => {
   res.render("income/new");
 });
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateIncome,
   catchAsync(async (req, res) => {
     const income = new Income(req.body.income);
@@ -68,7 +69,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const income = await Income.findById(id);
@@ -78,7 +79,7 @@ router.get(
 );
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateIncome,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -89,7 +90,7 @@ router.put(
 );
 router.delete(
   "/:incomeId",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
 

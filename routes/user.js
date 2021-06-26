@@ -374,10 +374,10 @@ router.delete(
 
 router.get(
   "/logout",
-  catchAsync((req, res) => {
+  (req, res) => {
     req.logout();
     req.flash("success", "Goodbye");
     res.redirect("/");
-  })
+  }
 );
 module.exports = router;

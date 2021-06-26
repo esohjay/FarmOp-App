@@ -9,6 +9,7 @@ const {
   validateExpense,
   searchAndFilter,
   sortDlisplay,
+  isAnAdmin,
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
@@ -40,12 +41,12 @@ router.get(
     res.render("expense/index", { expenses, names });
   })
 );
-router.get("/new", isLoggedin, (req, res) => {
+router.get("/new", isLoggedin, isAnAdmin, (req, res) => {
   res.render("expense/new");
 });
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateExpense,
   catchAsync(async (req, res) => {
     const expense = new Expense(req.body.expense);
@@ -69,7 +70,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const expense = await Expense.findById(id);
@@ -79,7 +80,7 @@ router.get(
 );
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateExpense,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -92,7 +93,7 @@ router.put(
 );
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
 

@@ -12,7 +12,7 @@ const Field = require("../models/field");
 const {
   isLoggedin,
   validateCrop,
-  
+  isAnAdmin,
   searchAndFilter,
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
@@ -41,7 +41,7 @@ router.get(
 );
 router.get(
   "/new",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const field = await Field.find({creator: req.user._id});
     res.render("crop/new", { field });
@@ -49,7 +49,7 @@ router.get(
 );
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   upload.single("image"),
   validateCrop,
   catchAsync(async (req, res) => {
@@ -82,7 +82,7 @@ router.post(
   })
 );
 router.get(
-  "/:id", isLoggedin,
+  "/:id", isLoggedin, 
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const crop = await Crop.findById(id)
@@ -101,7 +101,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const crop = await Crop.findById(id);
@@ -112,7 +112,7 @@ router.get(
 );
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   upload.single("image"),
   validateCrop,
   catchAsync(async (req, res) => {
@@ -136,7 +136,7 @@ router.put(
 );
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const crop = await Crop.findByIdAndDelete(id);

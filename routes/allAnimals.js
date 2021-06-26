@@ -159,7 +159,7 @@ router.get(
 
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const farmstock = await FarmStock.findById(id);
@@ -170,7 +170,7 @@ router.get(
 
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   upload.single("image"),
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -194,7 +194,7 @@ router.put(
 
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin,isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const farmstock = await FarmStock.findByIdAndDelete(id);

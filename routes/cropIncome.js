@@ -4,13 +4,13 @@ const router = express.Router({ mergeParams: true });
 
 const cropIncome = require("../models/cropIncome");
 const Crop = require("../models/crop");
-const { isLoggedin, validateIncome } = require("../middleware");
+const { isLoggedin, isAnAdmin, validateIncome } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateIncome,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -26,7 +26,7 @@ router.post(
 
 router.delete(
   "/:incomeId",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id, incomeId } = req.params;
     await Crop.findByIdAndUpdate(id, { $pull: { inflow: incomeId } });

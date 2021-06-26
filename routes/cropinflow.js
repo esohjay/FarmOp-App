@@ -8,7 +8,7 @@ const Crop = require("../models/crop");
 const {
   isLoggedin,
   validateIncome,
-  searchAndFilter,
+  searchAndFilter, isAnAdmin,
   sortDlisplay,
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
@@ -18,7 +18,7 @@ const changeDate = require("../utils/changeDate")
 router.get(
   "/", isLoggedin,
   searchAndFilter,
-  isLoggedin,
+  
   sortDlisplay,
   catchAsync(async (req, res) => {
     const { dbQuery, dbOption } = res.locals;
@@ -43,7 +43,7 @@ router.get(
 );
 router.get(
   "/new",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const crop = await Crop.find({creator: req.user._id});
     res.render("cropinflow/new", { crop });
@@ -51,7 +51,7 @@ router.get(
 );
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateIncome,
   catchAsync(async (req, res) => {
     const income = new cropIncome(req.body.income);
@@ -75,7 +75,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const income = await cropIncome.findById(id);
@@ -86,7 +86,7 @@ router.get(
 );
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateIncome,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -98,7 +98,7 @@ router.put(
   })
 );
 router.delete(
-  "/:id",
+  "/:id", isAnAdmin,
   isLoggedin,
   catchAsync(async (req, res) => {
     const { id } = req.params;

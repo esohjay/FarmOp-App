@@ -40,7 +40,9 @@ body ::-webkit-scrollbar {
   color: var(--secondary-color-hover)!important;
   background-color: var(--main-color-hover)!important;
 }
-
+.input-length {
+  width: 70px!important;
+}
 .main-content {
   margin-top: 80px;
    padding-bottom: 100px;
@@ -50,6 +52,9 @@ body ::-webkit-scrollbar {
 #sidebar {
   background-color: var(--main-color);
   color: aliceblue !important;
+}
+.small.message {
+margin-bottom: 10px!important;
 }
 .sidebar-accordion {
   background-color: var(--main-color) !important;
@@ -66,6 +71,9 @@ body ::-webkit-scrollbar {
     margin-left: 15rem;
    
   }
+  .input-length {
+  width: 140px!important;
+}
   .sidebar-menu-toggler {
     display: none !important;
   }

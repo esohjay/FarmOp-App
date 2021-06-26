@@ -6,14 +6,14 @@ const Crop = require('../models/crop')
 
 const Expense = require('../models/cropExpense')
 const Input = require('../models/input')
-const {isLoggedin, validateInput} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateInput} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 
 
 
 
-router.post('/', isLoggedin, validateInput, catchAsync( async (req, res) => {
+router.post('/', isLoggedin, isAnAdmin, validateInput, catchAsync( async (req, res) => {
    const {id} = req.params
     const crop = await Crop.findById(id)
     const input = new Input(req.body.input)
@@ -38,7 +38,7 @@ router.post('/', isLoggedin, validateInput, catchAsync( async (req, res) => {
 
 
 
-router.delete('/:iId', isLoggedin,  catchAsync(async(req, res) => {
+router.delete('/:iId', isLoggedin, isAnAdmin, catchAsync(async(req, res) => {
      const {id, iId} = req.params;
        await Crop.findByIdAndUpdate(id, { $pull: { inputs: iId } });
     await Input.findByIdAndDelete(iId);

@@ -9,7 +9,7 @@ const FarmStock = require("../models/farmstock");
 const {
   isLoggedin,
   validateFarmstock,
-  
+  isAnAdmin,
 } = require("../middleware");
 const {setImage} = require("../utils/logics")
 const catchAsync = require("../utils/catchAsync");
@@ -17,7 +17,7 @@ const ExpressError = require("../utils/ExpressError");
 
 //Create new livestock
 router.post(
-  "/", isLoggedin,
+  "/", isLoggedin, isAnAdmin,
   upload.single("image"),
   validateFarmstock,
   catchAsync(async (req, res) => {

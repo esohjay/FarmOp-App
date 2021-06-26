@@ -145,7 +145,7 @@ router.get(
 
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const animal = await Animal.findById(id);
@@ -158,7 +158,7 @@ const arrivaldate = changeDate(animal.dateOfArrival)
 router.put(
   "/:id",
   isLoggedin,
-  validateLivestock,
+  validateLivestock,isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const animal = await Animal.findByIdAndUpdate(id, { ...req.body.animal });
@@ -180,7 +180,7 @@ router.put("/:id/group", catchAsync(async (req, res) => {
 
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin,isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const animal = await Animal.findByIdAndDelete(id);

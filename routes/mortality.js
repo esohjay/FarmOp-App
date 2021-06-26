@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 const Animal = require('../models/animal')
-const {isLoggedin, validateMortality} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateMortality} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const Mortality = require('../models/mortality');
@@ -10,7 +10,7 @@ const Mortality = require('../models/mortality');
 
 
 
-router.post('/', isLoggedin, validateMortality, catchAsync( async (req, res) => {
+router.post('/', isLoggedin, isAnAdmin, validateMortality, catchAsync( async (req, res) => {
    const {id} = req.params
     const animal = await Animal.findById(id)
     const animalMortality = new Mortality(req.body.mortality)
@@ -25,7 +25,7 @@ router.post('/', isLoggedin, validateMortality, catchAsync( async (req, res) => 
 
 
 
-router.delete('/:mId', isLoggedin,  catchAsync(async(req, res) => {
+router.delete('/:mId', isLoggedin, isAnAdmin,  catchAsync(async(req, res) => {
      const {id, mId} = req.params;
        await Animal.findByIdAndUpdate(id, { $pull: { mortality: mId } });
     await Mortality.findByIdAndDelete(mId);

@@ -10,9 +10,10 @@ const User = require("../models/user");
 const {
   isLoggedin,
   validateTask,
-  validateTaskEdit,
+  
   searchAndFilter,
   sortDlisplay,
+  isAnAdmin,
 } = require("../middleware");
 
 router.get(
@@ -48,7 +49,7 @@ router.get(
 );
 router.get(
   "/new",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const staff = await User.find({farmId: req.user._id});
 
@@ -57,7 +58,7 @@ router.get(
 );
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateTask,
   catchAsync(async (req, res) => {
     const task = new Task(req.body.task);
@@ -83,7 +84,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const staff = await User.find({farmId: req.user._id});
@@ -95,17 +96,18 @@ router.get(
 );
 
 router.post(
-  "/:id/complete", isLoggedin,
+  "/:id/complete", isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
 
     const foundTask = await Task.findById(id);
-    const { name, leader, workers, task } = foundTask;
+    const { name, leader, workers, creator, task } = foundTask;
     const event = new Event({
       event: task,
       name: name,
       date: Date.now(),
       leader: leader,
+      creator : creator,
       note: `This event was completed by ${workers}`,
     });
 
@@ -116,7 +118,7 @@ router.post(
 );
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateTask,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -127,7 +129,7 @@ router.put(
 );
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const task = await Task.findByIdAndDelete(id);

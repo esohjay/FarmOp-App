@@ -84,9 +84,9 @@ module.exports.matingSchema = Joi.object({
 module.exports.parturitionSchema = Joi.object({
  
   breed: Joi.object({
-    paturitionDate: Joi.date().required(),
+    parturitionDate: Joi.date().required(),
    
-    litterNo: Joi.number().required(),
+    litterNo: Joi.number().required(), 
    
     
   }).required(),

@@ -8,7 +8,7 @@ const {
   isLoggedin,
   validateEvent,
   searchAndFilter,
-  sortDlisplay,
+  sortDlisplay,isAnAdmin,
 } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
@@ -45,7 +45,7 @@ router.get(
 );
 router.get(
   "/new",
-  isLoggedin,
+  isLoggedin,isAnAdmin,
   catchAsync(async (req, res) => {
     const user = await User.find({farmId: req.user._id});
     res.render("event/new", { user });
@@ -55,7 +55,7 @@ router.get(
 router.post(
   "/",
   isLoggedin,
-  validateEvent,
+  validateEvent,isAnAdmin,
   catchAsync(async (req, res) => {
     const event = new Event(req.body.event);
     event.creator = req.user._id
@@ -78,7 +78,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin,isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const staff = await User.find({farmId: req.user._id})
@@ -90,7 +90,7 @@ router.get(
 router.put(
   "/:id",
   isLoggedin,
-  validateEvent,
+  validateEvent,isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const event = await Event.findByIdAndUpdate(id, { ...req.body.event });
@@ -100,7 +100,7 @@ router.put(
 );
 router.delete(
   "/:eventId",
-  isLoggedin,
+  isLoggedin,isAnAdmin,
   catchAsync(async (req, res) => {
     const { eventId } = req.params;
 

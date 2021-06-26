@@ -6,13 +6,13 @@ const Animal = require('../models/animal')
 
 
 const Task = require('../models/task')
-const {isLoggedin, validateTask} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateTask} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 
 
 
-router.post('/', isLoggedin, validateTask, catchAsync(async (req, res) => {
+router.post('/', isLoggedin, isAnAdmin, validateTask, catchAsync(async (req, res) => {
      const {id} = req.params
     const animal = await Animal.findById(id)
     
@@ -28,7 +28,7 @@ router.post('/', isLoggedin, validateTask, catchAsync(async (req, res) => {
 
 
 
-router.delete('/:taskId', isLoggedin,  catchAsync(async(req, res) => {
+router.delete('/:taskId', isLoggedin, isAnAdmin,  catchAsync(async(req, res) => {
      const {id, taskId} = req.params;
        await Animal.findByIdAndUpdate(id, { $pull: { tasks: taskId } });
     await Task.findByIdAndDelete(taskId);

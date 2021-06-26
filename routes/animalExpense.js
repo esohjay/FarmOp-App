@@ -4,13 +4,13 @@ const router = express.Router({mergeParams: true});
 
 const Expense = require('../models/expense')
 const Animal = require('../models/animal')
-const {isLoggedin, validateExpense} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateExpense} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 
 
 
-router.post('/', isLoggedin, validateExpense, catchAsync( async (req, res) => {
+router.post('/', isLoggedin, validateExpense, isAnAdmin, catchAsync( async (req, res) => {
      const {id} = req.params;
     const animal = await Animal.findById(id)
    const expense = new Expense(req.body.expense)
@@ -21,7 +21,7 @@ router.post('/', isLoggedin, validateExpense, catchAsync( async (req, res) => {
    res.redirect(`/animal/${animal._id}`)
 }));
 
-router.delete('/:expenseId', isLoggedin,  catchAsync( async(req, res) => {
+router.delete('/:expenseId', isLoggedin, isAnAdmin,  catchAsync( async(req, res) => {
      
      const {id, expenseId} = req.params;
        await Animal.findByIdAndUpdate(id, { $pull: { expenses: expenseId } });

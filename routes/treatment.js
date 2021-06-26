@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const Treatment = require("../models/treatment");
-const { isLoggedin, searchAndFilter, sortDlisplay, validateTreatment } = require("../middleware");
+const { isLoggedin, searchAndFilter, isAnAdmin, sortDlisplay, validateTreatment } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const Expense = require("../models/expense");
 const changeDate = require("../utils/changeDate")
 
 router.get(
-  "/", isLoggedin,
+  "/", isLoggedin, isAnAdmin,
   searchAndFilter,
   sortDlisplay,
   catchAsync(async (req, res) => {
@@ -55,7 +55,7 @@ router.get("/new", isLoggedin, (req, res) => {
 //Create new treatment
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateTreatment,
   
   catchAsync(async (req, res) => {
@@ -91,7 +91,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const treatment = await Treatment.findById(id);
@@ -103,11 +103,12 @@ router.get(
 
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   validateTreatment,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const treatment = await Treatment.findByIdAndUpdate(id, { ...req.body.treatment });
+    treatment.creator = req.user._id
     await treatment.save();
     req.flash('success', 'Updated successfully')
     res.redirect(`/treatment/${treatment._id}`);
@@ -115,7 +116,7 @@ router.put(
 );
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     await Treatment.findByIdAndDelete(id);

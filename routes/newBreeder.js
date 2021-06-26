@@ -4,7 +4,7 @@ const Breeder = require("../models/breeder");
 const multer = require("multer");
 const { storage, cloudinary } = require("../cloudinary");
 const upload = multer({ storage });
-const { isLoggedin, searchAndFilter, sortDlisplay, validateBreeder } = require("../middleware");
+const { isLoggedin, searchAndFilter, isAnAdmin, sortDlisplay, validateBreeder } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const farmstock = require("../models/farmstock");
@@ -44,7 +44,7 @@ router.get(
   })
 );
 
-router.get("/new", isLoggedin, (req, res) => {
+router.get("/new", isLoggedin, isAnAdmin, (req, res) => {
   res.render("breeder/new", {
     tag: "",
     sex: "",
@@ -59,7 +59,7 @@ router.get("/new", isLoggedin, (req, res) => {
 //Create new livestock
 router.post(
   "/",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   upload.single("image"),
   validateBreeder,
   catchAsync(async (req, res) => {
@@ -101,7 +101,7 @@ router.post(
 );
 
 router.get(
-  "/:id", isLoggedin,
+  "/:id", isLoggedin, 
   catchAsync(async (req, res) => {
     const { id } = req.params;
 
@@ -118,7 +118,7 @@ router.get(
 
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const breeder = await Breeder.findById(id);
@@ -129,7 +129,7 @@ router.get(
 
 router.put(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   upload.single("image"),
   validateBreeder,
   catchAsync(async (req, res) => {
@@ -153,7 +153,7 @@ router.put(
 
 router.delete(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const breeder = await Breeder.findByIdAndDelete(id);

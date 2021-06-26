@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 const Breeder = require('../models/breeder')
 
-const {isLoggedin, validateMating, validateParturition} = require('../middleware')
+const {isLoggedin, isAnAdmin, validateMating, validateParturition} = require('../middleware')
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const Breeding = require('../models/breeding');
 
 
-router.post('/', isLoggedin, validateMating, catchAsync( async (req, res) => {
+router.post('/', isLoggedin, isAnAdmin, validateMating, catchAsync( async (req, res) => {
    const {id} = req.params
    
     const breeder = await Breeder.findById(id)
@@ -24,7 +24,7 @@ router.post('/', isLoggedin, validateMating, catchAsync( async (req, res) => {
    res.redirect(`/breeder/${breeder._id}`)
 }));
 
-router.put('/:bId',  isLoggedin, validateParturition, catchAsync( async(req, res) => {
+router.put('/:bId',  isLoggedin, isAnAdmin, validateParturition, catchAsync( async(req, res) => {
      const {id, bId} = req.params
     
     const breeder = await Breeder.findById(id)
@@ -35,7 +35,7 @@ router.put('/:bId',  isLoggedin, validateParturition, catchAsync( async(req, res
 }));
 
 
-router.delete('/:bId', isLoggedin, catchAsync( async(req, res) => {
+router.delete('/:bId', isLoggedin, isAnAdmin, catchAsync( async(req, res) => {
      const {id,  bId} = req.params;
     
     const breeder =   await Breeder.findByIdAndUpdate(id, { $pull: { breeding: bId } });

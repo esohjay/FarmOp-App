@@ -111,23 +111,27 @@
 
 <div class="ui horizontal segments">
   <div class="ui green segment">
-      <p>Add to Sold Livestock</p>
+      <p> Sold</p>
+     
    <form action="/farmstock/<%= farmstock._id %>/sold" method="POST">
             <div class="ui right labeled input">
-                 <label for="amount" class="ui label btn2">₦</label>
-                    <input type="number" placeholder="Enter Price" name="amount" id="amount">
-                    <button class="ui icon btn button">
+                 <label for="amount" class="ui label tiny btn2">₦</label>
+                 
+                    <input class="input-length" type="number" placeholder="Enter Price" name="amount" id="amount">
+                    
+                    <button class="ui icon tiny btn button">
                         <i class="cart icon"></i>
                     </button>
                     </div>
             </form>
+            
   </div>
   <div class="ui green segment">
       <p>Add to Breeders</p>
     <form action="/farmstock/<%= farmstock._id %>/breeds" method="POST">
-          <button class="ui active btn button">
+          <button class="ui active tiny btn button">
   <i class="paw icon"></i>
-  Breeder
+  
 </button>
         </form>
   </div>
@@ -135,7 +139,7 @@
       <p>Mortality</p>
      <form action="/farmstock/<%= farmstock._id %>/dead" method="POST">
         <div class="ui action input">
-  <input type="text" type="text" id="cause" name="cause" placeholder="Cause of Death"  required>
+  <input class="input-length" type="text" type="text" id="cause" name="cause" placeholder="Cause of Death"  required>
   <button class="ui icon btn button">
     <i class="heartbeat red icon"></i>
   </button>

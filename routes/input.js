@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const Input = require("../models/input");
-const { isLoggedin, searchAndFilter, sortDlisplay, validateInput } = require("../middleware");
+const { isLoggedin, searchAndFilter, sortDlisplay, validateInput, isAnAdmin } = require("../middleware");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const Expense = require("../models/cropExpense");
@@ -34,7 +34,7 @@ router.get(
   })
 );
 
-router.get("/new", isLoggedin, catchAsync(async (req, res) => {
+router.get("/new", isLoggedin, isAnAdmin, catchAsync(async (req, res) => {
   const crop = await Crop.find({creator: req.user._id})
   res.render("input/new", {
     inputType: "",
@@ -52,7 +52,7 @@ router.post(
   "/",
   isLoggedin,
   validateInput,
-  
+  isAnAdmin,
   catchAsync(async (req, res) => {
     const input = new Input(req.body.input);
     input.creator = req.user._id
@@ -72,7 +72,7 @@ router.post(
 );
 router.get(
   "/:id",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const input = await Input.findById(id)
@@ -86,7 +86,7 @@ router.get(
 );
 router.get(
   "/:id/edit",
-  isLoggedin,
+  isLoggedin, isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const input = await Input.findById(id);
@@ -100,7 +100,7 @@ router.get(
 router.put(
   "/:id",
   isLoggedin, validateInput,
-  
+  isAnAdmin,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const input = await Input.findByIdAndUpdate(id, { ...req.body.input });
