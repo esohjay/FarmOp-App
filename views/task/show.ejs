@@ -17,7 +17,9 @@
       <p>Start Date: <%= task.startDate.toDateString() %></p>
     </div>
     <div class="ui green segment">
-      <p><%= task.status %> <% if(task.status === "Completed") {%>
+      <p><%= task.status %> 
+         <% if(currentUser && currentUser.isAdmin) {%>
+        <% if(task.status === "Completed") {%>
         
          
                  <button class="ui  button btn mini taskBtns "> Add to event?</button>
@@ -44,7 +46,9 @@
                                         </div>
                                     </div>
                                 </div>
-      <% } %> </p>
+      <% } %> 
+      <% } %> 
+    </p>
       
     </div>
     <div class="ui green segment">
@@ -61,9 +65,11 @@
   <div class="ui green segment">
     <a class="ui btn button" href="/task">Back</a>
     <div class="ui buttons right floated">
+       <% if(currentUser && currentUser.isAdmin) {%>
       <a href="/task/<%= task._id %>/edit" class="ui btn2 button">Edit</a>
       <div class="or"></div>
       <button class="ui negative button" id="test">Delete</button>
+      <% } %> 
       <div class="ui modal test">
         <div class="header">
           Are you sure you want to delete <%= task.task %> task?

@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') %>
+<% if(currentUser && currentUser.isAdmin) {%>
 <a class="button btn ui" href="/input/new">Add Input</a>
-
+<% } %> 
  
  <h1 class="ui center aligned header">Crop Input</h1>
 <table class="ui celled selectable unstackable table">

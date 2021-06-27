@@ -31,9 +31,11 @@
   <div class="ui green segment">
     <a class="ui btn button" href="/treatment">Back</a>
     <div class="ui buttons right floated">
+       <% if(currentUser && currentUser.isAdmin) {%>
       <a href="/treatment/<%= treatment._id %>/edit" class="ui btn2 button">Edit</a>
       <div class="or"></div>
       <button class="ui negative button" id="test">Delete</button>
+      <% } %> 
       <div class="ui modal test">
         <div class="header">
           Are you sure you want to delete <%= treatment.treatment %> task?

@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') %>
+ <% if(currentUser && currentUser.isAdmin) {%>
 <a class="button btn ui" href="/treatment/new">Add a Treatment</a>
-
+<% } %> 
  
  <h1 class="ui center aligned header">Livestock Treatment</h1>
 <table class="ui celled selectable unstackable table">

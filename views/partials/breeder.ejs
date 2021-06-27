@@ -14,9 +14,9 @@ let breedFilter=[]; %>
   </button>
 </div>
  </form> 
-
+ <% if(currentUser && currentUser.isAdmin) {%>
 <a class="ui btn button" href="/breeder/new">Add a Breeder</a>
-
+<% } %> 
     <div class="ui labeled icon top right pointing dropdown right floated btn button">
   <i class="sliders horizontal icon"></i>
   <span class="text">Sort</span>

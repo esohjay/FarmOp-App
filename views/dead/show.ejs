@@ -39,8 +39,9 @@
     <div class="ui yellow segment">
       <a class="ui btn button" href="/livestock/sales">Back</a>
 
-      
+      <% if(currentUser && currentUser.isAdmin) {%>
         <button class="ui negative button" id="test">Delete</button>
+        <% } %> 
         <div class="ui modal test">
           <div class="header">
             Are you sure you want to delete <%= sales.tag %>?

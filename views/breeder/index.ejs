@@ -18,10 +18,11 @@
           ></a>
         </div>
         <div class="extra"><%= breed.dob.toDateString() %></div>
+          <% if(currentUser && currentUser.isAdmin) {%>
            <div class="extra">
             
 <div class="ui icon bottom right pointing dropdown right floated">
-  <i class="trash  icon"></i>
+  <i class="trash red icon"></i>
   <div class="menu">
     
     <div class="item">Are you sure?</div>
@@ -41,6 +42,7 @@
             
            
           </div>
+          <% } %> 
       </div>
     </div>
   </div>

@@ -2,8 +2,9 @@
 
 
  <%- include('../partials/cropEvent') %>
-
+<% if(currentUser && currentUser.isAdmin) {%>
 <a class="button btn ui" href="/cropevent/new">Add an Event</a>
+<% } %> 
 <h1 class="ui center aligned header">Crop Event</h1>
 <table class="ui celled selectable unstackable table">
         <thead>

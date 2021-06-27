@@ -1,8 +1,9 @@
 <% layout('layouts/boilerplate') %>
 
  <%- include('../partials/animalEvent') %>
+ <% if(currentUser && currentUser.isAdmin) {%>
  <a class="button btn ui" href="/event/new">Add an Event</a>
-
+<% } %> 
  <h1 class="ui center aligned header">Livestock Event</h1>
 <table class="ui celled selectable unstackable table">
         <thead>

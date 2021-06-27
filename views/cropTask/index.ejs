@@ -1,5 +1,7 @@
 <% layout('layouts/boilerplate') %>
+<% if(currentUser && currentUser.isAdmin) {%>
 <a class="button btn ui" href="/croptask/new">Add a Task</a>
+<% } %> 
 <%- include('../partials/cropTask') %>
 
 

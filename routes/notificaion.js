@@ -20,6 +20,7 @@ const { isLoggedin } = require('../middleware');
 router.get("/", isLoggedin, catchAsync(async (req, res) => {
 
     const tasks = await Task.find({creator: req.user.farmId})
+    const cTasks = await CTask.find({creator: req.user.farmId})
 let notificationInfo = []
     for(let task of tasks){
          const startDate = task.startDate  
@@ -32,8 +33,19 @@ const deadlineDaysLeft = Math.round(deadlineDiff/86400000)
 const info = {name: task.task, dateDiff: dateDiff, deadlineDiff: deadlineDiff, startDaysLeft: startDaysLeft, deadlineDaysLeft: deadlineDaysLeft,  startDate: startDate, deadline: deadline}
      notificationInfo.push(info)
     }
-   
-   res.render("notification/index", {tasks, notificationInfo})
+   let cropNotificationInfo = []
+     for(let task of cTasks){
+         const startDate = task.startDate  
+        const deadline = task.deadline
+const dateDiff = Date.parse(startDate) - Date.now();
+const deadlineDiff = Date.parse(deadline) - Date.now();
+
+const startDaysLeft = Math.round(dateDiff/86400000)
+const deadlineDaysLeft = Math.round(deadlineDiff/86400000)
+const info = {name: task.task, dateDiff: dateDiff, deadlineDiff: deadlineDiff, startDaysLeft: startDaysLeft, deadlineDaysLeft: deadlineDaysLeft,  startDate: startDate, deadline: deadline}
+    cropNotificationInfo.push(info)
+    }
+   res.render("notification/index", {tasks, notificationInfo, cropNotificationInfo})
 }) )
 
 router.get('/finance', isLoggedin, catchAsync(async (req, res) => {

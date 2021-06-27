@@ -11,8 +11,9 @@ let breedFilter=[]; %>
   </button>
 </div>
  </form> 
+  <% if(currentUser && currentUser.isAdmin) {%>
     <a class="ui button btn"  href="/animal/new">Add a Batch</a>   
-
+<% } %> 
  
 
   

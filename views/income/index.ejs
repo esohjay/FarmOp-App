@@ -2,8 +2,9 @@
 
 
     <% let totalIncome=0; %>
+    <% if(currentUser && currentUser.isAdmin) {%>
     <a class="button btn ui" href="/income/new">Add an Event</a>
-            
+    <% } %>   
             <%- include('../partials/animalIncome') %>
             <h1 class=" ui header center aligned"> Livestock Income</h1>
             <table class="ui celled selectable unstackable table">

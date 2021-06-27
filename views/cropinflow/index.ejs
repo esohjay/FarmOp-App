@@ -2,7 +2,9 @@
 
 
     <% let totalIncome=0; %>
+    <% if(currentUser && currentUser.isAdmin) {%>
     <a class="button btn ui" href="/cropinflow/new">Add an Income</a>
+    <% } %> 
            
         <%- include('../partials/cropIncome') %>
          <h1 class=" ui header center aligned"> Crop Income</h1>

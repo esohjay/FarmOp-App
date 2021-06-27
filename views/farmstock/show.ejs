@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
 <% const ageInWeeks = Math.round(age / 7 )%> 
-<% const ageInMonths = Math.round(age / 30.417 )%> 
+<% const ageInMonths = Math.floor(age / 30.417 )%> 
 
 <div class="ui segments">
   <div class="ui green segment">
@@ -15,7 +15,9 @@
       <div class="ui horizontal segments">
         <div class="ui huge header color-green segment">
           <p><%= farmstock.tag %></p> <form action="/farmstock/<%= farmstock._id %>/clone" method="POST">
+            <% if(currentUser && currentUser.isAdmin) {%>
           <button class="btn button ui tiny right floated">clone</button></form>
+          <% } %> 
         </div>
         <div class="ui huge header color-green segment">
           <p><%= farmstock.name%></p>
@@ -31,7 +33,7 @@
               <%= age %> days
           <% } %>     <%if(ageInWeeks >= 1 && ageInMonths >= 1  ) {%>
           <%= `${ageInMonths} months (${ageInWeeks} weeks)` %> 
-        <% }%> <%if(ageInWeeks >= 1 && ageInMonths <= 1 ){%> 
+        <% }%> <%if(ageInWeeks >= 1 && ageInMonths < 1 ){%> 
                 <%=`${ageInWeeks} weeks`  %> 
           <% } %>
         </p>
@@ -71,11 +73,13 @@
       <a class="ui btn button" href="/farmstock">Back</a>
 
       <div class="ui buttons right floated">
+        <% if(currentUser && currentUser.isAdmin) {%>
         <a href="/farmstock/<%=farmstock._id %>/edit" class="ui btn2 button"
           >Edit</a
         >
         <div class="or"></div>
         <button class="ui negative button" id="test">Delete</button>
+        <% } %> 
         <div class="ui modal test">
           <div class="header">
             Are you sure you want to delete <%= farmstock.tag %>?
@@ -108,7 +112,7 @@
     </div>
   </div>
 </div>
-
+<% if(currentUser && currentUser.isAdmin) {%>
 <div class="ui horizontal segments">
   <div class="ui green segment">
       <p> Sold</p>
@@ -146,7 +150,7 @@
   </form>
 </div>
 </div>
-
+<% } %> 
 
   
 </div>
@@ -158,6 +162,7 @@
    <div class="content">
         Add and View Treatment
         <div class="accordion transition hidden">
+          <% if(currentUser && currentUser.isAdmin) {%>
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Treatment
@@ -231,6 +236,7 @@
                     </div>
                 </div>
             </div>
+            <% } %> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Treatments
@@ -251,7 +257,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <%= treatment.name %>
+                                   <a class="color-green-h" href="/treatment/<%= treatment._id %>"><%= treatment.name %></a>
                                 </td>
                                 <td>
                                     <%= treatment.date.toDateString()%>

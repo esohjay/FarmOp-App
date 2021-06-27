@@ -32,9 +32,11 @@
     <div class="ui yellow segment">
       <a class="ui btn button" href="/income">Back</a>
       <div class="ui buttons right floated">
+        <% if(currentUser && currentUser.isAdmin) {%>
         <a href="/income/<%=income._id %>/edit" class="ui btn2 button">Edit</a>
         <div class="or"></div>
         <button class="ui  negative button" id="test">Delete</button>
+        <% } %> 
         <div class="ui modal test">
           <div class="header">Are you sure you want to delete <%= income.income %>? </div>
           <div class="content">

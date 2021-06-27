@@ -235,6 +235,8 @@ let newPasswordValue;
 let confirmationValue;
 const submitBtn = document.getElementById("submit-btn");
 const newPassword = document.getElementById("new-password");
+const username = document.getElementById("username");
+const regForm = document.getElementsByClassName("regFormValidate");
 const confirmation = document.getElementById("password-confirmation");
 const validationMessage = document.getElementById("validation-message");
 function validatePasswords(message, add, remove) {
@@ -254,6 +256,10 @@ confirmation.addEventListener("input", (e) => {
     submitBtn.removeAttribute("disabled");
   }
 });
-
+submitBtn.addEventListener("click", (e) => {
+ 
+ const lower=  username.value
+ lower.toLowerCase()
+})
  
 

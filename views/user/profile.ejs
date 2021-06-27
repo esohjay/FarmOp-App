@@ -29,7 +29,7 @@
     <div class="ui raised segments">
       <div class="ui yellow segment">
         <p>
-          Role: <%= currentUser.role === '' ? 'Role not assigned yet' :
+          Role: <%= currentUser.role === undefined ? 'Role not assigned yet' :
           currentUser.role %>
         </p>
       </div>

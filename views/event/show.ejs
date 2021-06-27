@@ -23,9 +23,11 @@
     <div class="ui yellow segment">
      <a class="ui btn button" href="/event">Back</a>
     <div class="ui buttons right floated">
+        <% if(currentUser && currentUser.isAdmin) {%>
             <a href="/event/<%=event._id %>/edit" class="ui btn2 button">Edit</a>
             <div class="or"></div>
             <button class="ui  negative button" id="test">Delete</button>
+            <% } %> 
             <div class="ui modal test">
                 <div class="header">Are you sure you want to delete <%= event.event %>? </div>
                 <div class="content">

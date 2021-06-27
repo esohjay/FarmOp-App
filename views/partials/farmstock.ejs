@@ -14,8 +14,9 @@ let breedFilter=[]; %>
   </button>
 </div>
  </form> 
+  <% if(currentUser && currentUser.isAdmin) {%>
     <a class="ui btn button" href="/farmstock/new">Add a Livestock</a>
-
+  <% } %> 
 
 <div class="ui labeled icon top right pointing dropdown right floated btn button">
   <i class="sliders horizontal icon"></i>
@@ -28,7 +29,7 @@ let breedFilter=[]; %>
     </div>
     <div class="item">
       <i class="sort up icon"></i>
-    <a class="ui sort-link" href="/farmstock?bydate=bydate ">  Asc</a>
+    <a class="ui sort-link" href="/farmstock?sort=createdAt&order=asc ">  Asc</a>
     </div>
     
     <div class="item">

@@ -22,12 +22,14 @@ router.get(
   searchAndFilter,
   sortDlisplay,
   catchAsync(async (req, res) => {
-    const options = {
+    
+    
+   
+const options = {
       page: req.query.page || 1,
       limit: 20,
-      sort: { createdAt: -1 },
-    };
-
+      sort: { createdAt : -1}
+    }
     //const { name, category } = req.query;
     const { dbQuery, dbOption } = res.locals;
 
@@ -40,7 +42,7 @@ router.get(
     let batch = [];
     let breed = [];
     let pStage = [];
-    const farmstock = await FarmStock.paginate(dbQuery || {creator: req.user.farmId}, dbOption || options);
+    const farmstock = await FarmStock.paginate(dbQuery || {creator: req.user.farmId}, options);
     for (let result of farmstock.docs) {
       names.push(result.name);
       sire.push(result.sire);
@@ -174,10 +176,21 @@ router.put(
   upload.single("image"),
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const farmstock = await FarmStock.findByIdAndUpdate(id, {
+    const {tag} = req.body.farmstock;
+    
+     const exist = await FarmStock.find({$and: [{creator: req.user._id}, {tag: tag}]})
+      if(exist.length){
+        req.flash("error", "Tag Number already exist");
+        error = "Tag Number already exist";
+       
+      res.redirect(`/farmstock/${id}/edit`);
+}else{
+       
+     const farmstock = await FarmStock.findByIdAndUpdate(id, {
       ...req.body.farmstock,
     });
-    if (farmstock.image && req.file) {
+
+     if (farmstock.image && req.file) {
       try {
         await cloudinary.uploader.destroy(farmstock.image.filename);
         const { path, filename } = req.file;
@@ -185,10 +198,14 @@ router.put(
       } catch (err) {
         req.flash("error", err.message);
       }
-    }
-    await farmstock.save();
+    } 
+   
+     await farmstock.save();
     req.flash("success", `${farmstock.tag} has been updated sucessfully`);
     res.redirect(`/farmstock/${farmstock._id}`);
+      }
+   
+   
   })
 );
 

@@ -252,7 +252,7 @@ module.exports.sortDlisplay = async (req, res, next) => {
   const queryKeys = Object.keys(req.query);
   if (queryKeys.length) {
     // initialize an empty array to store our db options (objects) in
-    let dbOptions;
+    let dbOptions ;
     const options = {
       page: req.query.page || 1,
       limit: 100,
@@ -274,12 +274,11 @@ module.exports.sortDlisplay = async (req, res, next) => {
     } = req.query;
 
     if (asc) {
-      dbOptions = {
-        page: req.query.page || 1,
-        limit: 100,
-        sort: { date: -1 },
+      dbOptions[sort] = 
         
-      };
+      { createdAt: -1 }
+        
+      
     }
     if (des) {
       dbOptions = {
@@ -355,11 +354,7 @@ module.exports.sortDlisplay = async (req, res, next) => {
     res.locals.dbOption = dbOptions
     
 
-    //queryKeys.splice(queryKeys.indexOf("page"), 1);
-    //const delimiter = queryKeys.length ? "&" : "?";
-
-    //res.locals.paginateUrl =
-    // req.originalUrl.replace(/(\?|\&)page=\d+/g, "") + `${delimiter}`;
+  
   }
 
   next();

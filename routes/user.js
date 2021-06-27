@@ -63,6 +63,33 @@ router.post(
       
       //user.isAdmin = true;
       const registerdUser = await User.register(user, password);
+      const smtpTransport = nodemailer.createTransport({
+     service: "gmail",
+     auth: {
+          type: "OAuth2",
+          user:  process.env.EMAIL, 
+          clientId:  process.env.CLIENT_ID,
+          clientSecret:  process.env.CLIENT_SECRET,
+          refreshToken: process.env.REFRESH_TOKEN,
+          accessToken: accessToken
+     },tls: {
+  rejectUnauthorized: false
+}
+});
+
+const msg = {
+    to: user.email,
+    from: process.env.EMAIL,
+    subject: 'Welcome to farmOp',
+    text: `Hello ${user.fname},
+	  	My name Olusoji Daramola, the CEO of farmOp. I'm pleased to welcome you to farmOp, the best farm management platform in Nigeria.
+      Our goal is to make farming easier and more profitable and we will do our best to help you achieve that.
+      Thank you for choosing farmOp`.replace(/	  	/g, '')
+  };
+await smtpTransport.sendMail(msg, (error, response) => {
+     error ? console.log(error) : console.log(response);
+     smtpTransport.close();
+});
       
      const uId = registerdUser._id
       if(req.user){
@@ -103,8 +130,8 @@ router.post(
           password,
           confirmPW,
         });
-      }
-
+      }else
+{
       req.flash("error", `${error}`);
       res.render("user/register", {
         username,
@@ -115,7 +142,7 @@ router.post(
         phone,
         password,
         confirmPW,
-      });
+      });}
     }
   })
 );
@@ -151,7 +178,7 @@ const token = await crypto.randomBytes(20).toString('hex');
 	if (!user) {
     req.flash('error', 'No account with that email address exists.')
 	
-	  return res.redirect('/forgot-password');
+	  return res.redirect('/user/forgot-password');
 	}
 
 	user.resetPasswordToken = token;

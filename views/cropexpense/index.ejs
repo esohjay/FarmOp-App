@@ -4,7 +4,9 @@
 
 
     <% let totalExpense=0; %>
+    <% if(currentUser && currentUser.isAdmin) {%>
     <a class="button btn ui" href="/cropexpense/new">Add an Expenditure</a>
+    <% } %> 
            
             <%- include('../partials/cropExpenses') %>
              <h1 class=" ui header center aligned"> Crop Expenses</h1>

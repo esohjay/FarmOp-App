@@ -39,10 +39,12 @@
   </div>
   <div class="ui green segment">
     <a class="ui btn button" href="/crop">Back</a>
+     <% if(currentUser && currentUser.isAdmin) {%>
     <div class="ui buttons right floated">
       <a  href="/crop/<%= crop._id %>/edit" class="ui btn2 button">Edit</a>
       <div class="or"></div>
       <button class="ui  negative button" id="test">Delete</button>
+      <% } %> 
       <div class="ui modal test">
         <div class="header">Are you sure you want to delete <%= crop.crop %>? </div>
         <div class="content">
@@ -81,7 +83,9 @@
   <div class=" content">
     View and add new event to <%= crop.crop %>
       <div class="accordion">
+        <% if(currentUser && currentUser.isAdmin) {%>
         <div class="active  title color-green-h">
+           
           <i class="dropdown icon"></i>
           Add Event
         </div>
@@ -132,7 +136,7 @@
             </form>
           </div>
         </div>
-
+        <% } %> 
 
 
         <!-- ADD EVENT END-->
@@ -159,7 +163,7 @@
             <tbody>
               <tr>
                 <td>
-                  <%= event.event %>
+                 <a class="color-green-h" href="/cropevent/<%= event._id %>"><%= event.event %></a>  
                 </td>
                 <td>
                   <%= event.date.toDateString()%>
@@ -217,6 +221,7 @@
   <div class=" content">
     View and add new task for <%= crop.crop %>
       <div class="accordion">
+        <% if(currentUser && currentUser.isAdmin) {%>
         <div class="active  title color-green-h">
           <i class="dropdown icon"></i>
           Add a Task
@@ -291,7 +296,7 @@
             </form>
           </div>
         </div>
-  
+        <% } %> 
   
   
         <!-- ADD EVENT END-->
@@ -328,7 +333,9 @@
                 </td>
                 
                 <td class="right aligned">
+                  <% if(currentUser && currentUser.isAdmin) {%>
                   <a><i class=" ui check green icon taskBtns"></i></a>
+                  <% } %> 
                   <div class="ui modal taskBtn">
                     <div class="header">Are you sure you have completed <%= task.task %> task? </div>
                     <div class="content">
@@ -377,6 +384,7 @@
   <div class=" content">
     View and add new input for <%= crop.crop %>
       <div class="accordion">
+        <% if(currentUser && currentUser.isAdmin) {%>
         <div class="active  title color-green-h">
           <i class="dropdown icon"></i>
           Add an Input
@@ -452,7 +460,7 @@
           </div>
         </div>
   
-  
+        <% } %> 
   
         <!-- ADD Input END-->
   
@@ -595,6 +603,7 @@
                             <p>View and add new Income made from <%= crop.crop %>
                             </p>
                             <div class="accordion">
+                              <% if(currentUser && currentUser.isAdmin) {%>
                               <div class="title color-green-h">
                                 <i class="dropdown icon"></i>
                                 Add Income
@@ -637,6 +646,7 @@
                                 <!--Income End-->
 
                               </div>
+                              <% } %> 
                               <div class="title color-green-h">
                                 <i class="dropdown icon"></i>
                                 Income Details for <%= crop.crop %>
@@ -659,7 +669,7 @@
                                     <tbody>
                                       <tr>
                                         <td>
-                                          <%= income.income %>
+                                          <a class="color-green-h" href="/cropinflow/<%= income._id %>"><%= income.income %></a>
                                         </td>
                                         <td>
                                           <%= income.date.toDateString() %>
@@ -715,6 +725,7 @@
                           <div class="content">
                             View and add all expenses on <%= crop.crop %>
                               <div class="accordion">
+                                <% if(currentUser && currentUser.isAdmin) {%>
                                 <div class="title color-green-h">
                                   <i class="dropdown icon"></i>
                                   Add Expenses
@@ -755,6 +766,7 @@
 
                                   <!--Expense End-->
                                 </div>
+                                <% } %> 
                                 <div class="title color-green-h">
                                   <i class="dropdown icon"></i>
                                   Expense Details
@@ -775,7 +787,7 @@
                                       <tbody>
                                         <tr>
                                           <td>
-                                            <%= expense.expense %>
+                                            <a class="color-green-h" href="/cropexpense/<%= expense._id %>"><%= expense.expense %></a> 
                                           </td>
                                           <td>
                                             <%= expense.date.toDateString() %>

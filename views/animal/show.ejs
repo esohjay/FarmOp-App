@@ -170,9 +170,11 @@
             <div class="ui yellow segment">
                 <a class="ui btn button" href="/animal">Back</a>
                 <div class="ui buttons right floated">
+                    <% if(currentUser && currentUser.isAdmin) {%> 
                     <a href="/animal/<%= animal._id %>/edit" class="ui btn2 button">Edit</a>
                     
                     <button class="ui  negative button" id="test">Delete</button>
+                    <% } %> 
                     <div class="ui modal test">
                         <div class="header">Are you sure you want to delete <%= animal.name %>? </div>
                         <div class="content">
@@ -216,6 +218,7 @@
 <div class="content">
     Add and View Tasks
     <div class="accordion transition hidden">
+        <% if(currentUser && currentUser.isAdmin) {%> 
         <div class="title color-green-h">
             <i class="dropdown icon"></i>
             Add New Task
@@ -291,6 +294,7 @@
                 </div>
             </div>
         </div>
+        <% } %> 
         <div class="title color-green-h">
             <i class="dropdown icon"></i>
             View Tasks
@@ -311,7 +315,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <%= task.task %>
+                               <a class="color-green-h" href="/task/<%= task._id %>"><%= task.task %></a> 
                             </td>
                             <td>
                                 <%= task.deadline.toDateString()%>
@@ -366,10 +370,12 @@
     <div class="content">
         Add and View Events
         <div class="accordion transition hidden">
+             <% if(currentUser && currentUser.isAdmin) {%> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Event
             </div>
+            
             <div class="content">
                 <div class="ui   grid">
                     <div class="ui eleven wide column centered">
@@ -415,6 +421,7 @@
                     </div>
                 </div>
             </div>
+             <% } %>
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Events
@@ -435,7 +442,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <%= event.event %>
+                                  <a class="color-green-h" href="/event/<%= event._id %>"><%= event.event %></a>  
                                 </td>
                                 <td>
                                     <%= event.date.toDateString()%>
@@ -487,10 +494,12 @@
     <div class="content">
         Add and View Treatment
         <div class="accordion transition hidden">
+             <% if(currentUser && currentUser.isAdmin) {%> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Treatment
             </div>
+           
             <div class="content">
                 <div class="ui   grid">
                     <div class="ui eleven wide column centered">
@@ -559,6 +568,7 @@
                     </div>
                 </div>
             </div>
+             <% } %> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Treatments
@@ -579,7 +589,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <%= treatment.name %>
+                               <a class="color-green-h" href="/treatment/<%= treatment._id %>"><%= treatment.name %></a>  
                                 </td>
                                 <td>
                                     <%= treatment.date.toDateString()%>
@@ -631,10 +641,12 @@
     <div class="content">
         Add and View Egg Record
         <div class="accordion transition hidden">
+             <% if(currentUser && currentUser.isAdmin) {%> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Egg Record
             </div>
+           
             <div class="content">
                 <div class="ui   grid">
                     <div class="ui eleven wide column centered">
@@ -660,6 +672,7 @@
                     </div>
                 </div>
             </div>
+             <% } %> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Egg Record
@@ -747,6 +760,7 @@
     <div class="content">
         Add and View Mortality Record
         <div class="accordion transition hidden">
+             <% if(currentUser && currentUser.isAdmin) {%> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Mortality Record
@@ -781,6 +795,7 @@
                     </div>
                 </div>
             </div>
+            <% } %>
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Mortality Record
@@ -862,6 +877,7 @@
     <div class="content">
         Add and View Feed Record
         <div class="accordion transition hidden">
+              <% if(currentUser && currentUser.isAdmin) {%>
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Feed Record
@@ -891,6 +907,7 @@
                     </div>
                 </div>
             </div>
+            <% }%>
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Feed Record
@@ -966,6 +983,7 @@
     <div class="content">
         Add and View Weight Record
         <div class="accordion transition hidden">
+              <% if(currentUser && currentUser.isAdmin) {%>
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Add New Weight Record
@@ -1009,6 +1027,7 @@
                     </div>
                 </div>
             </div>
+            <% } %> 
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 View Weight Record
@@ -1090,6 +1109,7 @@
         </p>
         <!--Start of Income-->
         <div class="accordion transition hidden">
+             
             <div class="title color-green-h">
                 <i class="dropdown icon"></i>
                 Income
@@ -1097,6 +1117,7 @@
             <div class="content">
                 <p class="transition hidden">Add and view Income record</p>
                 <div class="accordion transition hidden">
+                     <% if(currentUser && currentUser.isAdmin) {%>
                     <div class="title color-green-h">
                         <i class="dropdown icon"></i>
                         Add Income
@@ -1144,6 +1165,7 @@
                             </div>
                         </div>
                     </div>
+                    <% } %> 
                     <div class="title color-green-h">
                         <i class="dropdown icon"></i>
                         View Income record
@@ -1163,7 +1185,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <%= income.income %>
+                                           <a class="color-green-h" href="/income/<%= income._id %>"><%= income.income %></a> 
                                         </td>
 
                                         <td>
@@ -1215,6 +1237,7 @@
                     </div>
                 </div>
             </div>
+            
             <!--End of income-->
 
         </div>
@@ -1227,6 +1250,7 @@
             <div class="content">
                 <p class="transition hidden">Add and view Income record</p>
                 <div class="accordion transition hidden">
+                      <% if(currentUser && currentUser.isAdmin) {%>
                     <div class="title color-green-h">
                         <i class="dropdown icon"></i>
                         Add Expense
@@ -1274,6 +1298,7 @@
                             </div>
                         </div>
                     </div>
+                    <% } %> 
                     <div class="title color-green-h">
                         <i class="dropdown  icon"></i>
                         View Expense record
@@ -1293,7 +1318,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <%= expense.expense %>
+                                           <a class="color-green-h" href="/expense/<%= expense._id %>"><%= expense.expense %></a> 
                                         </td>
 
                                         <td>
@@ -1401,7 +1426,7 @@
     
     <!--Farmstock Starts-->
 
-
+  <% if(currentUser && currentUser.isAdmin) {%>
     <div class="ui  accordion">
         <div class="title">
 
@@ -1493,7 +1518,7 @@
 
         </div>
     </div>
-     
+     <% } %> 
 
          <div class="ui middle aligned divided list"> 
             <% for(let farmstocks of farmstock){ %>
@@ -1513,4 +1538,6 @@
 
         <% } %>
         </div>
+          <% if(currentUser && currentUser.isAdmin) {%>
  <%- include('../partials/group') %>
+ <% } %> 

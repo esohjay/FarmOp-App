@@ -33,11 +33,8 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
-  phone: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
+  phone: Number,
+    
   isAdmin: { type: Boolean, default: false },
   sex: String,
   role: String,

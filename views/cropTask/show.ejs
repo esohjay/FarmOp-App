@@ -20,10 +20,11 @@
       </p>
     </div>
     <div class="ui yellow segment">
-      <p><%= task.status %> <% if(task.status === "Completed") {%>
-        
-         
-                 <button class="ui  button btn mini taskBtns "> Add to event?</button>
+
+      <p><%= task.status %> 
+        <% if(currentUser && currentUser.isAdmin) {%>
+        <% if(task.status === "Completed") {%>
+         <button class="ui  button btn mini taskBtns "> Add to event?</button>
                                 <div class="ui modal taskBtn">
                                     <div class="header">Are you sure this task has been completed? </div>
                                     <div class="content">
@@ -48,6 +49,7 @@
                                     </div>
                                 </div>
       <% } %> 
+      <% } %> 
       </p>
     </div>
     <div class="ui yellow segment">
@@ -66,9 +68,11 @@
   <div class="ui yellow segment">
     <a class="ui btn button" href="/croptask">Back</a>
     <div class="ui buttons right floated">
+      <% if(currentUser && currentUser.isAdmin) {%>
       <a href="/croptask/<%= task._id %>/edit" class="ui btn2 button">Edit</a>
       <div class="or"></div>
       <button class="ui  negative button" id="test">Delete</button>
+      <% } %> 
       <div class="ui modal test">
         <div class="header">Are you sure you want to delete <%= task.task %> task? </div>
         <div class="content">

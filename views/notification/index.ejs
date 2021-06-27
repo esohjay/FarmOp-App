@@ -1,5 +1,9 @@
 <% layout('layouts/boilerplate') %>
-<div class="header">Upcoming Tasks</div>
+
+<div class="ui huge header color-green-h"> Animal Tasks</div>
+<% if(notificationInfo.length) {%>
+<div class="header color-green-h"><i class="hourglass start icon"></i> Upcoming Tasks</div>
+ <% if(notificationInfo.length) {%>
 <% for (let info of notificationInfo) {%>
   
 
@@ -8,20 +12,21 @@
   <div class="item">
     
     <div class="content">
-      <div class="header"><%= info.name %> </div>
+      <div class="header"><a class="color-green-h" href="/task/<%=info._id%>"><%=info.name%></a> </div>
       <%= info.startDaysLeft%> days left to begin 
     </div>
   </div>
     </div>
 
-    <% }  %> 
+    <% } %> 
   
-   
     <% } %>  
-    
+    <% } else {%> 
+  <p>You have no upcoming task</p>
+   <% } %>
 
-    <div class="header">Tasks that should have started</div>
-
+    <div class="header color-green-h"><i class="sync alternate icon"></i> Tasks that should have started</div>
+      <% if(notificationInfo.length) {%>
     <% for (let info of notificationInfo) {%>
   
 
@@ -30,22 +35,24 @@
   <div class="item">
     
     <div class="content">
-      <div class="header"><%= info.name %> </div>
+      <div class="header"><a class="color-green-h" href="/task/<%=info._id%>"><%=info.name%></a> </div>
 
       Deadline is <%= info.deadline.toDateString()%>  
     </div>
   </div>
     </div>
 
-    <% }  %> 
+    <% } %> 
   
    
     <% } %>  
+<% }  else {%> 
+  <p>No task to display</p>
+   <% } %>
 
 
-
-    <div class="header">Missed Tasks</div>
-
+    <div class="header color-green-h"><i class="red close icon icon"></i> Missed Tasks</div>
+<% if(notificationInfo.length) {%>
     <% for (let info of notificationInfo) {%>
   
 
@@ -54,18 +61,106 @@
   <div class="item">
     
     <div class="content">
-      <div class="header"><%= info.name %> </div>
+      
+      <div class="header"><a class="color-green-h" href="/task/<%=info._id%>"><%=info.name%></a> </div>
       Deadline was <%= info.deadline.toDateString()%>  
+     
     </div>
   </div>
     </div>
 
-    <% }  %> 
+    <% } %> 
+  <% }%> 
+    
+      
+    
+     <% } else{%> 
+  <p>There is no missed task yet</p>
+   <% } %>  
+     <% } else{%> 
+  <p>No Task to show</p>
+   <% } %>  
+
+
+   <div class="ui huge header color-green-h"> Crop Tasks</div>
+<% if(cropNotificationInfo.length) {%>
+<div class="header color-green-h"><i class="hourglass start icon"></i> Upcoming Tasks</div>
+ <% if(cropNotificationInfo.length) {%>
+<% for (let info of cropNotificationInfo) {%>
+  
+
+<% if(info.startDaysLeft < 5 && info.dateDiff > 0) {%> 
+    <div class="ui celled list">
+  <div class="item">
+    
+    <div class="content">
+      <div class="header"><a class="color-green-h" href="/croptask/<%=info._id%>"><%=info.name%></a> </div>
+      <%= info.startDaysLeft%> days left to begin 
+    </div>
+  </div>
+    </div>
+
+    <% } %> 
+  
+    <% } %>  
+    <% } else {%> 
+  <p>You have no upcoming task</p>
+   <% } %>
+
+    <div class="header color-green-h"><i class="sync alternate icon"></i> Tasks that should have started</div>
+      <% if(cropNotificationInfo.length) {%>
+    <% for (let info of cropNotificationInfo) {%>
+  
+
+<% if(info.dateDiff < 0 && info.deadlineDiff > 0 ) {%> 
+    <div class="ui celled list">
+  <div class="item">
+    
+    <div class="content">
+      <div class="header"><a class="color-green-h" href="/croptask/<%=info._id%>"><%=info.name%></a> </div>
+
+      Deadline is <%= info.deadline.toDateString()%>  
+    </div>
+  </div>
+    </div>
+
+    <% } %> 
   
    
     <% } %>  
+<% }  else {%> 
+  <p>No task to display</p>
+   <% } %>
+
+
+    <div class="header color-green-h"><i class="red close icon icon"></i> Missed Tasks</div>
+<% if(cropNotificationInfo.length ) {%>
+    <% for (let info of cropNotificationInfo) {%>
+  
+
+<% if(info.deadlineDiff < 0) {%> 
+    <div class="ui celled list">
+  <div class="item">
     
+    <div class="content">
+      
+      <div class="header"><a class="color-green-h" href="/croptask/<%=info._id%>"><%=info.name%></a> </div>
+      Deadline was <%= info.deadline.toDateString()%>  
+     
+    </div>
+  </div>
+    </div>
+
+    <% } %> 
+  <% }%> 
     
+      
     
+     <% } else{%> 
+  <p>There is no missed task yet</p>
+   <% } %>  
+     <% } else{%> 
+  <p>No Task to show</p>
+   <% } %>  
     
     
