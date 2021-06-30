@@ -187,7 +187,7 @@ Navbar
   top: 0;
   left: 0;
   width: 100%;
-  background: var(--yellow-color);
+  background: var(--main-color);
   box-shadow: var(--dark-shadow);
   z-index: 2;
 }
@@ -200,14 +200,14 @@ Navbar
   text-transform: capitalize;
   letter-spacing: var(--spacing);
   transition: var(--transition);
-  color: var(--main-color-hover);
+  color: var(--clr-white);
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
   }
   .nav-icon:hover {
     color: var(--yellow-color);
-  background: var(--main-color);
+  background: var(--main-color-hover);
   padding-left: 2.25rem;
   
   }
@@ -241,14 +241,14 @@ Navbar
   text-transform: capitalize;
   letter-spacing: var(--spacing);
   transition: var(--transition);
-  color: var(--main-color-hover);
+  color: var(--clr-white);
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
 }
 .nav-link:hover {
   color: var(--yellow-color);
-  background: var(--main-color);
+  background: var(--main-color-hover);
   padding-left: 2.25rem;
 }
 /* 280px */
@@ -262,7 +262,7 @@ Navbar
 }
 .nav-header {
    
-    color: var(--main-color-hover);
+    color: var(--clr-white);
   }
 @media screen and (min-width: 992px) {
   /* hide toggle button */
@@ -286,7 +286,7 @@ Navbar
   }
   .nav-header {
     padding: 0 0;
-    color: var(--main-color-hover);
+    color: var(--clr-white);
   }
   .nav-link {
     padding: 0 0;
@@ -295,7 +295,7 @@ Navbar
   }
   .nav-link:hover {
     padding: 0;
-    color: var(--main-color);
+    color: var(--yellow-color);
     background: transparent;
   }
   .nav-icons {
@@ -304,15 +304,15 @@ Navbar
   }
   .nav-icon {
     margin-right: 0.7rem;
-    color: var(--main-color-hover);
+    color: var(--clr-white);
     
     padding: 0 0;
     transition: var(--transition);
   }
   .nav-icon:hover {
-    background-color: var(--yellow-color);
+    background-color: transparent;
     padding: 0;
-    color: var(--main-color);
+    color: var(--yellow-color);
   }
 }
 /*
