@@ -1,36 +1,178 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+:root {
+  --tablet: 768px;
+  --smallMonitor: 992px;
+  --largeMonitor: 1200px;
+  --font-family: "Open Sans", sans-serif;
+  --main-color:  #1a7431;
+   --main-color-hover:  #10451d;
+    --main-color-hover2:  #38b000;
+  --secondary-color: #e9ff70;
+    --secondary-color-hover: #bfd200;
+}
+  
 body {
-  height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("https://images.unsplash.com/photo-1559521783-1d1599583485?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
-  background-size: cover;
-  background-position: center;
-  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
-}
-.cover-container {
-  max-width: 60vw;
+  font-family: var(--font-family) !important;
+  background-color: #faf9f9;
 }
 
-.nav-link {
-  padding: 0.25rem 0;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
-  margin-left: 1rem;
-  border-bottom: 0.25rem solid transparent;
+body ::-webkit-scrollbar {
+  width: 6px;
 }
 
-.nav-link:hover {
-  color: rgba(255, 255, 255, 0.5);
-  border-bottom-color: rgba(255, 255, 255, 0.5);
+.sidebar-accordion .sidebar-section{
+  color: var(--secondary-color)!important;
+}
+.ui.vertical.menu.sidebar-menu {
+  margin-top: 40px !important;
+  max-height: calc(100% - 40px) !important;
+  height: calc(100% - 40px) !important;
 }
 
-.nav-link.active {
-  color: white;
-  border-bottom-color: white;
+.ui.vertical.menu.sidebar-menu .item i.icon {
+  float: left;
+  margin: 0em 0.5em 0em 0em;
+}
+.ui.vertical.menu.sidebar-menu .item  {
+  color: var(--secondary-color);
+}
+.ui.vertical.menu.sidebar-menu .item :hover {
+  color: var(--secondary-color-hover)!important;
+  background-color: var(--main-color-hover)!important;
 }
 
-.btn-secondary,
-.btn-secondary:hover {
-  color: #333;
-  text-shadow: none;
+.main-content {
+  margin-top: 80px;
+   padding-bottom: 100px;
+    overflow: auto;
+     min-height: 100%;
+}
+#sidebar {
+  background-color: var(--main-color);
+  color: aliceblue !important;
+}
+.small.message {
+margin-bottom: 10px!important;
+}
+.sidebar-accordion {
+  background-color: var(--main-color) !important;
+  color: aliceblue !important;
+}
+@media (min-width: 768px) {
+  .ui.vertical.menu.sidebar-menu {
+   
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    width: 15rem !important;
+  }
+  .middle-menu {
+  
+   display: inline-block !important;
+  }
+  
+ 
+}
+
+ .middle-menu {
+    display: none !important;
+  }
+.footer{
+  background-color: var(--main-color);
+  position: relative;
+  height: 50px;
+  margin-top: -50px;
+  clear: both;
+  color: var(--secondary-color);
+}
+
+.footer-text{
+  text-align: center;
+ padding-top: 20px;
+
+}
+.ui.top.fixed{
+  background: var(--main-color);
+  
+ 
+}
+.ui.top.fixed .item{
+  color: var(--secondary-color);
+ 
+}
+
+.ui.top.fixed .item:hover {
+  color: var(--secondary-color-hover)!important;
+ 
+}
+.ui.dropdown.item.right-menu{
+   background: var(--main-color)!important;
+}
+
+h1, h2, h3, h4{
+  color: var(--main-color)!important;
+}
+.segment-target  h1 {
+  padding: 10px;
+  text-align: center;
+}
+.ui.bottom.attached.button {
+  background: var(--main-color);
+  color: var(--secondary-color);
+}
+.ui.bottom.attached.button:hover {
+   color: var(--main-color) !important;
+  background: var(--secondary-color)!important;
+}
+.btn {
+  background: var(--main-color)!important ;
+  color: white!important;
+}
+.btn:hover {
+  color: white !important;
+  background: var(--main-color-hover)!important;
+}
+
+.btn2 {
+  color: var(--main-color) !important;
+  background: var(--secondary-color)!important;
+}
+.btn2:hover {
+  background: var(--main-color)!important ;
+  color: var(--secondary-color)!important;
+}
+.color-green {
+  color: var(--main-color)!important;
+}
+.color-red {
+  color: red;
+}
+#validation-message {
+  margin-bottom: 5px;
+}
+.color-yellow {
+  color: var(--secondary-color)!important;
+}
+.color-green-h {
+  color: var(--main-color)!important;
+}
+.color-yellow-h {
+  color: var(--secondary-color)!important;
+}
+.color-green-h:hover {
+  color: var(--main-color-hover2)!important;
+}
+.color-yellow-h:hover {
+  color: var(--secondary-color-hover)!important;
+}
+.bheader {
+  padding-top: 10px;
+  
+}
+.ui.btn.button.page-num {
+  color: white!important;
+  background-color: var(--main-color)!important;
+}
+.ui.btn.button.page-num:hover {
+  color: white!important;
+  background-color: var(--main-color-hover)!important;
 }

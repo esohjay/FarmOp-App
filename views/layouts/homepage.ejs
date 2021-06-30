@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm App</title>
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+      integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+      crossorigin="anonymous"
+    />
+        <link rel="stylesheet" href="/css/app.css">
+</head>
+
+  <body>
+    <div class="site-body"></div>
+    
+    
+    <%- include('../partials/home') %>
+ 
+    <div class="main-content">
+    <!--<main class="ui container">
+     
+    </main>-->
+    <div class="pusher">
+        <div class="container">
+     
+        <div class="ui grid "></div>
+          <div class="ui grid">
+            <div class="ui ten wide column centered">
+              <%- include('../partials/flash') %>
+            </div>
+          </div>
+
+          <%- body %>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <%- include('../partials/footer') %>
+      <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+      integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/validateForm.js"></script>
+    <script src="/js/pagelayout.js"></script>
+  </body>
+</html>
+

@@ -17,7 +17,7 @@ const createTask =  function (newTasks, crop, date, name,  s, d, creator) {
         })
          crop.push(task)
           task.save();
-          console.log(task)
+         
     }
  
 

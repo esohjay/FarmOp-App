@@ -3,7 +3,9 @@
     
 
     
-  
+  <div class="staff-header">
+      <h2>Manage Staff</h2>
+  </div>
 
         <div class="ui middle aligned divided list"> 
              <% for(let user of users) {%>
@@ -16,7 +18,7 @@
       <div class="extra"><%= user.role %> </div>
     </div>
     <div class="blue ui mini buttons">
-  <button class="ui green basic mini button"><a class="color-green-h" href="/user/profile/<%= user._id %>/edit" >edit</a></button>
+  <button class="ui green basic mini button"><a class="color-green-h" href="/user/profile/<%= user._id %>/edit" >Set Role</a></button>
   <button class="ui red basic button staffBtns">Remove</button>
   <div class="ui modal staffBtn">
                                     <div class="header">Are you sure you want to remove this staff? </div>

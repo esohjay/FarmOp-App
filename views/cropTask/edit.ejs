@@ -32,7 +32,7 @@
                 <input type="date" id="deadline" name="task[deadline]" value="<%= deadline %>">
             </div>
             <div class="ui form">
-                <div class="field  required">
+                <div class="field  ">
                     <label for="worker">Workers</label>
                     <select multiple="" name="task[workers]" id="worker" class="ui search dropdown">
                         <option value="<%= task.workers %>">Select Staff</option>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="ui form">
-                <div class="field  required">
+                <div class="field  ">
                     <label for="leader">Lead by</label>
                     <select  name="task[leader]" id="leader" class="ui search dropdown">
                         <option value="<%= task.leader %>"><%= task.leader %></option>

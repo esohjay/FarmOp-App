@@ -1,0 +1,41 @@
+
+<!-- top nav -->
+
+<nav class="ui top fixed inverted menu">
+  <div class="left menu">
+    
+    <a href="/" class="header item"> farmOp </a>
+  </div>
+
+  <div class="right menu">
+    <% if(currentUser ) {%> 
+    <a href="/notification" class="item">
+      <i class="bell icon"></i>
+    </a>
+    <%} %> 
+    <div class="ui dropdown item right-menu">
+      <i class="user cirlce icon"></i>
+      <div class="menu">
+        <% if(!currentUser) { %>
+        <a href="/user/login" class="item">
+          <i class="login circle icon"></i> Login</a
+        >
+        <a href="/user/register" class="item">
+          <i class="user icon"></i> Register</a
+        >
+
+        <% }else {%>
+        <a href="/user/profile/<%= currentUser.id %>" class="item">
+          <i class="edit icon"></i> Dashboard</a
+        >
+        <a href="/user/logout" class="item">
+          <i class="sign-out icon"></i>
+          Logout
+        </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- top nav -->

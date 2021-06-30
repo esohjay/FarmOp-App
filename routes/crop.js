@@ -15,6 +15,7 @@ const {
   isAnAdmin,
   searchAndFilter,
 } = require("../middleware");
+const  {setImageCrop}= require("../utils/logics");
 const catchAsync = require("../utils/catchAsync");
 const changeDate = require("../utils/changeDate");
 const createTask = require("../utils/createTask");
@@ -55,15 +56,10 @@ router.post(
   catchAsync(async (req, res) => {
     const crop = new Crop(req.body.crop);
     crop.creator = req.user._id
-    if (req.file) {
-    const { path, filename } = req.file;
-    crop.image = { url: path, filename: filename };
- } else {
-    crop.image = {
-          url: "",
-          filename: "Unnamed",
-        };
-      }
+     const cropName  = crop.crop
+     crop.image = setImageCrop(crop.image, cropName) 
+      
+   
     //await crop.save();
 
     const newTask = [
@@ -113,22 +109,14 @@ router.get(
 router.put(
   "/:id",
   isLoggedin, isAnAdmin,
-  upload.single("image"),
+ 
   validateCrop,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     
     const crop = await Crop.findByIdAndUpdate(id, { ...req.body.crop });
     
-    if (crop.image && req.file) {
-      try {
-        await cloudinary.uploader.destroy(crop.image.filename);
-        const { path, filename } = req.file;
-        crop.image = { url: path, filename: filename };
-      } catch (err) {
-        req.flash("error", err.message);
-      }
-    }
+    
 
     await crop.save();
     res.redirect(`/crop/${crop._id}`);

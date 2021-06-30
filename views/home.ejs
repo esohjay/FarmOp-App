@@ -1,59 +1,483 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>FarmOp</title>
+   
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/home.css">
-</head>
+     <!--semantic ui-->
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+      integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+      crossorigin="anonymous"
+    />
+   
+    <!-- styles css -->
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- header  -->
+    <header id="home">
+      <!-- navbar -->
+      <nav class="navbar">
+        <div class="nav-center">
+          <!-- nav header -->
+          <div class="nav-header">
+            <h2>FarmOp</h2>
+            <button type="button" class="nav-toggle" id="nav-toggle">
+              <i class="sidebar icon"></i>
+            </button>
+          </div>
+          <!-- end of nav header -->
+          <!-- nav links -->
+          <ul class="nav-links" id="nav-links">
+            <!-- single link -->
+            <li>
+              <a href="#home" class="nav-link scroll-link">home</a>
+            </li>
+            <!-- end of single link -->
+            <!-- single link -->
+            <li>
+              <a href="#about" class="nav-link scroll-link">about</a>
+            </li>
+            <!-- end of single link -->
+            <!-- single link -->
+            <li>
+              <a href="#services" class="nav-link scroll-link">services</a>
+            </li>
+            <!-- end of single link -->
+            <!-- single link -->
+            <li>
+              <a href="#featured" class="nav-link scroll-link">featured</a>
+            </li>
+            <!-- end of single link -->
+            <!-- single link -->
+            <li>
+              <a href="#gallery" class="nav-link scroll-link">gallery</a>
+            </li>
+            <!-- end of single link -->
+              <!-- nav icons -->
+          <ul class="nav-icons">
+               <% if(!currentUser ){ %>
+            <!-- single icon -->
+            <li>
+              <a
+                href="/user/login"
+                target="_blank"
+                class="nav-icon"
+              >
+                <i class="icon user"></i> Login
+              </a>
+            </li>
+            <!-- end of single icon -->
+            <!-- single icon -->
+            <li>
+              <a
+                href="/user/register"
+                target="_blank"
+                class="nav-icon"
+              >
+                <i class="icon users"></i> Register
+              </a>
+            </li>
+            <!-- end of single icon -->
+             <% }else {%>
+            <!-- single icon -->
+            <li>
+              <a
+                href="/user/profile/<%= currentUser.id %>"
+                target="_blank"
+                class="nav-icon"
+              >
+                <i class="user icon"></i>
+                Dashboard
+              </a>
+            </li>
+            <!-- end of single icon -->
+             <!-- single icon -->
+            <li>
+              <a
+                href="/user/logout"
+                target="_blank"
+                class="nav-icon"
+              >
+                Logout
+              </a>
+            </li>
+            <!-- end of single icon -->
+            <% } %> 
+          </ul>
+          </ul>
+          <!-- end of nav links -->
+        
+          <!-- end of nav icons -->
+        </div>
+      </nav>
+      <!-- hero -->
+      <div class="hero">
+        <div class="hero-banner">
+          <h1>farm management solution</h1>
+          <p>
+            Farm management software that helps you to keep and manage your farm records, hence helping you to make better decision.
+          </p>
+          <a href="#featured" class="btn hero-btn scroll-link">get Started</a>
+        </div>
+      </div>
+    </header>
+    <!-- end of header  -->
 
-<body class="d-flex text-center text-white bg-dark">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
-            <div>
-                <h3 class="float-md-left mb-0">Farm App</h3>
-                <nav class="nav nav-masthead justify-content-center float-md-right">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="/animal">Livestocks</a>
-                    <a class="nav-link" href="/crop">Crops</a>
-                    <a class="nav-link" href="/task">Tasks</a>
-                    <a class="nav-link" href="/report/activities">Activities</a>
-                    <a class="nav-link" href="/report/finance">Finance</a>
-                    <a class="nav-link" href="/field">Field</a>
-                    <% if(!currentUser) { %>
-                        <a class="nav-link" href="/user/login">Login</a>
-                        <a class="nav-link" href="/user/register">Register</a>
-                        <% } else { %>
-                            <a class="nav-link" href="/user/logout">Logout</a>
-                            <% } %>
-                </nav>
+    <!-- about section -->
+    <section class="section" id="about">
+      <!-- section-title -->
+      <div class="section-title">
+        <h2>about <span>us</span></h2>
+      </div>
+      <!-- end of section-title -->
+      <div class="section-center about-center">
+        <!-- about img wrapper -->
+        <article class="about-img">
+          <img
+            src="./images/banner3.jpg"
+            class="about-photo"
+            alt="awesome beach"
+          />
+        </article>
+        <!-- about info -->
+        <article class="about-info">
+          <h3>making farming easier</h3>
+          <p>
+           We are a group of young agricultural entreprenuers passionate in helping the agricultural sector with information technology and help farmers make better decision.
+          </p>
+          <p>
+            Our main objective is  to improve the efficiency of digital farming while making ‘sustainable agriculture’ a new normal. Two of the United Nations’ Sustainable Development Goals (SDGs) – Zero Hunger and Climate change, are our guiding light for driving the holistic growth of the agriculture industry.
+          </p>
+          <a href="/user/register" class="btn"> get started</a>
+        </article>
+      </div>
+    </section>
+    <!-- end of about section -->
+
+    <!-- services -->
+    <section class="section services" id="services">
+      <!-- section-title -->
+      <div class="section-title">
+        <h2>our <span>product</span></h2>
+      </div>
+      <!-- end of section-title -->
+      <div class="section-center services-center">
+        <!-- single service -->
+        <article class="service">
+          <span class="service-icon">
+            <i class="folder open icon"></i>
+          </span>
+          <div class="service-info">
+            <h4 class="service-title">easy record keeping</h4>
+            <p class="service-text">
+             FarmOp helps you to keep record of all activities, events and tasks on your farm, which you can share with your staff, coperate partners,
+             financial institutions etc. These records are also used for making future plans.
+            </p>
+          </div>
+        </article>
+        <!-- enf of single service -->
+        <!-- single service -->
+        <article class="service">
+          <span class="service-icon">
+            <i class="chart line icon"></i>
+          </span>
+          <div class="service-info">
+            <h4 class="service-title">Analysis</h4>
+            <p class="service-text">
+              With FarmOp, you can easily analysis your financial activities to determine how well you are performing. Our software also help
+              you analyze the performance of your farm, give you report on all your farm activities and provide you with good recommendations.
+            </p>
+          </div>
+        </article>
+        <!-- enf of single service -->
+        <!-- single service -->
+        <article class="service">
+          <span class="service-icon">
+            <i class="handshake icon"></i>
+          </span>
+          <div class="service-info">
+            <h4 class="service-title">support</h4>
+            <p class="service-text">
+              we are partners with lots of well experienced leaders in the agricultural sector that we can link you up with whenever you need more advanced support on how to run your farm efficiently.
+            </p>
+          </div>
+        </article>
+        <!-- enf of single service -->
+      </div>
+    </section>
+    <!-- end of services -->
+
+
+
+    <!--start of get stated-->
+     <section id="get-started">
+      <article id="get-started-text">
+        <h2>What are you still waiting for?</h2>
+        <p>
+          FarmOp helps farmers to take their businesses to new heights with advanced technology solutions. We assist corporate and individual operators of crop farms, 
+          livestock farms, contract farming companies, and co-operatives to leverage the power of smart agriculture.
+        </p>
+       
+        <a class="btn" href="/user/register">Get started <i class="fa fa-gears"></i></a>
+      </article>
+     
+    </section>
+
+    <!--end of get started-->
+
+
+
+    <!-- featured tours -->
+    <section class="section" id="featured">
+      <!-- section-title -->
+      <div class="section-title">
+        <h2>featured <span>industries</span></h2>
+         <p>
+            Our farm management software portfolio supports all stakeholders of the agrifood value chain.
+Find out how we solve real-life challenges in your industry.
+          </p>
+      </div>
+      <!-- end of section-title -->
+       
+      <!-- featured-center -->
+      <div class="section-center featured-center">
+        <!-- single tour -->
+        <article class="tour-card">
+          <div class="tour-img-container">
+            <img src="./images/hero.jpg" class="tour-img" alt="" />
+            <p class="tour-date">Digital farm</p>
+          </div>
+          <!-- tour info -->
+          <div class="tour-info">
+            <div class="tour-title">
+              <h4>farm enterprise</h4>
+              
             </div>
-        </header>
-        <main class="px-3">
-            <h1>YelpCamp</h1>
-            <p class="lead"> Welcome to YelpCamp! <br> Jump right in and explore our many campgrounds. <br>
-                Feel free to share some of your own and comment on others!</p>
-            <a href="/campgrounds" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">View
-                Campgrounds</a>
-        </main>
+            <p>
+              One platform for all agricultural data and process management, easily accessible anytime and anywhere. Create a digital twin of your farm.
+            </p>
+            
+              <p>
+                Simplify farm administration and forget about papers, forget about countless spreadsheets. 
+              </p>
+              
+            
+          </div>
+        </article>
+        <!-- end of single tour -->
+        <!-- single tour -->
+        <article class="tour-card">
+          <div class="tour-img-container">
+            <img src="./images/card2.jpg" class="tour-img" alt="" />
+            <p class="tour-date">Ensure Continuous Supply</p>
+          </div>
+          <!-- tour info -->
+          <div class="tour-info">
+            <h4>food and beverages</h4>
+            <p>
+              Minimize gaps in produce delivery by monitoring yield plan changes and the farm harvesting progress, thus securing a continuous supply without gaps in produce delivery.
+            </p>
+            <p>Provide your partners with real-time farm report, enabling them to make timely and fact-based decisions.
 
-        <footer class="mt-auto text-white-50">
-            <p>&copy; 2020 </p>
-        </footer>
+</p>
+          </div>
+        </article>
+        <!-- end of single tour -->
+        <!-- single tour -->
+        <article class="tour-card">
+          <div class="tour-img-container">
+            <img src="./images/card3.webp" class="tour-img" alt="" />
+            <p class="tour-date">coperative farm management</p>
+          </div>
+          <!-- tour info -->
+          <div class="tour-info">
+            <h4>coperative societies</h4>
+            <p>
+              Monitor production progress by each farm and field and get real-time information and analysis. Provide direct fact-based advice through the platform..
+            </p>
+            <p>
+                Easily share information and farming advice among coperative members.  
+            </p>
+           
+          </div>
+        </article>
+        <!-- end of single tour -->
+       
+      </div>
+      
+    </section>
+    <!-- end of featured tours -->
 
+    <!-- contact -->
+    <section class="section contact" id="contact">
+      <div class="section-center contact-center">
+        <!-- contact title -->
+        <article class="contact-title">
+          <h3>want updates from farmOp?</h3>
+          <p>Sign up for newsletter and stay up to date</p>
+        </article>
+        <!-- contact form -->
+        <form class="contact-form">
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            placeholder="your email"
+          />
+          <button type="submit" class="btn-submit">submit</button>
+        </form>
+      </div>
+    </section>
+    <!-- end of contact -->
 
-    </div>
+    <section id="gallery">
+      <!-- section-title -->
+      <div class="section-title gallery-header">
+        <h2>gallery</h2>
+         
+      </div>
+      <!-- end of section-title -->
+    <!-- gallery  -->
+      <div class="gallery-center">
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop1.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
 
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop2.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop3.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop5.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop66.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop7.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop8.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
+        <!-- single item -->
+        <article class="gallery-img-container">
+          <img src="./images/farmop9.png" class="gallery-img" alt="" />
+          <a href="#" class="gallery-icon">
+            <i class="fas fa-search"></i>
+          </a>
+        </article>
+        <!-- end of single item -->
+      </div>
+    </section>
+    <!-- end of gallery  -->
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-        crossorigin="anonymous"></script>
-</body>
-
+    <!-- footer -->
+    <footer class="section footer">
+      <!-- footer links -->
+      <ul class="footer-links">
+        <!-- single link -->
+        <li>
+          <a href="#home" class="footer-link scroll-link">home</a>
+        </li>
+        <!-- end of single link -->
+        <!-- single link -->
+        <li>
+          <a href="#about" class="footer-link scroll-link">about</a>
+        </li>
+        <!-- end of single link -->
+        <!-- single link -->
+        <li>
+          <a href="#services" class="footer-link scroll-link">services</a>
+        </li>
+        <!-- end of single link -->
+        <!-- single link -->
+        <li>
+          <a href="#featured" class="footer-link scroll-link">featured</a>
+        </li>
+        <!-- end of single link -->
+        <!-- single link -->
+        <li>
+          <a href="#gallery" class="footer-link scroll-link">gallery</a>
+        </li>
+        <!-- end of single link -->
+      </ul>
+      <!-- end of footer links -->
+      <!-- footer icons -->
+      <ul class="footer-icons">
+        <!-- single icon -->
+        <li>
+          <a href="https://www.twitter.com" target="_blank" class="footer-icon">
+            <i class="fab fa-facebook"></i>
+          </a>
+        </li>
+        <!-- end of single icon -->
+        <!-- single icon -->
+        <li>
+          <a href="https://www.twitter.com" target="_blank" class="footer-icon">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </li>
+        <!-- end of single icon -->
+        <!-- single icon -->
+        <li>
+          <a href="https://www.twitter.com" target="_blank" class="footer-icon">
+            <i class="fab fa-squarespace"></i>
+          </a>
+        </li>
+        <!-- end of single icon -->
+      </ul>
+      <!-- end of footer icons -->
+      <p class="copyright">
+        copyright &copy; FarmOp <span id="date"></span>.
+        all rights reserved
+      </p>
+    </footer>
+    <!-- js -->
+    <script src="/js/app.js"></script>
+  </body>
 </html>

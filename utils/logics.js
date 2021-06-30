@@ -148,3 +148,65 @@ module.exports.setImageAnimal = function (name, cond) {
       }
       return name
 }
+
+module.exports.setImageCrop = function (name, cond) {
+   switch(cond){
+        case "maize" :
+           case "Maize" :
+              case "corn" :
+                 case "Corn":
+          name = "https://cdn.pixabay.com/photo/2014/03/25/16/23/corn-296956__340.png";
+          break;
+          case "Cassava":
+          case "cassava":
+          name = "https://cdn.pixabay.com/photo/2016/09/17/13/31/cassava-leaves-1676161_960_720.jpg";
+          break;
+          case "cocoyam" :
+             case "Cocoyam":
+          name = "https://cdn.pixabay.com/photo/2020/06/19/21/44/yam-5318942__480.jpg";
+          break;
+          case "potato":
+             case "Potato":
+          name = "https://cdn.pixabay.com/photo/2020/05/07/15/49/yam-5142029_960_720.jpg";
+          break;
+          case "Yam":
+              case "yam":
+          name = "https://media.istockphoto.com/photos/tomatoes-picture-id1296271278?s=612x612";
+          break;
+          case "plantain":
+              case "Plantain":
+                  case "banana":
+                      case "Banana":
+          name ="https://cdn.pixabay.com/photo/2020/05/25/09/47/banana-5217924_960_720.jpg";
+          break;
+          case "Water melon":
+              case "water melon":
+                  case "Water Melon":
+          name = "https://cdn.pixabay.com/photo/2018/03/16/16/54/water-3231812_960_720.jpg";
+          break;
+          case "Cucumber":
+              case "cucumber":
+                  
+          name = "https://cdn.pixabay.com/photo/2015/07/17/13/44/cucumbers-849269_960_720.jpg";
+          break;
+          case "Tomato":
+              case "Tomatoes":
+                  case "tomato":
+          name = "https://cdn.pixabay.com/photo/2011/03/16/16/01/tomatoes-5356_960_720.jpg";
+          break;
+          case "Pepper":
+              case "Pepper":
+                  
+          name = "https://cdn.pixabay.com/photo/2014/08/18/23/11/bell-peppers-421087_960_720.jpg";
+          break;
+           case "Oil palm":
+              case "Palm oil":
+                  
+          name = "https://cdn.pixabay.com/photo/2016/06/18/08/44/palm-1464660_960_720.jpg";
+          break;
+         default: 
+         name = "https://cdn.pixabay.com/photo/2014/10/08/20/52/cereals-480691_960_720.jpg";
+         break;
+      }
+      return name
+}

@@ -7,10 +7,7 @@ const CTask = require("../models/cropTask");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const Schema = mongoose.Schema;
 
-const ImageSchema = new Schema({
-  url: String,
-  filename: String,
-});
+
 const CropSchema = new Schema({
   crop: String,
   variety: String,
@@ -18,7 +15,7 @@ const CropSchema = new Schema({
   date: Date,
   createdAt: { type: Date, default: Date.now() },
   description: String,
-  image: ImageSchema,
+  image: String,
   coverage: String,
   events: [
     {

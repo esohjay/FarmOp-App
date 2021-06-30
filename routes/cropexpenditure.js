@@ -33,7 +33,7 @@ router.get(
     for (let result of expenses.docs) {
       names.push(result.name);
     }
-    if (!expenses.docs.length && res.locals.query) {
+    if (!expenses.docs.length && res.locals.dbQuery) {
       req.flash("error", "No result found");
       res.locals.error = "No result found";
     }

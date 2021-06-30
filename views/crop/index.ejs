@@ -20,16 +20,11 @@
 <div class="ui green raised segment">
     <div class="ui  very relaxed styled unstackable items">
         <div class="item">
-            <% if (crop.image.url){ %>
+            
                 <a href="/crop/<%= crop._id %>" class="ui tiny image">
-                    <img src="<%= crop.image.url %>">
+                    <img src="<%= crop.image %>">
                 </a>
-                <% } else{%>
-                    <a href="/crop/<%= crop._id %>" class="ui tiny image">
-                        <img
-                            src="https://images.unsplash.com/photo-1520564431999-5b020993cb07?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MzR8fGxpdmVzdG9ja3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60">
-                    </a>
-                    <% } %>
+                
     
                         <div class="middle aligned content">
                             <div class="header">

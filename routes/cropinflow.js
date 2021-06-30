@@ -34,7 +34,7 @@ router.get(
     for (let result of inflow.docs) {
       names.push(result.name);
     }
-    if (!inflow.docs.length && res.locals.query) {
+    if (!inflow.docs.length && res.locals.dbQuery) {
       req.flash("error", "No result found");
       res.locals.error = "No result found";
     }
