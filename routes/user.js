@@ -22,18 +22,18 @@ const cropTask = require("../models/cropTask");
 const cropIncome = require("../models/cropIncome");
 const Mortality = require("../models/mortality");
 const util = require("util");
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 const oauth2Client = new OAuth2(
-     process.env.CLIENT_ID, // ClientID
-      process.env.CLIENT_SECRET, // Client Secret
-     "https://developers.google.com/oauthplayground" // Redirect URL
+  process.env.CLIENT_ID, // ClientID
+  process.env.CLIENT_SECRET, // Client Secret
+  "https://developers.google.com/oauthplayground" // Redirect URL
 );
 oauth2Client.setCredentials({
-     refresh_token: process.env.REFRESH_TOKEN,
+  refresh_token: process.env.REFRESH_TOKEN,
 });
-const accessToken = oauth2Client.getAccessToken()
-router.get("/register",  (req, res) => {
+const accessToken = oauth2Client.getAccessToken();
+router.get("/register", (req, res) => {
   res.render("user/register", {
     username: "",
     fname: "",
@@ -60,55 +60,58 @@ router.post(
         fname,
         phone,
       });
-      
+
       //user.isAdmin = true;
       const registerdUser = await User.register(user, password);
       const smtpTransport = nodemailer.createTransport({
-     service: "gmail",
-     auth: {
+        service: "gmail",
+        auth: {
           type: "OAuth2",
-          user:  process.env.EMAIL, 
-          clientId:  process.env.CLIENT_ID,
-          clientSecret:  process.env.CLIENT_SECRET,
+          user: process.env.EMAIL,
+          clientId: process.env.CLIENT_ID,
+          clientSecret: process.env.CLIENT_SECRET,
           refreshToken: process.env.REFRESH_TOKEN,
-          accessToken: accessToken
-     },tls: {
-  rejectUnauthorized: false
-}
-});
+          accessToken: accessToken,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
 
-const msg = {
-    to: user.email,
-    from: process.env.EMAIL,
-    subject: 'Welcome to farmOp',
-    text: `Hello ${user.fname},
+      const msg = {
+        to: user.email,
+        from: process.env.EMAIL,
+        subject: "Welcome to farmOp",
+        text: `Hello ${user.fname},
 	  	My name Olusoji Daramola, the CEO of farmOp. I'm pleased to welcome you to farmOp, the best farm management platform in Nigeria.
       Our goal is to make farming easier and more profitable and we will do our best to help you achieve that.
-      Thank you for choosing farmOp`.replace(/	  	/g, '')
-  };
-await smtpTransport.sendMail(msg, (error, response) => {
-     error ? console.log(error) : console.log(response);
-     smtpTransport.close();
-});
-      
-     const uId = registerdUser._id
-      if(req.user){
-        await User.findByIdAndUpdate(uId,{$set: {farmId: req.user._id}})
-     
-        req.flash("success", `${registerdUser.fname} has been successfully registered`);
-        res.redirect(`/user/profile/${req.user._id}`)
-        
-      }else{
-        
-      await User.findByIdAndUpdate(uId,{$set: {farmId: uId, isAdmin: true}})
-     
-         req.login(registerdUser, (err) => {
-        if (err) return next(err);
-        req.flash("success", `Welcome ${user.username}`);
-        res.redirect("/");
+      Thank you for choosing farmOp`.replace(/	  	/g, ""),
+      };
+      await smtpTransport.sendMail(msg, (error, response) => {
+        error ? console.log(error) : console.log(response);
+        smtpTransport.close();
       });
+
+      const uId = registerdUser._id;
+      if (req.user) {
+        await User.findByIdAndUpdate(uId, { $set: { farmId: req.user._id } });
+
+        req.flash(
+          "success",
+          `${registerdUser.fname} has been successfully registered`
+        );
+        res.redirect(`/user/profile/${req.user._id}`);
+      } else {
+        await User.findByIdAndUpdate(uId, {
+          $set: { farmId: uId, isAdmin: true },
+        });
+
+        req.login(registerdUser, (err) => {
+          if (err) return next(err);
+          req.flash("success", `Welcome ${user.username}`);
+          res.redirect("/");
+        });
       }
-     
     } catch (e) {
       const { username, fname, lname, email, phone, password, confirmPW } =
         req.body;
@@ -130,19 +133,19 @@ await smtpTransport.sendMail(msg, (error, response) => {
           password,
           confirmPW,
         });
-      }else
-{
-      req.flash("error", `${error}`);
-      res.render("user/register", {
-        username,
-        error,
-        fname,
-        lname,
-        email,
-        phone,
-        password,
-        confirmPW,
-      });}
+      } else {
+        req.flash("error", `${error}`);
+        res.render("user/register", {
+          username,
+          error,
+          fname,
+          lname,
+          email,
+          phone,
+          password,
+          confirmPW,
+        });
+      }
     }
   })
 );
@@ -165,142 +168,175 @@ router.post(
   })
 );
 
-
-
-
-router.get("/forgot",  (req, res) => {
+router.get("/forgot", (req, res) => {
   res.render("user/forgot");
 });
-router.put('/forgot', catchAsync(async (req,res) => {
-const token = await crypto.randomBytes(20).toString('hex');
-	
-	const user = await User.findOne({ email: req.body.email })
-	if (!user) {
-    req.flash('error', 'No account with that email address exists.')
-	
-	  return res.redirect('/user/forgot-password');
-	}
+router.put(
+  "/forgot",
+  catchAsync(async (req, res) => {
+    const token = await crypto.randomBytes(20).toString("hex");
 
-	user.resetPasswordToken = token;
-	user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      req.flash("error", "No account with that email address exists.");
 
-  await user.save();
+      return res.redirect("/user/forgot-password");
+    }
 
-  const smtpTransport = nodemailer.createTransport({
-     service: "gmail",
-     auth: {
-          type: "OAuth2",
-          user:  process.env.EMAIL, 
-          clientId:  process.env.CLIENT_ID,
-          clientSecret:  process.env.CLIENT_SECRET,
-          refreshToken: process.env.REFRESH_TOKEN,
-          accessToken: accessToken
-     },tls: {
-  rejectUnauthorized: false
-}
-});
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-const msg = {
-    to: user.email,
-    from: process.env.EMAIL,
-    subject: 'FarmOp - Forgot Password / Reset',
-    text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.
+    await user.save();
+
+    const smtpTransport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.EMAIL,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    const msg = {
+      to: user.email,
+      from: process.env.EMAIL,
+      subject: "FarmOp - Forgot Password / Reset",
+      text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.
 			Please click on the following link, or copy and paste it into your browser to complete the process:
 			http://${req.headers.host}/user/reset-password/${token}
-			If you did not request this, please ignore this email and your password will remain unchanged.`.replace(/			/g, ''),
-  };
-await smtpTransport.sendMail(msg, (error, response) => {
-     error ? console.log(error) : console.log(response);
-     smtpTransport.close();
-});
-req.flash('success', `An e-mail has been sent to ${user.email} with further instructions.`);
-  res.redirect('/user/forgot');
-
-})
- 
+			If you did not request this, please ignore this email and your password will remain unchanged.`.replace(
+        /			/g,
+        ""
+      ),
+    };
+    await smtpTransport.sendMail(msg, (error, response) => {
+      error ? console.log(error) : console.log(response);
+      smtpTransport.close();
+    });
+    req.flash(
+      "success",
+      `An e-mail has been sent to ${user.email} with further instructions.`
+    );
+    res.redirect("/user/forgot");
+  })
 );
 
-router.get('/reset-password/:token', catchAsync(async(req, res) => {
-  const { token } = req.params;
-	const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
-  if (!user) {
-    req.flash('error', 'Password reset token is invalid or has expired.')
-   
-    return res.redirect('/user/forgot');
-  }
-  res.render('user/reset', { token });
-}))
+router.get(
+  "/reset-password/:token",
+  catchAsync(async (req, res) => {
+    const { token } = req.params;
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+    if (!user) {
+      req.flash("error", "Password reset token is invalid or has expired.");
 
-router.put('/reset-password/:token', catchAsync(async(req, res) => {
-  const { token } = req.params;
-	const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } });
-	
-	if (!user) {
-	  req.flash('error', 'Password reset token is invalid or has expired.');
-	 return res.redirect(`/user/reset/${ token }`);
-	}
+      return res.redirect("/user/forgot");
+    }
+    res.render("user/reset", { token });
+  })
+);
 
-	if(req.body.password === req.body.confirm) {
-		await user.setPassword(req.body.password);
-		user.resetPasswordToken = null;
-		user.resetPasswordExpires = null;
-		await user.save();
-		const login = util.promisify(req.login.bind(req));
-		await login(user);
-	} else {
-		 req.flash('error', 'Password do not match.');
-		return res.redirect(`/user/reset/${ token }`);
-	}
+router.put(
+  "/reset-password/:token",
+  catchAsync(async (req, res) => {
+    const { token } = req.params;
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
 
-  const smtpTransport = nodemailer.createTransport({
-     service: "gmail",
-     auth: {
-          type: "OAuth2",
-          user:  process.env.EMAIL, 
-          clientId:  process.env.CLIENT_ID,
-          clientSecret:  process.env.CLIENT_SECRET,
-          refreshToken: process.env.REFRESH_TOKEN,
-          accessToken: accessToken
-     },tls: {
-  rejectUnauthorized: false
-}
-});
+    if (!user) {
+      req.flash("error", "Password reset token is invalid or has expired.");
+      return res.redirect(`/user/reset/${token}`);
+    }
 
-const msg = {
-    to: user.email,
-    from: process.env.EMAIL,
-    subject: 'FarmOp - Password Changed',
-    text: `Hello,
+    if (req.body.password === req.body.confirm) {
+      await user.setPassword(req.body.password);
+      user.resetPasswordToken = null;
+      user.resetPasswordExpires = null;
+      await user.save();
+      const login = util.promisify(req.login.bind(req));
+      await login(user);
+    } else {
+      req.flash("error", "Password do not match.");
+      return res.redirect(`/user/reset/${token}`);
+    }
+
+    const smtpTransport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.EMAIL,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    const msg = {
+      to: user.email,
+      from: process.env.EMAIL,
+      subject: "FarmOp - Password Changed",
+      text: `Hello,
 	  	This email is to confirm that the password for your account has just been changed.
-	  	If you did not make this change, please hit reply and notify us at once.`.replace(/	  	/g, '')
-  };
-await smtpTransport.sendMail(msg, (error, response) => {
-     error ? console.log(error) : console.log(response);
-     smtpTransport.close();
-});
-req.flash('success', `Your password has been successfully changed.`);
-  res.redirect(`/user/profile/${user._id}`);
-
-}))
-
-
-
+	  	If you did not make this change, please hit reply and notify us at once.`.replace(
+        /	  	/g,
+        ""
+      ),
+    };
+    await smtpTransport.sendMail(msg, (error, response) => {
+      error ? console.log(error) : console.log(response);
+      smtpTransport.close();
+    });
+    req.flash("success", `Your password has been successfully changed.`);
+    res.redirect(`/user/profile/${user._id}`);
+  })
+);
 
 router.get(
   "/profile/:id",
   isLoggedin,
   catchAsync(async (req, res) => {
-    const {id} = req.params;
-    const user = await User.findById(id)
+    const { id } = req.params;
+    const user = await User.findById(id);
 
     if (user.isAdmin === true) {
-      const tasks = await Task.find({creator: req.user.farmId}).limit(5).exec();
-      const cTasks = await cropTask.find({creator: req.user.farmId}).limit(5).exec();
-      const cEvents = await cropEvent.find({creator: req.user.farmId}).limit(5).exec();
-      const cIncome = await cropIncome.find({creator: req.user.farmId}).limit(5).exec();
-      const events = await Event.find({creator: req.user.farmId}).limit(5).exec();
-      const sales = await Sales.find({creator: req.user.farmId}).limit(5).exec();
-      const mortality = await Mortality.find({creator: req.user.farmId}).limit(10).exec();
+      const tasks = await Task.find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
+      const cTasks = await cropTask
+        .find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
+      const cEvents = await cropEvent
+        .find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
+      const cIncome = await cropIncome
+        .find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
+      const events = await Event.find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
+      const sales = await Sales.find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
+      const mortality = await Mortality.find({ creator: req.user.farmId })
+        .limit(10)
+        .exec();
       res.render("user/profile", {
         tasks,
         events,
@@ -311,23 +347,28 @@ router.get(
         cIncome,
       });
     } else {
-      const tasks = await Task.find({creator: req.user.farmId})
+      const tasks = await Task.find({ creator: req.user.farmId })
         .where("workers")
         .all(user.fname)
         .limit(5)
         .exec();
       const cTasks = await cropTask
-        .find({creator: req.user.farmId})
+        .find({ creator: req.user.farmId })
         .where("workers")
         .all(user.fname)
         .limit(5)
         .exec();
-      const cEvents = await cropEvent.find({creator: req.user.farmId}).limit(5).exec();
-      const events = await Event.find({creator: req.user.farmId}).limit(5).exec();
+      const cEvents = await cropEvent
+        .find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
+      const events = await Event.find({ creator: req.user.farmId })
+        .limit(5)
+        .exec();
       if (!user) {
-      req.flash("error", "No user found");
-      return res.redirect("/user/login");
-    }
+        req.flash("error", "No user found");
+        return res.redirect("/user/login");
+      }
       res.render("user/profile", { tasks, events, cTasks, cEvents });
     }
   })
@@ -365,46 +406,62 @@ router.put(
   })
 );
 
-router.get('/', isLoggedin, isAnAdmin, catchAsync(async (req, res) => {
-  const users = await User.find({farmId: req.user.farmId});
-  if (!users) {
+router.get(
+  "/",
+  isLoggedin,
+  isAnAdmin,
+  catchAsync(async (req, res) => {
+    const users = await User.find({ farmId: req.user.farmId });
+    if (!users) {
       req.flash("error", "No user found");
       return res.redirect("/user/login");
     }
-  res.render('user/staff', {users})
-}))
-
-router.get('/profile/:id/edit', isLoggedin, isAnAdmin, catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const user = await User.findById(id);
-  res.render('user/staffEdit', {user})
-}))
-
-router.put('/setrole/:id', isLoggedin, isAnAdmin, catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const user = await User.findByIdAndUpdate(id,{...req.body.user});
-  await user.save();
-  req.flash('success', `Role for ${user.fname} has been set`);
-  res.redirect('/user')
-}))
-
-router.delete(
-  "/:id",
-  isLoggedin, isAnAdmin,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
-    req.flash("success", `${user.fname} ${user.lname} has been removed successfully`);
-    res.redirect("/user");
+    res.render("user/staff", { users });
   })
 );
 
 router.get(
-  "/logout",
-  (req, res) => {
-    req.logout();
-    req.flash("success", "Goodbye");
-    res.redirect("/");
-  }
+  "/profile/:id/edit",
+  isLoggedin,
+  isAnAdmin,
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    res.render("user/staffEdit", { user });
+  })
 );
+
+router.put(
+  "/setrole/:id",
+  isLoggedin,
+  isAnAdmin,
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, { ...req.body.user });
+    await user.save();
+    req.flash("success", `Role for ${user.fname} has been set`);
+    res.redirect("/user");
+  })
+);
+
+router.delete(
+  "/:id",
+  isLoggedin,
+  isAnAdmin,
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    req.flash(
+      "success",
+      `${user.fname} ${user.lname} has been removed successfully`
+    );
+    res.redirect("/user");
+  })
+);
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success", "Goodbye");
+  res.redirect("/");
+});
 module.exports = router;

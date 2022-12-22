@@ -19,7 +19,7 @@ const {
   parturitionSchema,
   breederSchema,
   inputSchema,
-  treatmentSchema
+  treatmentSchema,
 } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError");
 const User = require("./models/user");
@@ -252,7 +252,7 @@ module.exports.sortDlisplay = async (req, res, next) => {
   const queryKeys = Object.keys(req.query);
   if (queryKeys.length) {
     // initialize an empty array to store our db options (objects) in
-    let dbOptions ;
+    let dbOptions;
     const options = {
       page: req.query.page || 1,
       limit: 100,
@@ -274,11 +274,7 @@ module.exports.sortDlisplay = async (req, res, next) => {
     } = req.query;
 
     if (asc) {
-      dbOptions[sort] = 
-        
-      { createdAt: -1 }
-        
-      
+      dbOptions[sort] = { createdAt: -1 };
     }
     if (des) {
       dbOptions = {
@@ -348,13 +344,9 @@ module.exports.sortDlisplay = async (req, res, next) => {
         page: req.query.page || 1,
         limit: 100,
         sort: { createdAt: 1 },
-        
       };
     }
-    res.locals.dbOption = dbOptions
-    
-
-  
+    res.locals.dbOption = dbOptions;
   }
 
   next();
@@ -399,56 +391,89 @@ module.exports.searchAndFilter = async (req, res, next) => {
       // fields, using the search regular expression
       //dbQueries is an array which consist of 2 objects, 1st object consist of another object with $or operator that consist of an array, d 2nd {} of dbQueries consist of 1 {} i.e {creator: req.user._id}
       dbQueries.push({
-        $and: [{ $or: [
-          { name: search },
-          { crop: search },
-          { source: search },
-          { variety: search },
-          { field: search },
-          { tag: search },
-          { batch: search },
-        ]},
-        {creator: req.user.farmId}]
-       
+        $and: [
+          {
+            $or: [
+              { name: search },
+              { crop: search },
+              { source: search },
+              { variety: search },
+              { field: search },
+              { tag: search },
+              { batch: search },
+            ],
+          },
+          { creator: req.user.farmId },
+        ],
       });
     }
 
     if (name) {
       //filter(name);
-      dbQueries.push({$and: [{name: { $in: name }}, {creator: req.user.farmId} ]  });
+      dbQueries.push({
+        $and: [{ name: { $in: name } }, { creator: req.user.farmId }],
+      });
     }
     if (sex) {
-      dbQueries.push({$and: [{sex: { $in: sex }}, {creator: req.user.farmId} ]  });
+      dbQueries.push({
+        $and: [{ sex: { $in: sex } }, { creator: req.user.farmId }],
+      });
     }
     if (batch) {
-      dbQueries.push({$and: [{batch: { $in: batch }}, {creator: req.user.farmId} ]  });
+      dbQueries.push({
+        $and: [{ batch: { $in: batch } }, { creator: req.user.farmId }],
+      });
     }
-   if (event) {
-      dbQueries.push({$and: [{event: { $in: event }}, {creator: req.user.farmId} ]  });
+    if (event) {
+      dbQueries.push({
+        $and: [{ event: { $in: event } }, { creator: req.user.farmId }],
+      });
     }
-     if (task) {
-      dbQueries.push({$and: [{task: { $in: task }}, {creator: req.user.farmId} ]  });
+    if (task) {
+      dbQueries.push({
+        $and: [{ task: { $in: task } }, { creator: req.user.farmId }],
+      });
     }
     if (status) {
-      dbQueries.push({$and: [{status: { $in: status }}, {creator: req.user.farmId} ]  });
+      dbQueries.push({
+        $and: [{ status: { $in: status } }, { creator: req.user.farmId }],
+      });
     }
-     if (sire) {
-      dbQueries.push({$and: [{sire: { $in: sire }}, {creator: req.user.farmId} ]  });
+    if (sire) {
+      dbQueries.push({
+        $and: [{ sire: { $in: sire } }, { creator: req.user.farmId }],
+      });
     }
-     if (dam) {
-      dbQueries.push({$and: [{dam: { $in: dam }}, {creator: req.user.farmId} ]  });
+    if (dam) {
+      dbQueries.push({
+        $and: [{ dam: { $in: dam } }, { creator: req.user.farmId }],
+      });
     }
-     if (breed) {
-      dbQueries.push({$and: [{breed: { $in: breed }}, {creator: req.user.farmId} ]  });
+    if (breed) {
+      dbQueries.push({
+        $and: [{ breed: { $in: breed } }, { creator: req.user.farmId }],
+      });
     }
-     if (category) {
-      dbQueries.push({$and: [{category: { $in: category }}, {creator: req.user.farmId} ]  });
+    if (category) {
+      dbQueries.push({
+        $and: [{ category: { $in: category } }, { creator: req.user.farmId }],
+      });
     }
-     if (productionStage) {
-      dbQueries.push({$and: [{productionStage: { $in: productionStage }}, {creator: req.user.farmId} ]  });
+    if (productionStage) {
+      dbQueries.push({
+        $and: [
+          { productionStage: { $in: productionStage } },
+          { creator: req.user.farmId },
+        ],
+      });
     }
     if (healthStatus) {
-      dbQueries.push({$and: [{healthStatus: { $in: healthStatus }}, {creator: req.user.farmId} ]  });
+      dbQueries.push({
+        $and: [
+          { healthStatus: { $in: healthStatus } },
+          { creator: req.user.farmId },
+        ],
+      });
     }
 
     if (amount) {
@@ -460,8 +485,20 @@ module.exports.searchAndFilter = async (req, res, next) => {
 				max will search for all post documents with price
 				less than or equal to ($lte) the min value
 			*/
-      if (amount.min) dbQueries.push({$and:  [{amount: { $gte: amount.min }}, {creator: req.user.farmId}]});
-      if (amount.max) dbQueries.push({$and:  [{amount: { $gte: amount.max }}, {creator: req.user.farmId}]});
+      if (amount.min)
+        dbQueries.push({
+          $and: [
+            { amount: { $gte: amount.min } },
+            { creator: req.user.farmId },
+          ],
+        });
+      if (amount.max)
+        dbQueries.push({
+          $and: [
+            { amount: { $lte: amount.max } },
+            { creator: req.user.farmId },
+          ],
+        });
     }
     if (date) {
       /*
@@ -472,19 +509,38 @@ module.exports.searchAndFilter = async (req, res, next) => {
 				max will search for all post documents with price
 				less than or equal to ($lte) the min value
 			*/
-      if (date.from) dbQueries.push({$and:  [{date: { $gte: new Date(date.from) }}, {creator: req.user.farmId}]});
-      if (date.to) dbQueries.push({$and:  [{date: { $gte: new Date(date.to) }}, {creator: req.user.farmId}]});
+      if (date.from)
+        dbQueries.push({
+          $and: [
+            { date: { $gte: new Date(date.from) } },
+            { creator: req.user.farmId },
+          ],
+        });
+      if (date.to)
+        dbQueries.push({
+          $and: [
+            { date: { $gte: new Date(date.to) } },
+            { creator: req.user.farmId },
+          ],
+        });
     }
 
     if (dateFilter) {
-      dbQueries.push({$and:  [{date: { $gte: new Date(dateFilter) }}, {creator: req.user.farmId}]});
+      dbQueries.push({
+        $and: [
+          { date: { $gte: new Date(dateFilter) } },
+          { creator: req.user.farmId },
+        ],
+      });
     }
     if (age) {
-      dbQueries.push({$and: [{age: { $in: age }}, {creator: req.user.farmId} ]  });
+      dbQueries.push({
+        $and: [{ age: { $in: age } }, { creator: req.user.farmId }],
+      });
     }
     // pass database query to next middleware in route's middleware chain
     // which is the postIndex method from /controllers/postsController.js
-    res.locals.dbQuery ={ $and:  dbQueries} 
+    res.locals.dbQuery = { $and: dbQueries };
   }
   // pass req.query to the view as a local variable to be used in the searchAndFilter.ejs partial
   // this allows us to maintain the state of the searchAndFilter form
@@ -559,4 +615,3 @@ module.exports.changePassword = async (req, res, next) => {
     next();
   }
 };
-

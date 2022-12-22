@@ -13,12 +13,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const ExpressError = require("./utils/ExpressError");
-const mongoSanitize = require("express-mongo-sanitize")
-const helmet = require('helmet')
-const MongoStore = require('connect-mongo');
-
-
-
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const MongoStore = require("connect-mongo");
 
 const animalRoutes = require("./routes/animal");
 const allAnimalsRoutes = require("./routes/allAnimals");
@@ -103,15 +100,15 @@ const farmstockTreatmentRoute = require("./routes/farmstockTreatment");
 const breederTreatmentRoute = require("./routes/breederTreatment");
 
 // input route
-const inputRoute = require("./routes/input")
-const cropInputRoute = require("./routes/cropInput")
+const inputRoute = require("./routes/input");
+const cropInputRoute = require("./routes/cropInput");
 
-const groupRoute = require("./routes/group")
+const groupRoute = require("./routes/group");
 
 //for notification
-const notificationRoute = require("./routes/notificaion")
-//process.env.DB_URL || 
-const dbUrl = process.env.DB_URL ||  'mongodb://localhost:27017/farmapp';
+const notificationRoute = require("./routes/notificaion");
+//process.env.DB_URL ||
+const dbUrl = "mongodb://127.0.0.1/farmapp";
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -134,20 +131,19 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(mongoSanitize())
-const secret = process.env.SECRET || 'coded'
-const store =  MongoStore.create({
-    mongoUrl: dbUrl,
-    secret,
-    touchAfter: 24 *60 *60
-
+app.use(mongoSanitize());
+const secret = process.env.SECRET || "coded";
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  secret,
+  touchAfter: 24 * 60 * 60,
 });
-store.on('error', function (e) {
-    console.log("session error", e)
-})
+store.on("error", function (e) {
+  console.log("session error", e);
+});
 const sessionConfig = {
   store,
-  name: 'opCookie',
+  name: "opCookie",
   secret,
   resave: false,
   saveUninitialized: true,
@@ -162,42 +158,45 @@ app.use(session(sessionConfig));
 app.use(flash());
 app.use(helmet());
 const scriptSrcUrls = [
-    
-    "https://kit.fontawesome.com/",
-    "https://cdnjs.cloudflare.com/",
-    "https://cdn.jsdelivr.net/",
+  "https://kit.fontawesome.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://cdn.jsdelivr.net/",
 ];
 const styleSrcUrls = [
-    "https://kit-free.fontawesome.com/",
-    "https://stackpath.bootstrapcdn.com/",
-    "https://cdnjs.cloudflare.com/",
-    "https://fonts.googleapis.com/",
-    "https://use.fontawesome.com/",
-    "https://cdn.jsdelivr.net/"
+  "https://kit-free.fontawesome.com/",
+  "https://stackpath.bootstrapcdn.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://fonts.googleapis.com/",
+  "https://use.fontawesome.com/",
+  "https://cdn.jsdelivr.net/",
 ];
-const connectSrcUrls = ["https://developers.google.com/oauthplayground",
-"https://cdnjs.cloudflare.com/",];
-const fontSrcUrls = ["https://fonts.googleapis.com/", 
-"https://cdnjs.cloudflare.com/",];
+const connectSrcUrls = [
+  "https://developers.google.com/oauthplayground",
+  "https://cdnjs.cloudflare.com/",
+];
+const fontSrcUrls = [
+  "https://fonts.googleapis.com/",
+  "https://cdnjs.cloudflare.com/",
+];
 app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: [],
-            connectSrc: ["'self'", ...connectSrcUrls],
-            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-            workerSrc: ["'self'", "blob:"],
-            objectSrc: [],
-            imgSrc: [
-                "'self'",
-                "blob:",
-                "data:",
-                "https://res.cloudinary.com/djgprrm6h/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
-                "https://cdn.pixabay.com/",
-            ],
-            fontSrc: ["'self'", ...fontSrcUrls],
-        },
-    })
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        "https://res.cloudinary.com/djgprrm6h/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
+        "https://cdn.pixabay.com/",
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
+  })
 );
 
 app.use(passport.initialize());
@@ -223,7 +222,7 @@ app.use("/animal/:id/batchmember", batchMemberRoutes);
 app.use("/farmstock/:id", actionRoutes);
 
 //for viewing and showing sales and dead animals
-app.use("/livestock", viewActionRoutes)
+app.use("/livestock", viewActionRoutes);
 app.use("/breeder/:id/breeding", breedingRoutes);
 app.use("/breeder/:id/offspring", offspringRoutes);
 app.use("/crop", cropRoutes);
@@ -247,10 +246,9 @@ app.use("/animal/:id/mortality", mortalityRoutes);
 app.use("/animal/:id/egg", eggRoutes);
 
 //individual treatment
-app.use("/animal/:id/treatment", animalTreatmentRoute)
-app.use("/farmstock/:id/treatment", farmstockTreatmentRoute)
-app.use("/breeder/:id/treatment", breederTreatmentRoute)
-
+app.use("/animal/:id/treatment", animalTreatmentRoute);
+app.use("/farmstock/:id/treatment", farmstockTreatmentRoute);
+app.use("/breeder/:id/treatment", breederTreatmentRoute);
 
 //for events associated with each animal
 app.use("/animal/:id/event", eventRoutes);
@@ -319,7 +317,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Serving on port ${port}`);
 });
