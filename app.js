@@ -108,7 +108,7 @@ const groupRoute = require("./routes/group");
 //for notification
 const notificationRoute = require("./routes/notificaion");
 //process.env.DB_URL ||
-const dbUrl = "mongodb://127.0.0.1/farmapp";
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1/farmapp";
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
